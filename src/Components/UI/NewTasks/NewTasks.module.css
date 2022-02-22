@@ -1,0 +1,61 @@
+.toDo {
+  width: 80%;
+  height: 50px;
+  background-color: #ffffff;
+  text-align: center;
+  border-radius: 20px;
+  display: flex;
+  /* flex-basis: auto; */
+  flex-direction: row;
+  justify-content: space-between;
+  border-width: thick;
+  border-color: black;
+  border-style: solid;
+  align-items: center;
+  margin-top: 20px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: 20px;
+  overflow: scroll;
+}
+
+.btn__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.btn__complete {
+  background: #50c878;
+  color: #fff;
+  border-radius: 30px;
+  /* padding: 50 px 60 px 50 px 90; */
+  /* font-size: 0.8rem; */
+  padding: 0.5rem;
+  margin-right: 10px;
+  cursor: pointer;
+
+  position: relative;
+}
+
+.task {
+  margin-left: 10px;
+  font-size: 1.5rem;
+}
+
+.btn__close {
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  background-color: #cf142b;
+  margin-right: 10px;
+  color: #fff;
+  text-align: center;
+  cursor: pointer;
+  /* transform: translateX(10px); */
+}
+
+@media (min-width: 700px) {
+  .toDo {
+    width: 33rem;
+  }
+}

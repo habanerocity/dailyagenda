@@ -1,0 +1,27 @@
+.form__input {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.form__input > label {
+  margin-top: 9rem;
+  font-weight: bolder;
+  color: #fff;
+  font-size: 3.25rem;
+}
+
+.form__input > input {
+  margin-top: 9rem;
+  height: 3rem;
+  width: auto;
+  font-size: 1.5rem;
+  -webkit-box-shadow: 5px 4px 8px -1px #000000;
+  box-shadow: 5px 4px 8px -1px #000000;
+}
+
+@media (max-width: 700px) {
+  .form__input > input {
+    width: 60%;
+  }
+}
