@@ -1,7 +1,43 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  margin-top: 1.5rem;
+  height: 100%;
+  /* width: 90%; */
+  padding: 0 4rem;
+}
+
+.card_holder {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 95%;
+}
+
+.daily {
+  color: #fff;
+  font-size: 4rem;
+}
+
+.date {
+  color: #fff;
+  font-size: 2rem;
+  transform: translateY(-4px);
+}
+
+.heading {
+  display: flex;
+  width: 100%;
+  position: relative;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-direction: row;
+  padding: 0 1rem;
+  padding-bottom: 5px;
+}
+
+.line {
+  width: 100%;
 }

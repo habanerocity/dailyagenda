@@ -1,13 +1,13 @@
 .btn {
   order: none;
   font-family: inherit;
-  font-size: 1.5rem;
+  font-size: 1rem;
   color: inherit;
   background: none;
   cursor: pointer;
-  padding: 1.25rem 4rem;
+  padding: 0.8rem 2rem;
   display: inline-block;
-  margin: 0.7rem 1.5rem;
+  margin: 2rem 1.5rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: 700;
@@ -16,13 +16,10 @@
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   transition: all 0.3s;
-  margin-top: 4rem;
 }
 
 .btn__submit {
-  background: #50c878;
+  background: #fb8f0d;
   color: #fff;
   border-radius: 0.7rem;
-  box-shadow: 0 5px #119e4d;
-  padding: 25 px 60 px 25 px 90;
 }

@@ -28,17 +28,23 @@ const Form = props => {
   };
 
   return (
-    <form action="" className={classes.form__input} onSubmit={submitHandler}>
-      <label htmlFor="field">Enter a Task</label>
-      <input
-        type="text"
-        id="field"
-        value={enteredTask}
-        onChange={changeHandler}
-      />
-      <div className={classes.btn__container}></div>
-      <Button>Submit</Button>
-    </form>
+    <React.Fragment>
+      <div className={classes.header_container}>
+        <h1 className={classes.header}>DO</h1>
+        <hr />
+      </div>
+
+      <form className={classes.form__input} onSubmit={submitHandler}>
+        <input
+          type="text"
+          id="field"
+          placeholder="Enter a task..."
+          value={enteredTask}
+          onChange={changeHandler}
+        />
+        <Button>Add Task</Button>
+      </form>
+    </React.Fragment>
   );
 };
 

@@ -15,3 +15,16 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.header_container {
+  width: 90%;
+  position: relative;
+}
+
+.header {
+  color: #fff;
+  font-size: 4rem;
+  letter-spacing: 4px;
+  padding: 1.3rem 0;
+  text-align: center;
+}
