@@ -1,9 +1,8 @@
+import React, { useState, useEffect } from "react";
 import classes from "./Container.module.css";
 
 import UtilityCard from "./UtilityCard";
 import Card from "./Card";
-import TaskCard from "../UI/TaskCard";
-import React, { useState, useEffect } from "react";
 
 const getLocalStorage = () => {
   let tasks = localStorage.getItem("tasks");
@@ -17,6 +16,26 @@ const getLocalStorage = () => {
 
 const Container = () => {
   const [tasksList, setTasksList] = useState(getLocalStorage());
+  const [accomplishedTasks, setAccomplishedTasks] = useState([]);
+  const [currentTime, setCurrentTime] = useState(
+    new Date().toLocaleString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit"
+    })
+  );
+  const [currentDate, setCurrentDate] = useState(new Date().toDateString());
+
+  //update the time
+  setInterval(() => {
+    setCurrentTime(
+      new Date().toLocaleString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit"
+      })
+    );
+
+    setCurrentDate(new Date().toDateString());
+  }, 1000);
 
   const addTaskHandler = task => {
     //New Task Object being put together in Parent Component, task being received from Card.
@@ -39,6 +58,11 @@ const Container = () => {
     const newTasks = [...tasksList];
     //changing property of state slice
     newTasks[index].completed = true;
+
+    const completedTodos = newTasks.filter(task => task.completed === true);
+
+    setAccomplishedTasks(completedTodos);
+    console.log(accomplishedTasks);
     //setting new property back on state object
     setTasksList(newTasks);
   };
@@ -52,12 +76,6 @@ const Container = () => {
     setTasksList(removedTask);
   };
 
-  const date = new Date();
-
-  const today = date.toLocaleDateString();
-
-  console.log(today);
-
   return (
     <div className={classes.container}>
       <div className={classes.heading}>
@@ -65,24 +83,24 @@ const Container = () => {
           <h1 className={classes.daily}>Daily Agenda Todo List</h1>
         </div>
         <div>
-          <h1 className={classes.date}>{today}</h1>
+          <h1 className={classes.date}>{`${currentDate}, ${currentTime}`}</h1>
         </div>
       </div>
       <hr className={classes.line} />
       <div className={classes.card_holder}>
-        <Card onAddTask={addTaskHandler} />
-        <UtilityCard cardTitle="DONE" onAddTask={addTaskHandler} />
-        <UtilityCard cardTitle="WEATHER" onAddTask={addTaskHandler} />
-      </div>
-
-      {tasksList.length > 0 && (
-        <TaskCard
-          taskIsDone={completeTask}
-          taskRemoved={removeTask}
-          //dropping props chain with state
+        <Card
+          deleteTask={removeTask}
           job={tasksList}
+          onAddTask={addTaskHandler}
+          finito={completeTask}
         />
-      )}
+        {/* <DoneCard
+          finishTask={removeTask}
+          completedErrands={completedTasks}
+          tasks={tasksList}
+        /> */}
+        <UtilityCard cardTitle="WEATHER" />
+      </div>
     </div>
   );
 };

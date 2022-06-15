@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import classes from "./Form.module.css";
 import Button from "./UI/Button";
+import SearchBar from "./SearchBar";
+
+import NewTasks from "./UI/NewTasks/NewTasks";
 // import ErrorModal from "./UI/ErrorModal";
 
 const Form = props => {
   //initializing state
   const [enteredTask, setEnteredTask] = useState("");
-
-  // const { taskName } = props.objct;
 
   const changeHandler = e => {
     //putting input into state variable
@@ -27,22 +28,45 @@ const Form = props => {
     setEnteredTask("");
   };
 
+  const deleteHandler = deletedTaskData => {
+    //lifting state up to parent component
+    props.deleteTask(deletedTaskData);
+  };
+
+  const saveTaskDataHandler = enteredTaskData => {
+    //lifting state up to parent component
+    props.onAddTask(enteredTaskData);
+  };
+
   return (
     <React.Fragment>
       <div className={classes.header_container}>
         <h1 className={classes.header}>DO</h1>
         <hr />
+        <div>
+          {props.tasks.map((task, index) => {
+            console.log(index);
+            return (
+              <NewTasks
+                assignment={task.completed}
+                taskIsGone={deleteHandler}
+                accomplishedTask={props.taskIsComplete}
+                agenda={task.data}
+                key={task.id}
+                index={index}
+              />
+            );
+          })}
+        </div>
       </div>
 
       <form className={classes.form__input} onSubmit={submitHandler}>
-        <input
-          type="text"
-          id="field"
+        <SearchBar
           placeholder="Enter a task..."
-          value={enteredTask}
-          onChange={changeHandler}
+          task={enteredTask}
+          change={changeHandler}
+          name="Add task"
         />
-        <Button>Add Task</Button>
       </form>
     </React.Fragment>
   );

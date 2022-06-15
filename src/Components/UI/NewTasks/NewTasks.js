@@ -1,6 +1,9 @@
 import React from "react";
 import classes from "./NewTasks.module.css";
 
+import check from "../../../assets/check.png";
+import trash from "../../../assets/trash.png";
+
 const NewTasks = props => {
   const completeBtnHandler = () => {
     props.accomplishedTask(props.index);
@@ -20,20 +23,12 @@ const NewTasks = props => {
       </div>
 
       <div className={classes.btn__container}>
-        <button
-          type="button"
-          className={classes.btn__complete}
-          onClick={completeBtnHandler}
-        >
-          Done
-        </button>
-        <button
-          className={classes.btn__close}
-          onClick={removeTaskBtnHandler}
-          type="button"
-        >
-          X
-        </button>
+        <div className={classes.btn__complete} onClick={completeBtnHandler}>
+          <img alt="complete" className={classes.icon} src={check} />
+        </div>
+        <div className={classes.btn__close} onClick={removeTaskBtnHandler}>
+          <img alt="delete" className={classes.icon} src={trash} />
+        </div>
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./Card.module.css";
+
 import Form from "../Form";
 
 const Card = props => {
@@ -8,10 +9,21 @@ const Card = props => {
     props.onAddTask(enteredTaskData);
   };
 
+  const deleteHandler = deletedTaskData => {
+    //lifting state up to parent component
+    props.deleteTask(deletedTaskData);
+  };
+
   return (
     <div className={classes.card}>
       {/* receiving state from child component */}
-      <Form onSaveTaskData={saveTaskDataHandler} />
+      <Form
+        tasks={props.job}
+        onSaveTaskData={saveTaskDataHandler}
+        deleteTask={deleteHandler}
+        onAddTask={saveTaskDataHandler}
+        taskIsComplete={props.finito}
+      />
     </div>
   );
 };

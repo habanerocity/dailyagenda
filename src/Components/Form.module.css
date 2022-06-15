@@ -29,6 +29,19 @@
   position: relative;
 }
 
+.input_holder {
+  display: flow-root;
+  position: relative;
+}
+
+.task_holder {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
 @media (max-width: 700px) {
   .form__input > input {
     width: 60%;
