@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import classes from "./UtilityCard.module.css";
 
@@ -6,11 +6,12 @@ import SearchBar from "../SearchBar";
 
 import sunrise from "../../assets/whitesunrise.png";
 import sunset from "../../assets/whitesunset.png";
-import sun from "../../assets/sunillustration.png";
+import sun from "../../assets/sun2.png";
+import rain from "../../assets/rain.png";
 
 const UtilityCard = props => {
   const [weather, setWeather] = useState({});
-  const [location, setLocation] = useState("");
+  const [city, setCity] = useState("");
 
   const api = {
     key: "521a9ac90a6f44be92d203127221306",
@@ -18,38 +19,85 @@ const UtilityCard = props => {
     days: "3"
   };
 
-  const dateBuilder = d => {
-    let days = [
-      "Sunday",
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
-    ];
+  let days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday"
+  ];
 
-    let day = days[d.getDay()];
-  };
-
-  const getWeatherData = e => {
-    e.preventDefault();
-
-    fetch(
-      `${api.base}/forecast.json?key=${api.key}&q=${location}&days=${api.days}`
+  const savePositionToState = async position => {
+    await fetch(
+      `${api.base}/forecast.json?key=${api.key}&q=${position.coords.latitude},${position.coords.longitude}&days=${api.days}`
     )
       .then(response => response.json())
       .then(data => {
         setWeather(data);
         console.log(weather);
-        setLocation("");
       });
+  };
+
+  const fetchWeather = async () => {
+    try {
+      await window.navigator.geolocation.getCurrentPosition(
+        savePositionToState
+      );
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchWeather();
+
+    return setWeather("");
+  }, []);
+
+  const searchForWeather = async location => {
+    await fetch(
+      `${api.base}/forecast.json?key=${api.key}&q=${location}&days=${api.days}`
+    )
+      .then(response => {
+        response.json();
+      })
+      .then(data => {
+        setWeather(data);
+        console.log(weather);
+      });
+
+    setCity("");
+  };
+
+  const getWeatherData = async e => {
+    e.preventDefault();
+
+    try {
+      searchForWeather(city);
+
+      await fetch(
+        `${api.base}/forecast.json?key=${api.key}&q=${city}&days=${api.days}`
+      )
+        .then(response => {
+          response.json();
+        })
+        .then(data => {
+          setWeather(data);
+          console.log(weather);
+        });
+
+      setCity("");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const changeHandler = e => {
     //putting input into state variable
-    setLocation(e.target.value);
-    console.log(location);
+    setCity(e.target.value);
+    console.log(city);
   };
 
   return (
@@ -60,7 +108,7 @@ const UtilityCard = props => {
           <hr />
         </div>
 
-        {typeof weather.current != "undefined" ? (
+        {weather.forecast ? (
           <div className={classes.weather_info}>
             <h1
               className={classes.location}
@@ -107,8 +155,14 @@ const UtilityCard = props => {
                 </div>
               </div>
               <div className={classes.day_after_tomorrow}>
-                <h3>Wednesday</h3>
-                <img className={classes.weather_pic} src={sun} />
+                <h3>
+                  {
+                    days[
+                      new Date(weather.forecast.forecastday[2].date).getUTCDay()
+                    ]
+                  }
+                </h3>
+                <img className={classes.weather_pic} src={rain} />
                 <div className={classes.highLow}>
                   <h5 className={classes.max}>{`H:${Math.round(
                     weather.forecast.forecastday[2].day.maxtemp_f
@@ -121,14 +175,12 @@ const UtilityCard = props => {
             </div>
           </div>
         ) : (
-          <div className={classes.valid_location}>
-            Please Enter a Valid Location
-          </div>
+          <div className={classes.valid_location}>Getting location...</div>
         )}
         <form onSubmit={getWeatherData} className={classes.search}>
           <SearchBar
             change={changeHandler}
-            task={location}
+            task={city}
             name="Search"
             placeholder="Enter your city..."
           />

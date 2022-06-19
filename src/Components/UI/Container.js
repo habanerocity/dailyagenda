@@ -25,7 +25,7 @@ const Container = () => {
   );
   const [currentDate, setCurrentDate] = useState(new Date().toDateString());
 
-  //update the time
+  //update the time and date every second
   setInterval(() => {
     setCurrentTime(
       new Date().toLocaleString("en-US", {
@@ -63,6 +63,7 @@ const Container = () => {
 
     setAccomplishedTasks(completedTodos);
     console.log(accomplishedTasks);
+
     //setting new property back on state object
     setTasksList(newTasks);
   };
@@ -94,11 +95,6 @@ const Container = () => {
           onAddTask={addTaskHandler}
           finito={completeTask}
         />
-        {/* <DoneCard
-          finishTask={removeTask}
-          completedErrands={completedTasks}
-          tasks={tasksList}
-        /> */}
         <UtilityCard cardTitle="WEATHER" />
       </div>
     </div>

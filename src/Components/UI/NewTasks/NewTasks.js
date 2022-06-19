@@ -16,7 +16,10 @@ const NewTasks = props => {
   return (
     <div className={classes.toDo}>
       <div
-        style={{ textDecoration: props.assignment ? "line-through" : "" }}
+        style={{
+          textDecoration: props.assignment ? "line-through" : "",
+          textDecorationColor: props.assignment ? "#c1122f" : ""
+        }}
         className={classes.task}
       >
         {props.agenda}
