@@ -45,7 +45,7 @@ const Form = props => {
         <hr />
         <div>
           {props.tasks.map((task, index) => {
-            console.log(index);
+            // console.log(index);
             return (
               <NewTasks
                 assignment={task.completed}

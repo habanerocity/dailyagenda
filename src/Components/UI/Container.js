@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import classes from "./Container.module.css";
 
-import UtilityCard from "./UtilityCard";
+import UtilityCard from "./WeatherCard";
 import Card from "./Card";
 
 const getLocalStorage = () => {
@@ -29,8 +29,7 @@ const Container = () => {
   setInterval(() => {
     setCurrentTime(
       new Date().toLocaleString("en-US", {
-        hour: "2-digit",
-        minute: "2-digit"
+        timeStyle: "short"
       })
     );
 
@@ -78,6 +77,7 @@ const Container = () => {
   };
 
   return (
+    // <div className={classes.overlay}>
     <div className={classes.container}>
       <div className={classes.heading}>
         <div>
@@ -88,7 +88,7 @@ const Container = () => {
         </div>
       </div>
       <hr className={classes.line} />
-      <div className={classes.card_holder}>
+      <div className={`${classes.card_holder}`}>
         <Card
           deleteTask={removeTask}
           job={tasksList}
@@ -98,6 +98,8 @@ const Container = () => {
         <UtilityCard cardTitle="WEATHER" />
       </div>
     </div>
+    // </div>
+
   );
 };
 

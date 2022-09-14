@@ -1,12 +1,19 @@
+.form__input {
+  display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding-top: 1rem;
+    position: relative;
+}
+
 .form__input > label {
-  margin-top: 9rem;
   font-weight: bolder;
   color: #fff;
   font-size: 3.25rem;
 }
 
 .form__input > input {
-  margin-top: 9rem;
   height: 3.1rem;
   border-radius: 4px;
   width: auto;
@@ -42,8 +49,18 @@
   align-items: center;
 }
 
-@media (max-width: 700px) {
-  .form__input > input {
-    width: 60%;
+@media screen and (max-width: 840px){
+  .form__input {
+    flex-direction: column;
+  }
+}
+
+@media screen and (min-width: 1800px){
+  .header {
+    font-size: 6rem;
+  }
+
+  .form__input > input{
+    height: 3.7rem;
   }
 }

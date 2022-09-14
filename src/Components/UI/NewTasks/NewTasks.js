@@ -18,7 +18,7 @@ const NewTasks = props => {
       <div
         style={{
           textDecoration: props.assignment ? "line-through" : "",
-          textDecorationColor: props.assignment ? "#c1122f" : ""
+          textDecorationColor: props.assignment ? "#fb8f0d" : ""
         }}
         className={classes.task}
       >
