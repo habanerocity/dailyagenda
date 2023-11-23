@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import classes from "./Form.module.css";
 import SearchBar from "./SearchBar";
 
-import NewTasks from "./UI/NewTasks/NewTasks";
+import NewTasks from "./NewTasks/NewTasks";
 // import ErrorModal from "./UI/ErrorModal";
 
 const Form = props => {

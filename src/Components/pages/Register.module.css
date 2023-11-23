@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    transform: translateY(2rem);
+    padding: 0 4rem;
+  }
+
+.flex_container{
+    display: flex;
+    justify-self: center;
+    align-items: center;
+}
+
+  @media screen and (max-width: 840px){
+    .container {
+        transform: translateY(5px);
+      }
+  }

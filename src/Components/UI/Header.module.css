@@ -1,0 +1,48 @@
+.daily {
+    color: #fff;
+    font-size: 4rem;
+  }
+  
+  .date {
+    color: #fff;
+    font-size: 2rem;
+    transform: translateY(-4px);
+  }
+  
+  .heading {
+    display: flex;
+    width: 100%;
+    position: relative;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-direction: row;
+    padding: 0 1rem;
+    padding-bottom: 5px;
+  }
+  
+  .line {
+    width: 100%;
+  }
+
+  @media screen and (max-width: 840px){
+    .date {
+        padding-top: 1rem;
+      }
+    
+    .heading {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 !important;
+    }
+  }
+
+  @media screen and (min-width: 1800px) {
+    .daily {
+      font-size: 6.5rem;
+    }
+  
+    .date {
+      font-size: 3.25rem;
+    }
+  }

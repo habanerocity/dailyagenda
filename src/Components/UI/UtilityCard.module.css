@@ -2,10 +2,8 @@
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   background-color: rgba(17, 25, 40, 0.75);
-
   border: 1px solid rgba(255, 255, 255, 0.125);
   height: 85vh;
-
   width: 30%;
   border-radius: 3rem;
   margin: 2rem 0;
@@ -14,6 +12,11 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+}
+
+.error_text{
+  color: red;
+  font-size: 1.5rem;
 }
 
 .header_container {
@@ -27,4 +30,40 @@
   letter-spacing: 4px;
   padding: 1.3rem 0;
   text-align: center;
+  text-transform: uppercase;
+}
+
+.user_pic{
+  width: 16rem;
+ 
+}
+
+.user_pic_div{
+  margin: 3rem 0;
+}
+
+input{
+  width: 90%;
+  height:4rem;
+  line-height: 4rem;
+  position: relative;
+  font-size: 2rem;
+  padding-left: 2rem;
+  background-color: rgba(255, 255, 255, 0.125);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  border-radius: 10px;
+}
+
+input::placeholder{
+  font-size: 2rem;
+  line-height: 4rem;
+}
+
+.input_error{
+  border:solid 1px red;
+}
+
+.user_registration_form input{
+  margin-bottom: 1.5rem;
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./ToDoCard.module.css";
 
-import Form from "../Form";
+import Form from "./Form";
 
 const Card = props => {
   const saveTaskDataHandler = enteredTaskData => {
