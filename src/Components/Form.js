@@ -32,11 +32,6 @@ const Form = props => {
     props.deleteTask(deletedTaskData);
   };
 
-  // const saveTaskDataHandler = enteredTaskData => {
-  //   //lifting state up to parent component
-  //   props.onAddTask(enteredTaskData);
-  // };
-
   return (
     <React.Fragment>
       <div className={classes.header_container}>
