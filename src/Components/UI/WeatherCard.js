@@ -70,9 +70,9 @@ const UtilityCard = props => {
             <div className={classes.temperature}>
               {`${Math.round(weather.current.temp_f)}°F`}
             </div>
-            <h3 className={classes.weather_condition}>
+            <h5 className={classes.weather_condition}>
               {`${weather.current.condition.text}`}
-            </h3>
+            </h5>
             <div className={classes.highLow}>
               <h3 className={classes.high}>
                 {`H:${Math.round(weather.forecast.forecastday[0].day.maxtemp_f)}° L:${Math.round(weather.forecast.forecastday[0].day.mintemp_f)}°`}
@@ -80,13 +80,13 @@ const UtilityCard = props => {
             </div>
             <div >
               <span className={classes.icon}>
-                <img className={classes.sun} src={sunrise} />
+                <img className={classes.sun} src={sunrise} alt="sunrise" />
                 <h3 className={classes.substring}>
                   {weather.forecast.forecastday[0].astro.sunrise.substring(1)}
                 </h3>
               </span>
               <span className={classes.icon}>
-                <img className={classes.sun} src={sunset} />
+                <img className={classes.sun} src={sunset} alt="sunset" />
                 <h3 className={classes.substring}>
                   {weather.forecast.forecastday[0].astro.sunset.substring(1)}
                 </h3>
@@ -95,33 +95,33 @@ const UtilityCard = props => {
             <div className={classes.forecast}>
               <div className={classes.tomorrow}>
                 <h3 className={classes.day}>Tomorrow</h3>
-                <img className={classes.weather_pic} src={`https://${weather.forecast.forecastday[1].day.condition.icon}`} />
+                <img className={classes.weather_pic} alt="weather conditions" src={`https://${weather.forecast.forecastday[1].day.condition.icon}`} />
                 <div className={classes.highLow}>
-                  <h5 className={classes.max}>
+                  <h3 className={classes.max}>
                     {`H:${Math.round(weather.forecast.forecastday[1].day.maxtemp_f)}° L:${Math.round(weather.forecast.forecastday[1].day.mintemp_f)}°`}
-                  </h5>
+                  </h3>
                 </div>
               </div>
               <div className={classes.day_after_tomorrow}>
                 <h3 className={classes.day}>
                   {days[new Date(weather.forecast.forecastday[2].date).getUTCDay()]}
                 </h3>
-                <img className={classes.weather_pic} src={`https://${weather.forecast.forecastday[2].day.condition.icon}`} />
+                <img className={classes.weather_pic} alt="weather conditions" src={`https://${weather.forecast.forecastday[2].day.condition.icon}`} />
                 <div className={classes.highLow}>
-                  <h5 className={classes.max}>
+                  <h3 className={classes.max}>
                     {`H:${Math.round(weather.forecast.forecastday[2].day.maxtemp_f)}° L:${Math.round(weather.forecast.forecastday[2].day.mintemp_f)}°`}
-                  </h5>
+                  </h3>
                 </div>
               </div>
             </div>
           </div>
         ) : (
-          <div className={classes.valid_location}>
-            {hasError ? <h1>Error</h1> : <h1>Getting Location...</h1>}
-            <div>Please Enable Location Services</div>
-            {hasError ? '' : <div className={classes.loading}></div>}
-          </div>
-        )}
+            <div className={classes.valid_location}>
+              {hasError ? <h1>Error</h1> : <h1>Getting Location...</h1>}
+              <div>Please Enable Location Services</div>
+              {hasError ? '' : <div className={classes.loading}></div>}
+            </div>
+          )}
       </div>
     </div >
   );

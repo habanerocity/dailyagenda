@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import classes from "./Form.module.css";
-import Button from "./UI/Button";
 import SearchBar from "./SearchBar";
 
 import NewTasks from "./UI/NewTasks/NewTasks";
@@ -33,10 +32,10 @@ const Form = props => {
     props.deleteTask(deletedTaskData);
   };
 
-  const saveTaskDataHandler = enteredTaskData => {
-    //lifting state up to parent component
-    props.onAddTask(enteredTaskData);
-  };
+  // const saveTaskDataHandler = enteredTaskData => {
+  //   //lifting state up to parent component
+  //   props.onAddTask(enteredTaskData);
+  // };
 
   return (
     <React.Fragment>

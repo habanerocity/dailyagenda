@@ -15,7 +15,7 @@
   margin-top: 1rem;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   font-size: 20px;
-  overflow: scroll;
+  /* overflow: scroll; */
 }
 
 .btn__container {
@@ -62,6 +62,7 @@
 @media screen and (min-width: 1800px){
   .toDo{
     height: 6rem;
+    overflow: none!important;
   }
 
   .task {

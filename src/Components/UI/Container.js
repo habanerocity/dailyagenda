@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import classes from "./Container.module.css";
 
 import UtilityCard from "./WeatherCard";
-import Card from "./Card";
+import Card from "./ToDoCard";
 
 const getLocalStorage = () => {
   let tasks = localStorage.getItem("tasks");
@@ -14,23 +14,22 @@ const getLocalStorage = () => {
   }
 };
 
+const shortTime = {
+  timeStyle: "short"
+};
+
 const Container = () => {
   const [tasksList, setTasksList] = useState(getLocalStorage());
   const [accomplishedTasks, setAccomplishedTasks] = useState([]);
   const [currentTime, setCurrentTime] = useState(
-    new Date().toLocaleString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit"
-    })
+    new Date().toLocaleString("en-US", shortTime)
   );
   const [currentDate, setCurrentDate] = useState(new Date().toDateString());
 
   //update the time and date every second
   setInterval(() => {
     setCurrentTime(
-      new Date().toLocaleString("en-US", {
-        timeStyle: "short"
-      })
+      new Date().toLocaleString("en-US", shortTime)
     );
 
     setCurrentDate(new Date().toDateString());

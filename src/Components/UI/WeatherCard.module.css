@@ -2,7 +2,7 @@
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   background-color: rgba(17, 25, 40, 0.75);
-  overflow: scroll;
+  /* overflow: scroll; */
   border: 1px solid rgba(255, 255, 255, 0.125);
   height: 85vh;
   width: 45%;
@@ -32,7 +32,7 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  overflow: scroll;
+  /* overflow: scroll; */
 }
 
 .header_container {
@@ -70,6 +70,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-bottom: 3rem;
   transform: translateY(3rem);
 }
 
@@ -261,6 +262,11 @@
 }
 
 @media screen and (min-width: 1800px){
+
+  .card {
+    overflow:none!important;
+  }
+
   .header {
     font-size: 6rem;
   }
@@ -295,7 +301,8 @@
 
   .forecast {
     width: 75%;
-    margin-top: 9rem;
+    overflow: none!important;
+    /* margin-top: 9rem; */
   }
 
   .day {
