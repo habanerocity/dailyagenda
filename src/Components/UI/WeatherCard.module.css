@@ -1,0 +1,319 @@
+.card {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75);
+  /* overflow: scroll; */
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  height: 85vh;
+  width: 45%;
+  border-radius: 3rem;
+  margin: 2rem 0;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.country {
+  margin-top: 1rem;
+  font-size: 3rem;
+}
+
+.forecast {
+  padding: 2rem;
+  margin-top: 2rem;
+  background-color: rgba(255, 255, 255, 0.125);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  text-align: center;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  /* overflow: scroll; */
+}
+
+.header_container {
+  width: 90%;
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.header {
+  color: #fff;
+  font-size: 4rem;
+  letter-spacing: 4px;
+  padding: 1.3rem 0;
+  text-align: center;
+}
+
+.high {
+  padding-right: 4px;
+}
+
+.highLow {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: 2.5rem;
+  padding-top: 5px;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 3rem;
+  transform: translateY(3rem);
+}
+
+.loading::after {
+  content: "";
+  width: 5rem;
+  height: 5rem;
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75);
+  border: 10px solid transparent;
+  border-top-color: #fb8f0d;
+  border-radius: 50%;
+  animation: loading 1s linear infinite;
+
+}
+
+@keyframes loading {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.location {
+  font-size: 3rem;
+  margin-top: 2rem;
+}
+
+.icon {
+  /* padding: 1rem;
+  font-size: 2rem; */
+}
+
+.search > input {
+  height: 3.1rem;
+  border-radius: 4px;
+  width: auto;
+  font-size: 1.5rem;
+  padding-left: 1rem;
+}
+
+.substring {
+  font-size: 1.3rem;
+}
+
+.sun {
+  /* position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center; */
+  margin-top: 1rem;
+  /* height: 2rem; */
+ 
+}
+
+.temperature {
+  font-size: 6rem;
+  margin-top: 1rem;
+}
+
+.tomorrow {
+  font-size: 3.5rem;
+  padding-right: 2rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-right: #fff thick 20px;
+}
+
+.day_after_tomorrow {
+  font-size: 3.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather_info {
+  /* padding-top: 1rem; */
+  color: #fff;
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather_condition {
+  font-size: 2rem;
+  margin-top: 1rem;
+}
+
+.valid_location {
+  color: #fff;
+  font-size: 3rem;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  /* margin-bottom: 3rem; */
+}
+
+.valid_location > h1 {
+  font-size: 3.5rem;
+  padding-bottom: 1rem;
+}
+
+@media screen and (max-width: 1020px){
+  .location {
+    font-size: 2.5rem;
+  }
+
+  .country {
+    margin-top: 1rem;
+    font-size: 2.5rem;
+  }
+
+  .temperature {
+    font-size: 5rem;
+    margin-top: 1rem;
+  }
+
+  .weather_condition {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+  }
+
+}
+
+@media screen and (max-width: 840px){
+  .card {
+    /* min-height: 50vh; */
+   height: auto;
+  }
+
+  .forecast{
+    margin-bottom: 2rem;
+  }
+}
+
+@media screen and (max-width: 810px){
+  .day {
+    font-size: 1.5rem;
+  }
+
+  .max {
+    font-size: 1.3rem;
+  }
+}
+
+@media screen and (max-width: 550px){
+  .card {
+    width: 80%;
+  }
+
+
+}
+
+@media screen and (max-width: 400px){
+  .card {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 340px){
+  .card {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 660px){
+  .forecast {
+    width: 75%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .tomorrow {
+    padding-right: 0;
+    padding-bottom: 2rem;
+  }
+}
+
+@media screen and (min-width: 1800px){
+
+  .card {
+    overflow:none!important;
+  }
+
+  .header {
+    font-size: 6rem;
+  }
+
+  .location {
+    font-size: 4rem;
+  }
+
+  .country {
+    font-size: 4rem;
+  }
+
+  .temperature {
+    font-size: 6rem;
+  }
+
+  .weather_condition {
+    font-size: 3rem;
+  }
+
+  .high {
+    font-size: 2.5rem;
+  }
+
+  .sun {
+    height: 4rem;
+  }
+
+  .icon {
+    font-size: 3rem;
+  }
+
+  .forecast {
+    width: 75%;
+    overflow: none!important;
+    /* margin-top: 9rem; */
+  }
+
+  .day {
+    font-size: 3rem;
+  }
+
+  .weather_pic {
+    height: 12rem;
+  }
+
+  .max {
+    font-size: 2rem;
+  }
+}

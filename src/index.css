@@ -1,0 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=M+PLUS+1+Code&family=Roboto+Condensed&display=swap");
+
+body {
+  font-family: "M PLUS 1 Code", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
