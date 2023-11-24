@@ -3,7 +3,7 @@ import classes from "../UI/Button.module.css";
 
 const Button = props => {
   return (
-    <button type="submit" className={`${classes.btn} ${classes.btn__submit}`}>
+    <button id={props.id} type="submit" className={`${classes.btn} ${classes.btn__submit}`} disabled={props.disabled}>
       {props.children}
     </button>
   );

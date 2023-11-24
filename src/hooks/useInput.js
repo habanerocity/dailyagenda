@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-//Custom Hook that uses a function paramaeter that validates form inputs
+//Custom Hook that uses a function parameter that validates form inputs and returns input functions
 
 const useInput = (validateValue) => {
 	const [ enteredValue, setEnteredValue ] = useState('');
