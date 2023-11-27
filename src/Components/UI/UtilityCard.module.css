@@ -3,7 +3,7 @@
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   background-color: rgba(17, 25, 40, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.125);
-  height: 85vh;
+  height: auto;
   width: 30%;
   border-radius: 3rem;
   margin: 2rem 0;
@@ -22,19 +22,26 @@
 .header_container {
   width: 90%;
   position: relative;
+  padding: 3rem 0;
+}
+
+h2 {
+  font-size: 1.6rem;
+  margin-top: 1.3rem;
+  color: #fff;
 }
 
 .header {
   color: #fff;
   font-size: 4rem;
   letter-spacing: 4px;
-  padding: 1.3rem 0;
+  padding-bottom: 1.3rem;
   text-align: center;
   text-transform: uppercase;
 }
 
 .user_pic{
-  width: 16rem;
+  width: 40%;
  
 }
 
@@ -75,6 +82,60 @@ input::placeholder{
 #disabled{
   background-color: #f1a448;
   cursor: not-allowed;
+}
+
+#guest_btn {
+  background-color: transparent;
+  border-color: #fb8f0d;
+}
+
+#guest_btn:hover{
+  background-color: #fb8f0d;
+  cursor: pointer;
+}
+
+.btn_container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.btn_container > a {
+  width: 100%;
+}
+
+span {
+  color: #fff;
+  font-size: 1.2rem;
+}
+
+a {
+  font-size: 1.2rem;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: 1px solid underline;
+}
+
+.or h6{
+  font-size: 1.5rem;
+  color: #fff;
+  padding: 0 1rem;
+}
+
+.or{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+}
+
+.line{
+  width: 100%;
+}
+
+.full-width{
+  width: 100%;
 }
 
 /* .form_input{

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { Link, Navigate } from 'react-router-dom';
+
 import useInput from "../../hooks/useInput";
 
 import user_pic from '../../assets/user_icon.svg';
@@ -12,9 +14,12 @@ const UtilityCard = props => {
   const [ confirmedPassword, setConfirmedPassword ] = useState('');
   const [ confirmedPasswordIsTouched, setConfirmedPasswordIsTouched ] = useState(false);
 
+  const [redirectToLogin, setRedirectToLogin] = useState(false);
+
   const isNotEmpty = value => value.trim() !== "";
   const isEmail = value => value.includes("@") && value.includes(".");
   const isPassword = value => value.length >= 8;
+
 
   //extract values via destructuring from useInput custom hook
   const {
@@ -44,8 +49,13 @@ const UtilityCard = props => {
     reset: resetPassword
   } = useInput(isNotEmpty && isPassword);
 
-  const passwordMatches = (value, valueTwo) => value === valueTwo;
+  const passwordMatches = (value, valueTwo) =>isNotEmpty(value) && isNotEmpty(valueTwo) && value === valueTwo;
   
+  if(redirectToLogin) {
+    return <Navigate to="/Login" />;
+  }
+
+
   const confirmedPasswordChangeHandler = (e) => {
     setConfirmedPassword(e.target.value);
   };
@@ -115,6 +125,8 @@ const UtilityCard = props => {
     resetEmail('');
     resetPassword('');
     resetconfirmedPassword('');
+
+    setRedirectToLogin(true);
   
   }).catch((error) => console.log(error));
   }
@@ -124,6 +136,7 @@ const UtilityCard = props => {
       <div className={classes.header_container}>
         <h1 className={classes.header}>{props.heading}</h1>
         <hr />
+        <h2>Sign up for an account today, it's free.</h2>
         <div className={classes.flex_container}>
           <div className={classes.user_pic_div}>
             <img src={user_pic} alt="user icon" className={classes.user_pic}/>
@@ -154,7 +167,7 @@ const UtilityCard = props => {
               value={enteredPassword} 
               />
               <input 
-              className={`${confirmedPasswordHasError ? classes.input_error : null} ${confirmedPasswordHasError ? classes.input_success : null }`}
+              className={`${confirmedPasswordHasError ? classes.input_error : null} ${passwordMatches(enteredPassword, confirmedPassword) ? classes.input_success : null }`}
               placeholder={confirmedPasswordHasError ? 'Password must match!' : 'Confirm Password'} 
               type="password"
               onChange={confirmedPasswordChangeHandler}
@@ -163,6 +176,7 @@ const UtilityCard = props => {
               />
               <Button type="button" disabled={!formIsValid} id={!formIsValid ? classes.disabled : null}>Submit</Button>
             </form>
+            <span>Already have an account?  <Link to="/Login" >Sign in here</Link></span>
           </div>
         </div>
       </div>
