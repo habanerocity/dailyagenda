@@ -14,26 +14,26 @@ const getLocalStorage = () => {
   }
 };
 
-const shortTime = {
-  timeStyle: "short"
-};
+// const shortTime = {
+//   timeStyle: "short"
+// };
 
 const Container = () => {
   const [tasksList, setTasksList] = useState(getLocalStorage());
   const [accomplishedTasks, setAccomplishedTasks] = useState([]);
-  const [currentTime, setCurrentTime] = useState(
-    new Date().toLocaleString("en-US", shortTime)
-  );
-  const [currentDate, setCurrentDate] = useState(new Date().toDateString());
+  // const [currentTime, setCurrentTime] = useState(
+  //   new Date().toLocaleString("en-US", shortTime)
+  // );
+  // const [currentDate, setCurrentDate] = useState(new Date().toDateString());
 
   //update the time and date every second
-  setInterval(() => {
-    setCurrentTime(
-      new Date().toLocaleString("en-US", shortTime)
-    );
+  // setInterval(() => {
+  //   setCurrentTime(
+  //     new Date().toLocaleString("en-US", shortTime)
+  //   );
 
-    setCurrentDate(new Date().toDateString());
-  }, 1000);
+  //   setCurrentDate(new Date().toDateString());
+  // }, 1000);
 
   const addTaskHandler = task => {
     //New Task Object being put together in Parent Component, task being received from Card.
@@ -44,10 +44,16 @@ const Container = () => {
         { data: task, id: Math.random().toString(), completed: false }
       ];
     });
+    console.log(tasksList);
+
   };
+
 
   useEffect(() => {
     getLocalStorage();
+
+  
+    console.log(tasksList);
     localStorage.setItem("tasks", JSON.stringify(tasksList));
   }, [tasksList]);
 
@@ -64,6 +70,8 @@ const Container = () => {
 
     //setting new property back on state object
     setTasksList(newTasks);
+
+   
   };
 
   const removeTask = index => {

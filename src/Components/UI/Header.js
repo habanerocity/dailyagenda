@@ -1,4 +1,10 @@
-import React, { useState} from 'react';
+// import React, { useState, useContext } from 'react';
+import React, { useState, useContext } from 'react';
+
+// import { UserContext } from "../../store/user-context";
+
+import LogoutButton from './LogoutButton';
+
 import classes from "./Header.module.css";
 
 const shortTime = {
@@ -6,6 +12,7 @@ const shortTime = {
   };
 
 const Header = () => {
+    // const { isLoggedIn } = useContext(UserContext);
 
     const [currentTime, setCurrentTime] = useState(new Date().toLocaleString("en-US", shortTime));
     const [currentDate, setCurrentDate] = useState(new Date().toDateString());
@@ -22,9 +29,12 @@ const Header = () => {
                 <div>
                     <h1 className={classes.daily}>Daily Agenda Todo List</h1>
                 </div>
-                <div>
-                    <h1 className={classes.date}>{`${currentDate}, ${currentTime}`}</h1>
-                </div>
+                {/* {isLoggedIn &&  */}
+                 <div className={classes.flex__row}>
+                     <h1 className={classes.date}>{`${currentDate}, ${currentTime}`}</h1>
+                     <LogoutButton />
+                 </div> 
+                {/* } */}
             </div>
             <hr className={classes.line} />
         </React.Fragment>

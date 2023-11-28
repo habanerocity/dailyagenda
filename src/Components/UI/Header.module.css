@@ -8,6 +8,18 @@
     font-size: 2rem;
     transform: translateY(-4px);
   }
+
+  .flex__row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 30%;
+  }
+
+  .log__out{
+    color:white;
+    font-size:1.4rem;
+  }
   
   .heading {
     display: flex;

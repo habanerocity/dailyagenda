@@ -21,18 +21,46 @@ const Home = () => {
 
   const addTaskHandler = task => {
     //New Task Object being put together in Parent Component, task being received from Card.
+
     setTasksList(prevTasksList => {
       return [
         //state array depends on previous state objects
         ...prevTasksList,
-        { data: task, id: Math.random().toString(), completed: false }
+        { id: Math.random().toString(),
+          data: task, 
+          completed: false }
       ];
     });
+
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     getLocalStorage();
     localStorage.setItem("tasks", JSON.stringify(tasksList));
+    console.log(tasksList);
+
+    //Retrieve jwt from local storage
+    // const jwt = localStorage.getItem('jwtToken');
+
+    // try {
+    //   const response = await fetch("http://localhost:8888/todo_backend/insert_todos.php", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Authorization: jwt
+    //   },
+    //   body: JSON.stringify(tasksList)
+    //   });
+
+    //   if(response.ok) {
+    //     const data = await response.json();
+    //     console.log(data);
+    //   } else {
+    //     console.error("Error:", response.status);
+    //   }
+    // } catch (error){
+    //   console.error("Error:", error.message);
+    // }
   }, [tasksList]);
 
   const completeTask = index => {
@@ -44,7 +72,6 @@ const Home = () => {
     const completedTodos = newTasks.filter(task => task.completed === true);
 
     setAccomplishedTasks(completedTodos);
-    console.log(accomplishedTasks);
 
     //setting new property back on state object
     setTasksList(newTasks);

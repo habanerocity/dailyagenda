@@ -45,6 +45,16 @@ h2 {
  
 }
 
+.error__msg{
+  /* width: 90%; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: red;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
 .user_pic_div{
   margin: 3rem 0;
 }

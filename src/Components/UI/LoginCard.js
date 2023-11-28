@@ -1,3 +1,4 @@
+// import React, { useState, useEffect, useContext } from "react";
 import React, { useState, useEffect } from "react";
 import { Link, Navigate } from 'react-router-dom';
 
@@ -9,25 +10,43 @@ import check_mark from '../../assets/check.svg';
 import classes from "./UtilityCard.module.css";
 import Button from "../UI/Button";
 
+// import { UserContext } from "../../store/user-context";
+
 const LoginCard = props => {
+  // const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
+
+  // console.log(isLoggedIn);
 
   const [redirectToHome, setRedirectToHome] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const isNotEmpty = value => value.trim() !== "";
   const isEmail = value => value.includes("@") && value.includes(".");
 
-  //Check ot see if a JWT is stored in local storage
+  // useEffect(() => {
+  //   if(isLoggedIn){
+  //     console.log(isLoggedIn);
+  //     setRedirectToHome(true);
+  //   } 
+  // }, [isLoggedIn])
+
+  //Check ot see if a JWT is stored in local storage, then login automatically
   useEffect(() => {
     const jwt = localStorage.getItem('jwtToken');
 
     if(jwt) {
       //Redirect to the todo app if JWT is present
-      setRedirectToHome(true);
-      console.log('jwt present. Logging in!');
+      setTimeout(() => {
+        setRedirectToHome(true);
+        console.log('jwt present. Logging in!');
+      }, 5000);
     }
   }, []);
 
-  //extract values via destructuring from useInput custom hook
+  //extract input helpers via destructuring from useInput custom hook
 
   const {
     value: enteredEmail,
@@ -35,7 +54,6 @@ const LoginCard = props => {
     hasError: emailHasError,
     valueChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
-    reset: resetEmail
   } = useInput(isNotEmpty && isEmail);
 
   const {
@@ -44,7 +62,6 @@ const LoginCard = props => {
     hasError: passwordHasError,
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
-    reset: resetPassword
   } = useInput(isNotEmpty);
 
   if(redirectToHome) {
@@ -77,8 +94,6 @@ const LoginCard = props => {
       password: enteredPassword
     }
 
-    console.log(formData);
-
     const url = 'http://localhost:8888/todo_backend/user_login.php';
 
     fetch(url, { 
@@ -98,15 +113,28 @@ const LoginCard = props => {
     throw new Error(`Error: ${response.status}`);
   }})
   .then((data) => { if(data){
-
     const { result, token } = data;
-    console.log(result);
-    console.log(token);
 
-    localStorage.setItem('jwtToken', token);
+    console.log(result);
     
-    // setRedirectToHome(true);
-  
+    if(token){
+      localStorage.setItem('jwtToken', token);
+      const jwt = localStorage.getItem('jwtToken') ? true : false;
+
+      if (jwt){
+        // setIsLoggedIn(true);
+        // if(isLoggedIn){
+          // console.log(isLoggedIn);
+          setRedirectToHome(true);
+        // }
+      } 
+    } else {
+      console.log('no token stored!');
+      setError(true);
+      setErrorMsg(result);
+      // console.log(`${error}: ${errorMsg}`);
+    }
+
   }}).catch((error) => console.log(error));
   }
 
@@ -137,6 +165,9 @@ const LoginCard = props => {
               onBlur={passwordBlurHandler}
               value={enteredPassword} 
               />
+              <div className={classes.error__msg}>
+                {error && <p>{errorMsg}</p>}
+              </div>
               <div className={classes.btn_container}>
                 <Button type="button" disabled={!formIsValid} id={!formIsValid ? classes.disabled : null}>Login</Button>
                 <div className={classes.or}>
