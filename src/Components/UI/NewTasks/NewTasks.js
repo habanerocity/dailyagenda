@@ -1,24 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import classes from "./NewTasks.module.css";
 
 import check from "../../../assets/check.png";
 import trash from "../../../assets/trash.png";
 
 const NewTasks = props => {
+  
   const completeBtnHandler = () => {
-    props.accomplishedTask(props.index);
+    
+  
   };
 
   const removeTaskBtnHandler = () => {
     props.taskIsGone(props.index);
   };
 
+  //transform db value completed into number, rendering it truthy
+  const completed = Number(props.assignment);
+
   return (
     <div className={classes.toDo}>
       <div
         style={{
-          textDecoration: props.assignment ? "line-through" : "",
-          textDecorationColor: props.assignment ? "#fb8f0d" : ""
+          textDecoration: completed ? "line-through" : "",
+          textDecorationColor: completed ? "#fb8f0d" : ""
         }}
         className={classes.task}
       >
@@ -26,7 +31,7 @@ const NewTasks = props => {
       </div>
 
       <div className={classes.btn__container}>
-        <div className={classes.btn__complete} onClick={completeBtnHandler}>
+        <div className={classes.btn__complete} onClick={completeBtnHandler(props.assignment)}>
           <img alt="complete" className={classes.icon} src={check} />
         </div>
         <div className={classes.btn__close} onClick={removeTaskBtnHandler}>

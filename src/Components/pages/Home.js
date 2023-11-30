@@ -1,91 +1,103 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import classes from "./Home.module.css";
 
 import Header from "../UI/Header";
 import UtilityCard from "../UI/WeatherCard";
 import Card from "../UI/ToDoCard";
 
-const getLocalStorage = () => {
-  let tasks = localStorage.getItem("tasks");
-
-  if (tasks) {
-    return (tasks = JSON.parse(localStorage.getItem("tasks")));
-  } else {
-    return [];
-  }
-};
-
 const Home = () => {
-  const [tasksList, setTasksList] = useState(getLocalStorage());
-  const [accomplishedTasks, setAccomplishedTasks] = useState([]);
+  //fetched tasklist from db
+  const [tasksList, setTasksList] = useState([]);
 
-  const addTaskHandler = task => {
-    //New Task Object being put together in Parent Component, task being received from Card.
+  const jwt = localStorage.getItem('jwtToken');
 
-    setTasksList(prevTasksList => {
-      return [
-        //state array depends on previous state objects
-        ...prevTasksList,
-        { id: Math.random().toString(),
-          data: task, 
-          completed: false }
-      ];
-    });
+    // Fetch data from your server when the component mounts
+    const fetchData = useCallback(async () => {
+      try {
+        const response = await fetch("http://localhost:8888/todo_backend/fetch_todos.php", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${jwt}`
+          },
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          setTasksList(data); // Update state with the fetched data
+        } else {
+          console.error("Error:", response.status);
+        }
+      } catch (error) {
+        console.error("Error:", error.message);
+      }
+    }, [jwt]);
+
+    useEffect(() => {
+      fetchData(); // Call the fetch function
+    }, [fetchData]);
+
+  const addTaskHandler = val => {
+    //New Task Object being put together to send to server, task being received from Card.
+    const taskObj = {
+      data: val,
+      completed: 0
+    };
+    
+    console.log(taskObj);
+
+    // Update the fetch request to send taskObject
+    (async () => {
+      // const jwt = localStorage.getItem('jwtToken');
+      try {
+        const response = await fetch("http://localhost:8888/todo_backend/insert_todos.php", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${jwt}`
+          },
+          body: JSON.stringify(taskObj),
+        });
+
+        if (response.ok) {
+          //After successfully inserting, fetch the updated list of todos
+          fetchData();
+          console.log("Todo inserted successfully!");
+        } else {
+          console.error("Error:", response.status);
+        }
+      } catch (error) {
+        console.error("Error:", error.message);
+      }
+    })();
 
   };
 
-  useEffect(async () => {
-    getLocalStorage();
-    localStorage.setItem("tasks", JSON.stringify(tasksList));
-    console.log(tasksList);
-
-    //Retrieve jwt from local storage
-    // const jwt = localStorage.getItem('jwtToken');
-
-    // try {
-    //   const response = await fetch("http://localhost:8888/todo_backend/insert_todos.php", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     Authorization: jwt
-    //   },
-    //   body: JSON.stringify(tasksList)
-    //   });
-
-    //   if(response.ok) {
-    //     const data = await response.json();
-    //     console.log(data);
-    //   } else {
-    //     console.error("Error:", response.status);
-    //   }
-    // } catch (error){
-    //   console.error("Error:", error.message);
-    // }
-  }, [tasksList]);
-
-  const completeTask = index => {
+  const completeTask = (obj) => {
+    console.log(obj);
     //new array variable created with state spread out in it
-    const newTasks = [...tasksList];
+    // const newTasks = [...tasksList];
     //changing property of state slice
-    newTasks[index].completed = true;
+    // newTasks[index].completed = 1; //use 1 for true when it comes to tinyint data type
 
-    const completedTodos = newTasks.filter(task => task.completed === true);
+    // const completedTodos = newTasks.filter(task => task.completed === 1);
 
-    setAccomplishedTasks(completedTodos);
+    // setAccomplishedTasks(completedTodos);
 
     //setting new property back on state object
-    setTasksList(newTasks);
+    // setTasksList(newTasks);
   };
 
   const removeTask = index => {
     //new array variable with state spread out in it
-    const removedTask = [...tasksList];
+    // const removedTask = [...tasksList];
     //removing task from new array variable, according to index
-    removedTask.splice(index, 1);
+    // removedTask.splice(index, 1);
     //putting edited object back into state
-    setTasksList(removedTask);
+    // setTasksList(removedTask);
   };
 
+  
   return (
     // <div className={classes.overlay}>
     <div className={classes.container}>

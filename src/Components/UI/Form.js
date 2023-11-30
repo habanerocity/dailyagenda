@@ -21,6 +21,7 @@ const Form = props => {
     if (enteredTask.trim().length === 0) {
       return;
     }
+    console.log(enteredTask);
     //Lifting state up to Parent component
     props.onSaveTaskData(enteredTask);
     //resetting input field
@@ -39,13 +40,13 @@ const Form = props => {
         <hr />
         <div>
           {props.tasks.map((task, index) => {
-            // console.log(index);
+            console.log(task.completed);
             return (
               <NewTasks
                 assignment={task.completed}
                 taskIsGone={deleteHandler}
                 accomplishedTask={props.taskIsComplete}
-                agenda={task.data}
+                agenda={task.description}
                 key={task.id}
                 index={index}
               />
