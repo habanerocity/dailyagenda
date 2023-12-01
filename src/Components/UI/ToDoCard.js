@@ -9,19 +9,15 @@ const Card = props => {
     props.onAddTask(enteredTaskData);
   };
 
-  const deleteHandler = deletedTaskData => {
-    //lifting state up to parent component
-    props.deleteTask(deletedTaskData);
-  };
-
   return (
     <div className={classes.card}>
       {/* receiving state from child component */}
       <Form
         tasks={props.job}
         onSaveTaskData={saveTaskDataHandler}
-        deleteTask={deleteHandler}
         onAddTask={saveTaskDataHandler}
+        //function passed down from parent component to fetch tasks from db
+        updateTodos={props.fetchTasks}
         taskIsComplete={props.finito}
       />
     </div>

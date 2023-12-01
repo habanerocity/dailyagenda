@@ -11,7 +11,7 @@ const Home = () => {
 
   const jwt = localStorage.getItem('jwtToken');
 
-    // Fetch data from your server when the component mounts
+    // Fetch data from the server when the component mounts
     const fetchData = useCallback(async () => {
       try {
         const response = await fetch("http://localhost:8888/todo_backend/fetch_todos.php", {
@@ -35,20 +35,20 @@ const Home = () => {
 
     useEffect(() => {
       fetchData(); // Call the fetch function
+      console.log(tasksList);
     }, [fetchData]);
 
+  //Receives props passed up from child components, then makes request to db and inserts tasks into todo table
   const addTaskHandler = val => {
-    //New Task Object being put together to send to server, task being received from Card.
+    //New Task Object being put together to send to server, task being received from child components.
     const taskObj = {
       data: val,
       completed: 0
     };
-    
-    console.log(taskObj);
 
     // Update the fetch request to send taskObject
     (async () => {
-      // const jwt = localStorage.getItem('jwtToken');
+      
       try {
         const response = await fetch("http://localhost:8888/todo_backend/insert_todos.php", {
           method: "POST",
@@ -73,41 +73,18 @@ const Home = () => {
 
   };
 
-  const completeTask = (obj) => {
-    console.log(obj);
-    //new array variable created with state spread out in it
-    // const newTasks = [...tasksList];
-    //changing property of state slice
-    // newTasks[index].completed = 1; //use 1 for true when it comes to tinyint data type
-
-    // const completedTodos = newTasks.filter(task => task.completed === 1);
-
-    // setAccomplishedTasks(completedTodos);
-
-    //setting new property back on state object
-    // setTasksList(newTasks);
-  };
-
-  const removeTask = index => {
-    //new array variable with state spread out in it
-    // const removedTask = [...tasksList];
-    //removing task from new array variable, according to index
-    // removedTask.splice(index, 1);
-    //putting edited object back into state
-    // setTasksList(removedTask);
-  };
-
-  
   return (
     // <div className={classes.overlay}>
     <div className={classes.container}>
       <Header />
       <div className={`${classes.card_holder}`}>
         <Card
-          deleteTask={removeTask}
+          //Passing down tasks retrieved from db as props
           job={tasksList}
+          //Passing down fetchData function as props
+          fetchTasks={fetchData}
+          //Receiving todos from Form component
           onAddTask={addTaskHandler}
-          finito={completeTask}
         />
         <UtilityCard cardTitle="WEATHER" />
       </div>

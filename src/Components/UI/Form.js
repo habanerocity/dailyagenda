@@ -21,16 +21,11 @@ const Form = props => {
     if (enteredTask.trim().length === 0) {
       return;
     }
-    console.log(enteredTask);
+    
     //Lifting state up to Parent component
     props.onSaveTaskData(enteredTask);
     //resetting input field
     setEnteredTask("");
-  };
-
-  const deleteHandler = deletedTaskData => {
-    //lifting state up to parent component
-    props.deleteTask(deletedTaskData);
   };
 
   return (
@@ -40,13 +35,17 @@ const Form = props => {
         <hr />
         <div>
           {props.tasks.map((task, index) => {
-            console.log(task.completed);
             return (
+              //Todo element
               <NewTasks
+                //Todo completed status passed down from parent component from db
                 assignment={task.completed}
-                taskIsGone={deleteHandler}
-                accomplishedTask={props.taskIsComplete}
-                agenda={task.description}
+                //Function passed down from parent component to fetch tasks from db
+                fetchTodos={props.updateTodos}
+                //Todo Description passed down from db 
+                toDoDescription={task.description}
+                //Todo task id passed down from parent component
+                taskId={task.id}
                 key={task.id}
                 index={index}
               />
