@@ -11,13 +11,16 @@ const Form = () => {
   //initializing state
   const [enteredTask, setEnteredTask] = useState("");
 
+  //Import userContext store
   const userCtx = useContext(UserContext);
 
+  //Change enteredTask state variable every keystroke
   const changeHandler = e => {
     //putting input into state variable
     setEnteredTask(e.target.value);
   };
 
+  //Submit todo
   const submitHandler = e => {
     e.preventDefault();
 
@@ -28,9 +31,10 @@ const Form = () => {
     
     //Lifting state up to Parent component
     userCtx.addTaskHandler(enteredTask);
-    
+
     //resetting input field
     setEnteredTask("");
+   
   };
 
   return (
@@ -60,7 +64,7 @@ const Form = () => {
       <form className={classes.form__input} onSubmit={submitHandler}>
         <SearchBar
           placeholder="Enter a task..."
-          task={userCtx.enteredTask}
+          task={enteredTask}
           change={changeHandler}
           name="Add task"
         />

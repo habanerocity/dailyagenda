@@ -9,6 +9,7 @@ import Card from "../UI/ToDoCard";
 
 const Home = () => {
 
+  //Import userContext store
   const userCtx = useContext(UserContext);
   
   // Call the fetchData function which lives in the context store and fetches todos from db

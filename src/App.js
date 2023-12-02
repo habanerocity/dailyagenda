@@ -54,38 +54,40 @@ const App = () => {
     fetchData(); 
   }, [fetchData]);
 
-  const addTaskHandler = val => {
-    //New Task Object being put together to send to server, task being received from child components.
+  const sendTaskToDb = async (val) => {
+
+    //Initialize task object to send todos to db
     const taskObj = {
       data: val,
       completed: 0
     };
 
-    // Update the fetch request to send taskObject
-    (async () => {
-      
-      try {
-        const response = await fetch("http://localhost:8888/todo_backend/insert_todos.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${jwt}`
-          },
-          body: JSON.stringify(taskObj),
-        });
+    try {
+      const response = await fetch("http://localhost:8888/todo_backend/insert_todos.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${jwt}`
+        },
+        body: JSON.stringify(taskObj),
+      });
 
-        if (response.ok) {
-          //After successfully inserting, fetch the updated list of todos
-          fetchData();
-          console.log("Todo inserted successfully!");
-        } else {
-          console.error("Error:", response.status);
-        }
-      } catch (error) {
-        console.error("Error:", error.message);
+      if (response.ok) {
+        //After successfully inserting, fetch the updated list of todos
+        fetchData();
+        console.log("Todo inserted successfully!");
+      } else {
+        console.error("Error:", response.status);
       }
-    })();
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  };
+  
 
+  const addTaskHandler = (val) => {
+ 
+    sendTaskToDb(val);
   };
 
   const userCtxValue = {

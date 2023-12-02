@@ -8,7 +8,8 @@ export const UserContext = createContext({
     setTasksList: () => {},
     fetchData: () =>{},
     enteredTask: '',
-    setEnteredTask: () => {}
+    setEnteredTask: () => {},
+    addTaskHandler: () => {}
 });
 
 

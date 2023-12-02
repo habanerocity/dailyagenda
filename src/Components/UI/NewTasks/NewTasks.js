@@ -11,6 +11,7 @@ const NewTasks = props => {
   // to the number 0, thus a falsy value
   const [isCompleted, setIsCompleted] = useState(Number(props.assignment));
 
+  //import user context from store
   const userCtx = useContext(UserContext);
 
   //Retrieve jwt from local storage
@@ -21,10 +22,30 @@ const NewTasks = props => {
     userCtx.fetchData();
   }, [props]);
 
-  //Complete todos and update db to reflect their status
-  const updateCompleted = async () => {
+  const apiRequest = async (url, method, body) => {
     try {
-     
+      const response = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${jwt}`
+        },
+        body: body ? JSON.stringify(body) : undefined
+      });
+
+      if(response.ok){
+        fetchTodosCallback();
+        console.log("Request successful!");
+      } else {
+        console.error("Error:", response.status);
+      }
+    } catch (error) {
+      console.error("Error:", error.message );
+    }
+  };
+
+  //Complete todos and update db to reflect their status
+  const updateCompleted = () => {
       //isCompleted state updating function
       setIsCompleted(prevIsCompleted => {
         // Invert the previous isCompleted value
@@ -36,35 +57,27 @@ const NewTasks = props => {
           completed: updatedIsCompleted
         };
 
-        //Fetch request to update the completed column in the todos table
-        (async () => {
-          try {
-            const response = await fetch("http://localhost:8888/todo_backend/update_data-completed.php", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${jwt}`
-              },
-              body: JSON.stringify(taskIdObj),
-            });
-
-            if (response.ok) {
-              fetchTodosCallback();
-              console.log("Todo updated successfully!");
-            } else {
-              console.error("Error:", response.status);
-            }
-          } catch (error) {
-            console.error("Error:", error.message);
-          }
-        })();
+        completeTodos(taskIdObj);
 
         // Return the new isCompleted value
         return updatedIsCompleted;
       });
-    } catch (error) {
-      console.error("Error:", error.message);
-    }
+  };
+
+  // Function to construct API URL
+  const constructApiUrl = (scriptName) => {
+  return `http://localhost:8888/todo_backend/${scriptName}`;
+  };
+
+  //Send completed todos to db
+  const completeTodos = async (val) => {
+    const url = constructApiUrl("update_data-completed.php");
+    apiRequest(url, "POST", val);
+  };
+
+  const deleteTodos = (taskId) => {
+    const url = constructApiUrl("delete_todo.php");
+    apiRequest(url, "POST", { taskId });
   };
 
   //Completes todos
@@ -73,36 +86,9 @@ const NewTasks = props => {
     updateCompleted();
   };
 
-  //Removes todos
+  //Removes todos from db
   const removeTaskBtnHandler = () => {
-   
-    const deleteTaskObj = {
-      taskId: props.taskId,
-    };
-
-    // Run the fetch request to delete the todo record in the todos table
-    (async () => {
-      
-      try {
-        const response = await fetch("http://localhost:8888/todo_backend/delete_todo.php", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${jwt}`
-          },
-          body: JSON.stringify(deleteTaskObj),
-        });
-
-        if (response.ok) {
-          fetchTodosCallback();
-          console.log("Todo deleted successfully!");
-        } else {
-          console.error("Error:", response.status);
-        }
-      } catch (error) {
-        console.error("Error:", error.message);
-      }
-    })();
+    deleteTodos(props.taskId);
   };
 
   return (
