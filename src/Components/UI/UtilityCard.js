@@ -102,7 +102,7 @@ const UtilityCard = props => {
       password: confirmedPassword
     }
 
-    const url = 'http://localhost:8888/todo_backend/todo_insert_data.php';
+    const url = 'http://localhost:8888/todo_backend/user_registration.php';
 
     fetch(url, { 
       method: 'POST',

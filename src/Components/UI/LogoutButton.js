@@ -21,9 +21,7 @@ const LogoutButton = () => {
             setRedirectToLogin(true);
         }
 
-
     }
-
 
     if(redirectToLogin) {
         return <Navigate to="/Login" />;

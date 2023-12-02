@@ -1,5 +1,7 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import classes from "./NewTasks.module.css";
+
+import { UserContext } from "../../../store/user-context";
 
 import check from "../../../assets/check.png";
 import trash from "../../../assets/trash.png";
@@ -9,12 +11,14 @@ const NewTasks = props => {
   // to the number 0, thus a falsy value
   const [isCompleted, setIsCompleted] = useState(Number(props.assignment));
 
+  const userCtx = useContext(UserContext);
+
   //Retrieve jwt from local storage
   const jwt = localStorage.getItem('jwtToken');
 
   //Fetch todos from db
   const fetchTodosCallback = useCallback(() => {
-    props.fetchTodos();
+    userCtx.fetchData();
   }, [props]);
 
   //Complete todos and update db to reflect their status

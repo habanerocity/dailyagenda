@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import classes from "./Form.module.css";
 import SearchBar from "./SearchBar";
+
+import { UserContext } from "../../store/user-context";
 
 import NewTasks from "./NewTasks/NewTasks";
 // import ErrorModal from "./UI/ErrorModal";
 
-const Form = props => {
+const Form = () => {
   //initializing state
   const [enteredTask, setEnteredTask] = useState("");
+
+  const userCtx = useContext(UserContext);
 
   const changeHandler = e => {
     //putting input into state variable
@@ -23,7 +27,8 @@ const Form = props => {
     }
     
     //Lifting state up to Parent component
-    props.onSaveTaskData(enteredTask);
+    userCtx.addTaskHandler(enteredTask);
+    
     //resetting input field
     setEnteredTask("");
   };
@@ -34,14 +39,12 @@ const Form = props => {
         <h1 className={classes.header}>DO</h1>
         <hr />
         <div>
-          {props.tasks.map((task, index) => {
+          {userCtx.tasksList.map((task, index) => {
             return (
               //Todo element
               <NewTasks
                 //Todo completed status passed down from parent component from db
                 assignment={task.completed}
-                //Function passed down from parent component to fetch tasks from db
-                fetchTodos={props.updateTodos}
                 //Todo Description passed down from db 
                 toDoDescription={task.description}
                 //Todo task id passed down from parent component
@@ -57,7 +60,7 @@ const Form = props => {
       <form className={classes.form__input} onSubmit={submitHandler}>
         <SearchBar
           placeholder="Enter a task..."
-          task={enteredTask}
+          task={userCtx.enteredTask}
           change={changeHandler}
           name="Add task"
         />

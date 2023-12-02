@@ -3,7 +3,12 @@ import { createContext } from 'react';
 export const UserContext = createContext({
     isLoggedIn: false,
     userFullName: '',
-    setIsLoggedIn: () => {}
+    setIsLoggedIn: () => {},
+    tasksList: [],
+    setTasksList: () => {},
+    fetchData: () =>{},
+    enteredTask: '',
+    setEnteredTask: () => {}
 });
 
 
