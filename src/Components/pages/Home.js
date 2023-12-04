@@ -11,17 +11,21 @@ const Home = () => {
 
   //Import userContext store
   const userCtx = useContext(UserContext);
+
+  const jwt = localStorage.getItem('jwtToken');
   
   // Call the fetchData function which lives in the context store and fetches todos from db
     useEffect(() => {
-      userCtx.fetchData(); 
+      if(jwt){
+        userCtx.fetchData(); 
+      }
     }, [userCtx.fetchData]);
 
   return (
     // <div className={classes.overlay}>
     <div className={classes.container}>
       <Header />
-      <div className={`${classes.card_holder}`}>
+      <div className={classes.card_holder}>
         <Card />
         <UtilityCard cardTitle="WEATHER" />
       </div>

@@ -19,7 +19,9 @@ const NewTasks = props => {
 
   //Fetch todos from db
   const fetchTodosCallback = useCallback(() => {
-    userCtx.fetchData();
+    if(jwt){
+      userCtx.fetchData();
+    }
   }, [props]);
 
   const apiRequest = async (url, method, body) => {
@@ -102,7 +104,6 @@ const NewTasks = props => {
       >
         {props.toDoDescription}
       </div>
-
       <div className={classes.btn__container}>
         <div className={classes.btn__complete} onClick={completeBtnHandler}>
           <img alt="complete" className={classes.icon} src={check} />

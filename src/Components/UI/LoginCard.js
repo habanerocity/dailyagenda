@@ -1,6 +1,6 @@
 // import React, { useState, useEffect, useContext } from "react";
-import React, { useState, useEffect } from "react";
-import { Link, Navigate } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from 'react-router-dom';
 
 import useInput from "../../hooks/useInput";
 
@@ -10,39 +10,27 @@ import check_mark from '../../assets/check.svg';
 import classes from "./UtilityCard.module.css";
 import Button from "../UI/Button";
 
-// import { UserContext } from "../../store/user-context";
+import { UserContext } from "../../store/user-context";
 
 const LoginCard = props => {
-  // const { isLoggedIn, setIsLoggedIn } = useContext(UserContext);
-
-  // console.log(isLoggedIn);
-
-  const [redirectToHome, setRedirectToHome] = useState(false);
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  
+  const userCtx = useContext(UserContext);
 
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   const isNotEmpty = value => value.trim() !== "";
   const isEmail = value => value.includes("@") && value.includes(".");
-
-  // useEffect(() => {
-  //   if(isLoggedIn){
-  //     console.log(isLoggedIn);
-  //     setRedirectToHome(true);
-  //   } 
-  // }, [isLoggedIn])
 
   //Check ot see if a JWT is stored in local storage, then login automatically
   useEffect(() => {
     const jwt = localStorage.getItem('jwtToken');
 
     if(jwt) {
-      //Redirect to the todo app if JWT is present
-      setTimeout(() => {
-        setRedirectToHome(true);
+      //Redirect to the todo app if JWT is present 
         console.log('jwt present. Logging in!');
-      }, 5000);
+        navigate("/");
     }
   }, []);
 
@@ -63,10 +51,6 @@ const LoginCard = props => {
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
   } = useInput(isNotEmpty);
-
-  if(redirectToHome) {
-    return <Navigate to="/" />;
-  }
 
   let formIsValid = false;
 
@@ -114,25 +98,20 @@ const LoginCard = props => {
   }})
   .then((data) => { if(data){
     const { result, token } = data;
-
-    console.log(result);
     
     if(token){
       localStorage.setItem('jwtToken', token);
-      const jwt = localStorage.getItem('jwtToken') ? true : false;
+      const jwt = localStorage.getItem('jwtToken');
 
       if (jwt){
-        // setIsLoggedIn(true);
-        // if(isLoggedIn){
-          // console.log(isLoggedIn);
-          setRedirectToHome(true);
-        // }
+        console.log(`Token: ${jwt}`);
+        userCtx.setIsLoggedIn(true);
+        navigate("/");
       } 
     } else {
       console.log('no token stored!');
       setError(true);
       setErrorMsg(result);
-      // console.log(`${error}: ${errorMsg}`);
     }
 
   }}).catch((error) => console.log(error));

@@ -13,9 +13,15 @@ const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [tasksList, setTasksList] = useState([]);
   const [isCompleted, setIsCompleted] = useState('');
+  const [redirectToLogin, setRedirectToLogin] = useState(false);
+  const [userFullName, setUserFullName] = useState(false);
 
   const handleIsLoggedIn = () => {
-    setIsLoggedIn(true);
+    isLoggedIn ? setIsLoggedIn(false): setIsLoggedIn(true);
+  }
+
+  const handleRedirectToLogin = () => {
+    redirectToLogin ? setRedirectToLogin(false): setRedirectToLogin(true);
   }
 
   const handleTasksList = (newTasksList) => {
@@ -26,7 +32,20 @@ const App = () => {
     setIsCompleted(val);
   };
 
+  const addTaskHandler = (val) => {
+    sendTaskToDb(val);
+  };
+
+  //Retrieve jwt from local storage
   const jwt = localStorage.getItem('jwtToken');
+
+  useEffect(() => {
+    if(jwt){
+      // console.log('jwt is present in app.js!', jwt);
+      setIsLoggedIn(true);
+      setRedirectToLogin(false);
+    }
+  }, [])
 
   // Fetch data from the server when the component mounts
   const fetchData = useCallback(async () => {
@@ -41,6 +60,7 @@ const App = () => {
 
       if (response.ok) {
         const data = await response.json();
+        console.log(data);
         setTasksList(data); // Update state with the fetched data
       } else {
         console.error("Error:", response.status);
@@ -51,7 +71,9 @@ const App = () => {
   }, [jwt]);
 
   useEffect(() => {
-    fetchData(); 
+    if(jwt){
+      fetchData();
+    }
   }, [fetchData]);
 
   const sendTaskToDb = async (val) => {
@@ -84,12 +106,6 @@ const App = () => {
     }
   };
   
-
-  const addTaskHandler = (val) => {
- 
-    sendTaskToDb(val);
-  };
-
   const userCtxValue = {
     isLoggedIn: isLoggedIn, 
     userFullName: '',
@@ -99,7 +115,9 @@ const App = () => {
     isCompleted: isCompleted,
     setIsCompleted: handleIsCompleted,
     fetchData: fetchData,
-    addTaskHandler: addTaskHandler
+    addTaskHandler: addTaskHandler,
+    setRedirectToLogin: handleRedirectToLogin,
+    redirectToLogin: redirectToLogin
   }
 
   return (

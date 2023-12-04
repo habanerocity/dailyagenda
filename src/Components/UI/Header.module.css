@@ -36,6 +36,11 @@
     width: 100%;
   }
 
+  .welcome{
+    text-align: left;
+    font-size: 2rem;
+  }
+
   @media screen and (max-width: 840px){
     .date {
         padding-top: 1rem;

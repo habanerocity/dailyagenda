@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Link, Navigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import useInput from "../../hooks/useInput";
 
@@ -14,7 +14,7 @@ const UtilityCard = props => {
   const [ confirmedPassword, setConfirmedPassword ] = useState('');
   const [ confirmedPasswordIsTouched, setConfirmedPasswordIsTouched ] = useState(false);
 
-  const [redirectToLogin, setRedirectToLogin] = useState(false);
+  const navigate=useNavigate();
 
   const isNotEmpty = value => value.trim() !== "";
   const isEmail = value => value.includes("@") && value.includes(".");
@@ -51,10 +51,9 @@ const UtilityCard = props => {
 
   const passwordMatches = (value, valueTwo) =>isNotEmpty(value) && isNotEmpty(valueTwo) && value === valueTwo;
   
-  if(redirectToLogin) {
-    return <Navigate to="/Login" />;
-  }
-
+  // if(redirectToLogin) {
+  //   return <Navigate to="/Login" />;
+  // }
 
   const confirmedPasswordChangeHandler = (e) => {
     setConfirmedPassword(e.target.value);
@@ -126,7 +125,8 @@ const UtilityCard = props => {
     resetPassword('');
     resetconfirmedPassword('');
 
-    setRedirectToLogin(true);
+    // setRedirectToLogin(true);
+    navigate("/Login");
   
   }).catch((error) => console.log(error));
   }

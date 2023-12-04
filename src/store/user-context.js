@@ -9,7 +9,9 @@ export const UserContext = createContext({
     fetchData: () =>{},
     enteredTask: '',
     setEnteredTask: () => {},
-    addTaskHandler: () => {}
+    addTaskHandler: () => {},
+    redirectToLogin: '',
+    setRedirectToLogin: () => {}
 });
 
 
