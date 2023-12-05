@@ -11,7 +11,9 @@ export const UserContext = createContext({
     setEnteredTask: () => {},
     addTaskHandler: () => {},
     redirectToLogin: '',
-    setRedirectToLogin: () => {}
+    setRedirectToLogin: () => {},
+    setUserFullName: () => {},
+    userFullName: ''
 });
 
 

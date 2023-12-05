@@ -14,7 +14,7 @@ const App = () => {
   const [tasksList, setTasksList] = useState([]);
   const [isCompleted, setIsCompleted] = useState('');
   const [redirectToLogin, setRedirectToLogin] = useState(false);
-  const [userFullName, setUserFullName] = useState(false);
+  const [userFullName, setUserFullName] = useState('');
 
   const handleIsLoggedIn = () => {
     isLoggedIn ? setIsLoggedIn(false): setIsLoggedIn(true);
@@ -28,6 +28,10 @@ const App = () => {
     setTasksList(newTasksList);
   }
 
+  const handleSetUserFullName = (val) => {
+    setUserFullName(val);
+  }
+
   const handleIsCompleted = (val) => {
     setIsCompleted(val);
   };
@@ -35,6 +39,17 @@ const App = () => {
   const addTaskHandler = (val) => {
     sendTaskToDb(val);
   };
+  
+  useEffect(() => {
+    // Retrieve the user's full name from local storage
+    const storedFullName = localStorage.getItem("userFullName");
+
+    // Update the context or state with the retrieved full name
+    if (storedFullName) {
+      // Update the context or state with the user's full name
+      setUserFullName(storedFullName);
+    }
+  }, []);
 
   //Retrieve jwt from local storage
   const jwt = localStorage.getItem('jwtToken');
@@ -117,7 +132,9 @@ const App = () => {
     fetchData: fetchData,
     addTaskHandler: addTaskHandler,
     setRedirectToLogin: handleRedirectToLogin,
-    redirectToLogin: redirectToLogin
+    redirectToLogin: redirectToLogin,
+    setUserFullName: handleSetUserFullName,
+    userFullName: userFullName
   }
 
   return (

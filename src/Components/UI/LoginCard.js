@@ -97,15 +97,21 @@ const LoginCard = props => {
     throw new Error(`Error: ${response.status}`);
   }})
   .then((data) => { if(data){
-    const { result, token } = data;
+    const { result, token, full_name } = data;
+
+    console.log(full_name);
     
     if(token){
       localStorage.setItem('jwtToken', token);
-      const jwt = localStorage.getItem('jwtToken');
+      localStorage.setItem("userFullName", full_name);
 
+      const jwt = localStorage.getItem('jwtToken');
+      console.log(localStorage.getItem("userFullName"));
       if (jwt){
         console.log(`Token: ${jwt}`);
         userCtx.setIsLoggedIn(true);
+        userCtx.setUserFullName(full_name);
+        console.log(userCtx.userFullName);
         navigate("/");
       } 
     } else {

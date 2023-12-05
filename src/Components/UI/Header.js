@@ -10,13 +10,11 @@ const shortTime = {
 
 const Header = () => {
   const userCtx = useContext(UserContext);
-  // console.log(userCtx.tasksList[0].full_name);
+
   const navigate = useNavigate();
 
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleString("en-US", shortTime));
   const [currentDate, setCurrentDate] = useState(new Date().toDateString());
-
-  const [welcomeDisplayed, setWelcomeDisplayed] = useState(false);
 
   useEffect(() => {
     console.log("Header - Component mounted");
@@ -39,26 +37,18 @@ const Header = () => {
 
     if (!userCtx.isLoggedIn && userCtx.redirectToLogin) {
         userCtx.setRedirectToLogin();
-        console.log('Redirect to login:', userCtx.redirectToLogin);
-        console.log("Redirecting to Login...");
+
         navigate("/Login");
       }
     // }
   }, [userCtx.isLoggedIn]);
-
-  useEffect(() => {
-    // Display welcome message only once when the component mounts
-    if (!welcomeDisplayed && userCtx.tasksList.length > 0) {
-      setWelcomeDisplayed(true);
-    }
-  }, [userCtx.tasksList, welcomeDisplayed]);
 
   return (
     <React.Fragment>
       <div className={classes.heading}>
         <div>
           <h1 className={classes.daily}>Daily Agenda Todo List</h1>
-          {welcomeDisplayed && (<h2 className={classes.welcome}>{userCtx.tasksList[0] && `Welcome back ${userCtx.tasksList[0].full_name}!`}</h2>)}
+          <h2 className={classes.welcome}>{userCtx.isLoggedIn && userCtx.userFullName && `Welcome back ${userCtx.userFullName}! 👋`}</h2>
         </div>
         {userCtx.isLoggedIn && 
           <div className={classes.flex__row}>

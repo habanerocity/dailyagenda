@@ -15,7 +15,7 @@ const LogoutButton = () => {
         // Clear jwt token from localStorage
         if(jwt){
             localStorage.removeItem('jwtToken');
-
+            localStorage.removeItem('userFullName');
             // Set userCtx.isLoggedIn to false
             userCtx.setIsLoggedIn();
 
