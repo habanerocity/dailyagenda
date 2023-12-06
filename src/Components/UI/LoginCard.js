@@ -26,9 +26,7 @@ const LoginCard = props => {
 
   //Check ot see if a JWT is stored in local storage, then login automatically
   useEffect(() => {
-    const jwt = localStorage.getItem('jwtToken');
-
-    if(jwt) {
+    if(userCtx.jwt) {
       //Redirect to the todo app if JWT is present 
         console.log('jwt present. Logging in!');
         navigate("/");

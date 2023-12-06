@@ -17,7 +17,7 @@ const Header = () => {
   const [currentDate, setCurrentDate] = useState(new Date().toDateString());
 
   useEffect(() => {
-    console.log("Header - Component mounted");
+    // console.log("Header - Component mounted");
 
     // Update the time and date every second
     const intervalId = setInterval(() => {
@@ -27,13 +27,13 @@ const Header = () => {
 
     // Cleanup function to clear the interval when the component unmounts
     return () => {
-      console.log("Header - Component unmounted");
+      // console.log("Header - Component unmounted");
       clearInterval(intervalId);
     };
   }, []); // Empty dependency array ensures that the effect runs only once, similar to componentDidMount
 
   useEffect(() => {
-    console.log("Header - IsLoggedIn:", userCtx.isLoggedIn);
+    // console.log("Header - IsLoggedIn:", userCtx.isLoggedIn);
 
     if (!userCtx.isLoggedIn && userCtx.redirectToLogin) {
         userCtx.setRedirectToLogin();
@@ -41,7 +41,7 @@ const Header = () => {
         navigate("/Login");
       }
     // }
-  }, [userCtx.isLoggedIn, userCtx.redirectToLogin, navigate]);
+  }, [userCtx, navigate]);
 
   return (
     <React.Fragment>

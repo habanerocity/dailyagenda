@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useContext } from "react";
+import React, { useState, useContext } from "react";
 import classes from "./NewTasks.module.css";
 
 import { UserContext } from "../../../store/user-context";
@@ -15,29 +15,20 @@ const NewTasks = props => {
   //import user context from store
   const userCtx = useContext(UserContext);
 
-  //Retrieve jwt from local storage
-  const jwt = localStorage.getItem('jwtToken');
-
-  //Fetch todos from db
-  const fetchTodosCallback = useCallback(() => {
-    if(jwt){
-      userCtx.fetchData();
-    }
-  }, [jwt, userCtx]);
-
   const apiRequest = async (url, method, body) => {
     try {
       const response = await fetch(url, {
         method,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${jwt}`
+          "Authorization": `Bearer ${userCtx.jwt}`
         },
         body: body ? JSON.stringify(body) : undefined
       });
 
       if(response.ok){
-        fetchTodosCallback();
+        // fetchTodosCallback();
+        userCtx.fetchData();
         console.log("Request successful!");
       } else {
         console.error("Error:", response.status);
@@ -49,22 +40,22 @@ const NewTasks = props => {
 
   //Complete todos and update db to reflect their status
   const updateCompleted = () => {
-      //isCompleted state updating function
-      setIsCompleted(prevIsCompleted => {
-        // Invert the previous isCompleted value
-        const updatedIsCompleted = prevIsCompleted === 0 ? 1 : 0;
+    //isCompleted state updating function
+    setIsCompleted(prevIsCompleted => {
+      // Invert the previous isCompleted value
+      const updatedIsCompleted = prevIsCompleted === 0 ? 1 : 0;
 
-        // Assemble object with data from the front end to send to server and update the completed column in the SQL table
-        const taskIdObj = {
-          taskId: props.taskId,
-          completed: updatedIsCompleted
-        };
+      // Assemble object with data from the front end to send to server and update the completed column in the SQL table
+      const taskIdObj = {
+        taskId: props.taskId,
+        completed: updatedIsCompleted
+      };
 
-        completeTodos(taskIdObj);
+      completeTodos(taskIdObj);
 
-        // Return the new isCompleted value
-        return updatedIsCompleted;
-      });
+      // Return the new isCompleted value
+      return updatedIsCompleted;
+    });
   };
 
   //Send completed todos to db

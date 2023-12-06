@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 
 import { Link, useNavigate } from 'react-router-dom';
 
 import useInput from "../../hooks/useInput";
+
+import { UserContext } from "../../store/user-context";
 
 import user_pic from '../../assets/user_icon.svg';
 import check_mark from '../../assets/check.svg';
@@ -16,6 +18,8 @@ const UtilityCard = props => {
   const [ confirmedPasswordIsTouched, setConfirmedPasswordIsTouched ] = useState(false);
 
   const navigate=useNavigate();
+
+  const userCtx = useContext(UserContext);
 
   const isNotEmpty = value => value.trim() !== "";
   const isEmail = value => value.includes("@") && value.includes(".");
@@ -52,10 +56,6 @@ const UtilityCard = props => {
 
   const passwordMatches = (value, valueTwo) =>isNotEmpty(value) && isNotEmpty(valueTwo) && value === valueTwo;
   
-  // if(redirectToLogin) {
-  //   return <Navigate to="/Login" />;
-  // }
-
   const confirmedPasswordChangeHandler = (e) => {
     setConfirmedPassword(e.target.value);
   };
@@ -102,7 +102,8 @@ const UtilityCard = props => {
       password: confirmedPassword
     }
 
-    const url = 'http://localhost:8888/todo_backend/user_registration.php';
+    const url = userCtx.constructApiUrl("user_registration.php");
+    // const url = 'http://localhost:8888/todo_backend/user_registration.php';
 
     fetch(url, { 
       method: 'POST',

@@ -40,33 +40,17 @@ const App = () => {
     sendTaskToDb(val);
   };
 
+  //Retrieve jwt from local storage
+  const jwt = localStorage.getItem('jwtToken');
+
   // Function to construct API URL
   const constructApiUrl = (scriptName) => {
     return `http://localhost:8888/todo_backend/${scriptName}`;
   };
-  // Retrieve the user's full name from local storage
 
+  // Retrieve the user's full name from local storage
   const storedFullName = localStorage.getItem("userFullName");
   
-  useEffect(() => {
-    // Update the context or state with the retrieved full name
-    if (storedFullName) {
-      // Update the context or state with the user's full name
-      setUserFullName(storedFullName);
-    }
-  }, [storedFullName]);
-
-  //Retrieve jwt from local storage
-  const jwt = localStorage.getItem('jwtToken');
-
-  useEffect(() => {
-    if(jwt){
-      console.log('jwt is present in app.js!', jwt);
-      setIsLoggedIn(true);
-      setRedirectToLogin(false);
-    }
-  }, [jwt])
-
   // Fetch data from the server when the component mounts
   const fetchData = useCallback(async () => {
     const url = constructApiUrl("fetch_todos.php");
@@ -91,12 +75,6 @@ const App = () => {
     }
   }, [jwt]);
 
-  useEffect(() => {
-    if(jwt){
-      fetchData();
-    }
-  }, []);
-
   const sendTaskToDb = async (val) => {
 
     //Initialize task object to send todos to db
@@ -105,8 +83,10 @@ const App = () => {
       completed: 0
     };
 
+    const url = constructApiUrl("insert_todos.php");
+
     try {
-      const response = await fetch("http://localhost:8888/todo_backend/insert_todos.php", {
+      const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -126,7 +106,29 @@ const App = () => {
       console.error("Error:", error.message);
     }
   };
-  
+
+  useEffect(() => {
+    if(jwt){
+      fetchData();
+    }
+  }, [jwt]);
+
+  useEffect(() => {
+    // Update the context or state with the retrieved full name
+    if (storedFullName) {
+      // Update the context or state with the user's full name
+      setUserFullName(storedFullName);
+    }
+  }, [storedFullName]);
+
+  useEffect(() => {
+    if(jwt){
+      console.log('jwt is present in app.js!', jwt);
+      setIsLoggedIn(true);
+      setRedirectToLogin(false);
+    }
+  }, [jwt])
+
   const userCtxValue = {
     isLoggedIn: isLoggedIn, 
     userFullName: userFullName,
@@ -140,7 +142,8 @@ const App = () => {
     setRedirectToLogin: handleRedirectToLogin,
     redirectToLogin: redirectToLogin,
     setUserFullName: handleSetUserFullName,
-    constructApiUrl: constructApiUrl
+    constructApiUrl: constructApiUrl,
+    jwt: jwt
   }
 
   return (

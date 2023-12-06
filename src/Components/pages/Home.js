@@ -1,7 +1,5 @@
-import React, { useEffect, useContext } from "react";
+import React from "react";
 import classes from "./Home.module.css";
-
-import { UserContext } from "../../store/user-context";
 
 import Header from "../UI/Header";
 import UtilityCard from "../UI/WeatherCard";

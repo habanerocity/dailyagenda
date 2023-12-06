@@ -8,12 +8,10 @@ const LogoutButton = () => {
 
     const userCtx = useContext(UserContext);
 
-    const jwt = localStorage.getItem('jwtToken');
-
     const handleLogout = () => {
 
         // Clear jwt token from localStorage
-        if(jwt){
+        if(userCtx.jwt){
             localStorage.removeItem('jwtToken');
             localStorage.removeItem('userFullName');
             // Set userCtx.isLoggedIn to false
@@ -22,7 +20,7 @@ const LogoutButton = () => {
             userCtx.setRedirectToLogin();
         }
 
-        if (!jwt) {
+        if (!userCtx.jwt) {
             console.log('no jwt found!');
         }
     }
