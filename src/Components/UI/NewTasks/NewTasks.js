@@ -7,6 +7,7 @@ import check from "../../../assets/check.png";
 import trash from "../../../assets/trash.png";
 
 const NewTasks = props => {
+  // console.log('new tasks is rendering...');
   // Render completed db column value, which arrives as a string from the fetch call, 
   // to the number 0, thus a falsy value
   const [isCompleted, setIsCompleted] = useState(Number(props.assignment));
@@ -22,7 +23,7 @@ const NewTasks = props => {
     if(jwt){
       userCtx.fetchData();
     }
-  }, [props]);
+  }, [jwt, userCtx]);
 
   const apiRequest = async (url, method, body) => {
     try {
@@ -66,19 +67,14 @@ const NewTasks = props => {
       });
   };
 
-  // Function to construct API URL
-  const constructApiUrl = (scriptName) => {
-  return `http://localhost:8888/todo_backend/${scriptName}`;
-  };
-
   //Send completed todos to db
   const completeTodos = async (val) => {
-    const url = constructApiUrl("update_data-completed.php");
+    const url = userCtx.constructApiUrl("update_data-completed.php");
     apiRequest(url, "POST", val);
   };
 
   const deleteTodos = (taskId) => {
-    const url = constructApiUrl("delete_todo.php");
+    const url = userCtx.constructApiUrl("delete_todo.php");
     apiRequest(url, "POST", { taskId });
   };
 

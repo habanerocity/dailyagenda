@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import classes from "./WeatherCard.module.css";
 
@@ -25,33 +25,38 @@ const UtilityCard = props => {
     "Saturday"
   ];
 
-  const savePositionToState = async position => {
-    await fetch(
-      `${api.base}/forecast.json?key=${api.key}&q=${position.coords.latitude},${position.coords.longitude}&days=${api.days}`
-    )
-      .then(response => response.json())
-      .then(data => {
+  const fetchWeather = useCallback(() => {
+    const savePositionToState = async (position) => {
+      try {
+        const response = await fetch(
+          `${api.base}/forecast.json?key=${api.key}&q=${position.coords.latitude},${position.coords.longitude}&days=${api.days}`
+        );
+        const data = await response.json();
         setWeather(data);
-        // console.log(data);
-      }).catch(() => {
+      } catch (error) {
         setError(true);
-      });
-  };
-
-  const fetchWeather = async () => {
+      }
+    };
+  
     try {
-      await window.navigator.geolocation.getCurrentPosition(
-        savePositionToState
-      );
+      window.navigator.geolocation.getCurrentPosition(savePositionToState);
     } catch (err) {
       console.error(err);
     }
-  };
-
+  }, [api.base, api.days, api.key]);
+  
   useEffect(() => {
     fetchWeather();
-    return setWeather("");
-  }, []);
+    
+    const intervalId = setInterval(() => {
+      fetchWeather();
+    }, 15 * 60 * 1000); // Fetch every 15 minutes
+  
+    return () => {
+      clearInterval(intervalId); // Cleanup on unmount
+    };
+    
+  }, [fetchWeather]);
 
   return (
     <div className={classes.card}>

@@ -41,7 +41,7 @@ const Header = () => {
         navigate("/Login");
       }
     // }
-  }, [userCtx.isLoggedIn]);
+  }, [userCtx.isLoggedIn, userCtx.redirectToLogin, navigate]);
 
   return (
     <React.Fragment>

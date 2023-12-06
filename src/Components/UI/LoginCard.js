@@ -13,6 +13,7 @@ import Button from "../UI/Button";
 import { UserContext } from "../../store/user-context";
 
 const LoginCard = props => {
+  // console.log('rendering login card');
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   
@@ -32,7 +33,7 @@ const LoginCard = props => {
         console.log('jwt present. Logging in!');
         navigate("/");
     }
-  }, []);
+  }, [navigate]);
 
   //extract input helpers via destructuring from useInput custom hook
 

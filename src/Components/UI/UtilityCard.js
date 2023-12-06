@@ -8,9 +8,10 @@ import user_pic from '../../assets/user_icon.svg';
 import check_mark from '../../assets/check.svg';
 
 import classes from "./UtilityCard.module.css";
-import Button from "../UI/Button";
+import Button from "./Button";
 
 const UtilityCard = props => {
+  // console.log('utility card');
   const [ confirmedPassword, setConfirmedPassword ] = useState('');
   const [ confirmedPasswordIsTouched, setConfirmedPasswordIsTouched ] = useState(false);
 

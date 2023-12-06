@@ -8,21 +8,10 @@ import UtilityCard from "../UI/WeatherCard";
 import Card from "../UI/ToDoCard";
 
 const Home = () => {
-
-  //Import userContext store
-  const userCtx = useContext(UserContext);
-
-  const jwt = localStorage.getItem('jwtToken');
-  
-  // Call the fetchData function which lives in the context store and fetches todos from db
-    useEffect(() => {
-      if(jwt){
-        userCtx.fetchData(); 
-      }
-    }, [userCtx.fetchData]);
+  // console.log('home.js is rendering');
 
   return (
-    // <div className={classes.overlay}>
+  
     <div className={classes.container}>
       <Header />
       <div className={classes.card_holder}>
@@ -30,7 +19,6 @@ const Home = () => {
         <UtilityCard cardTitle="WEATHER" />
       </div>
     </div>
-    // </div>
 
   );
 };

@@ -2,7 +2,6 @@ import { createContext } from 'react';
 
 export const UserContext = createContext({
     isLoggedIn: false,
-    userFullName: '',
     setIsLoggedIn: () => {},
     tasksList: [],
     setTasksList: () => {},
@@ -13,7 +12,10 @@ export const UserContext = createContext({
     redirectToLogin: '',
     setRedirectToLogin: () => {},
     setUserFullName: () => {},
-    userFullName: ''
+    userFullName: '',
+    constructApiUrl: () => {},
+    fetchTodosCallback: () => {},
+    apiRequest: () => {}
 });
 
 

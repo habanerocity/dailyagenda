@@ -8,6 +8,7 @@ import NewTasks from "./NewTasks/NewTasks";
 // import ErrorModal from "./UI/ErrorModal";
 
 const Form = () => {
+  // console.log('form is rendering');
   //initializing state
   const [enteredTask, setEnteredTask] = useState("");
 
