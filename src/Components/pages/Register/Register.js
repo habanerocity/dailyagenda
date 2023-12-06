@@ -1,8 +1,8 @@
 import React from 'react';
 
 import classes from './Register.module.css';
-import Header from '../UI/Header';
-import UserRegistrationCard from '../UI/UtilityCard';
+import Header from '../../UI/Header/Header';
+import UserRegistrationCard from '../../UI/UserRegistrationCard/UserRegistrationCard';
 
 const Register = () => {
     return (

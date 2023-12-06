@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from "react";
 
 import classes from "./WeatherCard.module.css";
 
-import sunrise from "../../assets/whitesunrise.png";
-import sunset from "../../assets/whitesunset.png";
+import sunrise from "../../../assets/whitesunrise.png";
+import sunset from "../../../assets/whitesunset.png";
 
 const UtilityCard = props => {
   const [weather, setWeather] = useState({});

@@ -1,6 +1,6 @@
 import React, { useContext} from 'react';
 
-import { UserContext } from "../../store/user-context";
+import { UserContext } from "../../../store/user-context";
 
 import classes from './LogoutButton.module.css';
 

@@ -1,14 +1,12 @@
 import React, { useState, useContext } from "react";
-import classes from "./Form.module.css";
-import SearchBar from "./SearchBar";
+import classes from "./ToDoCard.module.css";
 
-import { UserContext } from "../../store/user-context";
+import { UserContext } from "../../../store/user-context";
 
-import NewTasks from "./NewTasks/NewTasks";
-// import ErrorModal from "./UI/ErrorModal";
+import SearchBar from "../SearchBar";
+import Todo from "../Todo/Todo";
 
-const Form = () => {
-  // console.log('form is rendering');
+const Card = () => {
   //initializing state
   const [enteredTask, setEnteredTask] = useState("");
 
@@ -39,7 +37,7 @@ const Form = () => {
   };
 
   return (
-    <React.Fragment>
+    <div className={classes.card}>
       <div className={classes.header_container}>
         <h1 className={classes.header}>DO</h1>
         <hr />
@@ -47,7 +45,7 @@ const Form = () => {
           {userCtx.tasksList.map((task, index) => {
             return (
               //Todo element
-              <NewTasks
+              <Todo
                 //Todo completed status passed down from parent component from db
                 assignment={task.completed}
                 //Todo Description passed down from db 
@@ -70,8 +68,8 @@ const Form = () => {
           name="Add task"
         />
       </form>
-    </React.Fragment>
+    </div>
   );
 };
 
-export default Form;
+export default Card;

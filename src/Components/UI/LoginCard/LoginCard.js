@@ -2,15 +2,15 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 
-import useInput from "../../hooks/useInput";
+import useInput from "../../../hooks/useInput";
 
-import user_login_pic from '../../assets/user_login.svg';
-import check_mark from '../../assets/check.svg';
+import user_login_pic from '../../../assets/user_login.svg';
+// import check_mark from '../../../assets/check.svg';
 
-import classes from "./UtilityCard.module.css";
-import Button from "../UI/Button";
+import classes from "./LoginCard.module.css";
+import Button from "../Button/Button";
 
-import { UserContext } from "../../store/user-context";
+import { UserContext } from "../../../store/user-context";
 
 const LoginCard = props => {
   // console.log('rendering login card');
@@ -132,7 +132,7 @@ const LoginCard = props => {
             <img src={user_login_pic} alt="user icon" className={classes.user_pic}/>
           </div>
           <div className={classes.form_wrapper}>
-            <form className={classes.user_registration_form} method="POST" onSubmit={formSubmissionHandler}>
+            <form className={classes.user_login_form} method="POST" onSubmit={formSubmissionHandler}>
               <input 
               className={`${emailHasError ? classes.input_error : null} ${emailIsValid ? classes.input_success : null }`}
               placeholder={emailHasError ? 'Email must not be empty!' : 'Email'}

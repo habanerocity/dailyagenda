@@ -3,10 +3,10 @@ import classes from "./CompletedTasks.module.css";
 
 import trash from "../../../assets/trash.png";
 
-const NewTasks = props => {
-  const removeTaskBtnHandler = () => {
-    props.taskIsGone(props.key);
-  };
+// const NewTasks = props => {
+//   const removeTaskBtnHandler = () => {
+//     props.taskIsGone(props.key);
+//   };
 
   return (
     <div className={classes.toDo}>

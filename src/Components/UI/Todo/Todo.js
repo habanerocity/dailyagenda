@@ -1,12 +1,12 @@
 import React, { useState, useContext } from "react";
-import classes from "./NewTasks.module.css";
+import classes from "./Todo.module.css";
 
 import { UserContext } from "../../../store/user-context";
 
 import check from "../../../assets/check.png";
 import trash from "../../../assets/trash.png";
 
-const NewTasks = props => {
+const Todo = props => {
   // console.log('new tasks is rendering...');
   // Render completed db column value, which arrives as a string from the fetch call, 
   // to the number 0, thus a falsy value
@@ -27,7 +27,6 @@ const NewTasks = props => {
       });
 
       if(response.ok){
-        // fetchTodosCallback();
         userCtx.fetchData();
         console.log("Request successful!");
       } else {
@@ -95,7 +94,7 @@ const NewTasks = props => {
         <div className={classes.btn__complete} onClick={completeBtnHandler}>
           <img alt="complete" className={classes.icon} src={check} />
         </div>
-        <div className={classes.btn__close} onClick={removeTaskBtnHandler}>
+        <div className={classes.btn__trash} onClick={removeTaskBtnHandler}>
           <img alt="delete" className={classes.icon} src={trash} />
         </div>
       </div>
@@ -103,4 +102,4 @@ const NewTasks = props => {
   );
 };
 
-export default NewTasks;
+export default Todo;

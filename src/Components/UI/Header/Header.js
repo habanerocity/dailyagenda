@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { UserContext } from "../../store/user-context";
-import LogoutButton from './LogoutButton';
+import { UserContext } from "../../../store/user-context";
+import LogoutButton from '../LogoutButton/LogoutButton';
 import { useNavigate } from 'react-router-dom';
 import classes from "./Header.module.css";
 
@@ -17,8 +17,6 @@ const Header = () => {
   const [currentDate, setCurrentDate] = useState(new Date().toDateString());
 
   useEffect(() => {
-    // console.log("Header - Component mounted");
-
     // Update the time and date every second
     const intervalId = setInterval(() => {
       setCurrentTime(new Date().toLocaleString("en-US", shortTime));
@@ -27,14 +25,11 @@ const Header = () => {
 
     // Cleanup function to clear the interval when the component unmounts
     return () => {
-      // console.log("Header - Component unmounted");
       clearInterval(intervalId);
     };
-  }, []); // Empty dependency array ensures that the effect runs only once, similar to componentDidMount
+  }, []);
 
   useEffect(() => {
-    // console.log("Header - IsLoggedIn:", userCtx.isLoggedIn);
-
     if (!userCtx.isLoggedIn && userCtx.redirectToLogin) {
         userCtx.setRedirectToLogin();
 

@@ -42,7 +42,6 @@ h2 {
 
 .user_pic{
   width: 40%;
- 
 }
 
 .error__msg{
@@ -94,27 +93,6 @@ input::placeholder{
   cursor: not-allowed;
 }
 
-#guest_btn {
-  background-color: transparent;
-  border-color: #fb8f0d;
-}
-
-#guest_btn:hover{
-  background-color: #fb8f0d;
-  cursor: pointer;
-}
-
-.btn_container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-}
-
-.btn_container > a {
-  width: 100%;
-}
-
 span {
   color: #fff;
   font-size: 1.2rem;
@@ -127,36 +105,5 @@ a {
   text-decoration: 1px solid underline;
 }
 
-.or h6{
-  font-size: 1.5rem;
-  color: #fff;
-  padding: 0 1rem;
-}
 
-.or{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
-}
 
-.line{
-  width: 100%;
-}
-
-.full-width{
-  width: 100%;
-}
-
-/* .form_input{
-  background:url('../../assets/circle-check-solid.svg') no-repeat scroll;
-  padding-left: 20px;
-} */
-
-/* .form_wrapper{
-  height: 25%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-} */

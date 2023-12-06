@@ -1,10 +1,12 @@
 import React, { useState, useCallback, useEffect } from "react";
 
 import { Routes, Route } from 'react-router-dom';
-import Home from './Components/pages/Home';
-import Register from './Components/pages/Register';
+
+import Home from './Components/pages/Home/Home';
+import Register from './Components/pages/Register/Register';
+import Login from "./Components/pages/Login/Login";
+
 import classes from "./App.module.css";
-import Login from "./Components/pages/Login";
 
 import { UserContext } from './store/user-context';
 
@@ -116,7 +118,6 @@ const App = () => {
   useEffect(() => {
     // Update the context or state with the retrieved full name
     if (storedFullName) {
-      // Update the context or state with the user's full name
       setUserFullName(storedFullName);
     }
   }, [storedFullName]);

@@ -2,17 +2,17 @@ import React, { useState, useContext } from "react";
 
 import { Link, useNavigate } from 'react-router-dom';
 
-import useInput from "../../hooks/useInput";
+import useInput from "../../../hooks/useInput";
 
-import { UserContext } from "../../store/user-context";
+import { UserContext } from "../../../store/user-context";
 
-import user_pic from '../../assets/user_icon.svg';
-import check_mark from '../../assets/check.svg';
+import user_pic from '../../../assets/user_icon.svg';
+// import check_mark from '../../assets/check.svg';
 
-import classes from "./UtilityCard.module.css";
-import Button from "./Button";
+import classes from "./UserRegistrationCard.module.css";
+import Button from "../Button/Button";
 
-const UtilityCard = props => {
+const UserRegistrationCard = props => {
   // console.log('utility card');
   const [ confirmedPassword, setConfirmedPassword ] = useState('');
   const [ confirmedPasswordIsTouched, setConfirmedPasswordIsTouched ] = useState(false);
@@ -103,7 +103,6 @@ const UtilityCard = props => {
     }
 
     const url = userCtx.constructApiUrl("user_registration.php");
-    // const url = 'http://localhost:8888/todo_backend/user_registration.php';
 
     fetch(url, { 
       method: 'POST',
@@ -139,11 +138,10 @@ const UtilityCard = props => {
         <h1 className={classes.header}>{props.heading}</h1>
         <hr />
         <h2>Sign up for an account today, it's free.</h2>
-        <div className={classes.flex_container}>
+        <div>
           <div className={classes.user_pic_div}>
             <img src={user_pic} alt="user icon" className={classes.user_pic}/>
           </div>
-          <div className={classes.form_wrapper}>
             <form className={classes.user_registration_form} method="POST" onSubmit={formSubmissionHandler}>
               <input 
               className={`${nameHasError ? classes.input_error : null} ${nameIsValid ? classes.input_success : null }`}
@@ -179,11 +177,10 @@ const UtilityCard = props => {
               <Button type="button" disabled={!formIsValid} id={!formIsValid ? classes.disabled : null}>Submit</Button>
             </form>
             <span>Already have an account?  <Link to="/Login" >Sign in here</Link></span>
-          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default UtilityCard;
+export default UserRegistrationCard;
