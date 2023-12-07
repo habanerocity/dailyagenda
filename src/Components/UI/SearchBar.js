@@ -3,20 +3,6 @@ import React from "react";
 import Button from "./Button/Button";
 
 const SearchBar = props => {
-  //   const [location, setLocation] = useState("");
-
-  // const submitHandler = e => {
-  //   e.preventDefault();
-
-  //   //form validation to make sure empty string is not submitted
-  //   if (location().length === 0) {
-  //     return;
-  //   }
-  //   //Lifting state up to Parent component
-  //   props.onSaveTaskData(enteredTask);
-  //   //resetting input field
-  //   setEnteredTask("");
-  // };
 
   return (
     <>

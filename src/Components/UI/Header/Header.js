@@ -1,7 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
+
 import { UserContext } from "../../../store/user-context";
-import LogoutButton from '../LogoutButton/LogoutButton';
+
 import { useNavigate } from 'react-router-dom';
+
+import LogoutButton from '../LogoutButton/LogoutButton';
+
 import classes from "./Header.module.css";
 
 const shortTime = {
@@ -9,10 +13,13 @@ const shortTime = {
 };
 
 const Header = () => {
+  //import UserContext from store
   const userCtx = useContext(UserContext);
 
+  //Import useNavigate for programmatic navigation
   const navigate = useNavigate();
 
+  //Initialize state variables for time and date
   const [currentTime, setCurrentTime] = useState(new Date().toLocaleString("en-US", shortTime));
   const [currentDate, setCurrentDate] = useState(new Date().toDateString());
 
@@ -30,6 +37,7 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
+    //If user is not logged in and redirectToLogin are true, redirect to Login page
     if (!userCtx.isLoggedIn && userCtx.redirectToLogin) {
         userCtx.setRedirectToLogin();
 

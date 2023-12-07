@@ -17,14 +17,17 @@ const LoginCard = props => {
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   
+  //Import UserContext values
   const userCtx = useContext(UserContext);
 
+  //Initialize navigate variable for programmatic navigation
   const navigate = useNavigate();
 
+  //Form validation variables
   const isNotEmpty = value => value.trim() !== "";
   const isEmail = value => value.includes("@") && value.includes(".");
 
-  //Check ot see if a JWT is stored in local storage, then login automatically
+  //Check to see if a JWT is stored in local storage, then login automatically
   useEffect(() => {
     if(userCtx.jwt) {
       //Redirect to the todo app if JWT is present 
@@ -34,7 +37,6 @@ const LoginCard = props => {
   }, [navigate]);
 
   //extract input helpers via destructuring from useInput custom hook
-
   const {
     value: enteredEmail,
     isValid: emailIsValid,
@@ -51,8 +53,10 @@ const LoginCard = props => {
     inputBlurHandler: passwordBlurHandler,
   } = useInput(isNotEmpty);
 
+  //Initialize formIsValid variable as false
   let formIsValid = false;
 
+  //Frontend validation that checks if email and password are valid, then sets formIsValid to true 
   if (
     emailIsValid &&
     passwordIsValid
@@ -60,9 +64,11 @@ const LoginCard = props => {
     formIsValid = true;
   }
 
+  //Handler function that is performed if formIsValid
   const formSubmissionHandler = (e) => {
     e.preventDefault();
 
+    //If email or password has an error stop function
     if (
       emailHasError &&
       passwordHasError
@@ -70,15 +76,19 @@ const LoginCard = props => {
       return;
     }
 
+    //If form is not valid stop function
     if (!formIsValid) return;
 
+    //Initialize object that is sent to db
     const formData = {
       email: enteredEmail,
       password: enteredPassword
     }
 
-    const url = 'http://localhost:8888/todo_backend/user_login.php';
+    //Construct api url endpoint
+    const url = userCtx.constructApiUrl("user_login.php");
 
+    //Perform 'POST' request to perform user authentication
     fetch(url, { 
       method: 'POST',
       headers: {
@@ -96,16 +106,20 @@ const LoginCard = props => {
     throw new Error(`Error: ${response.status}`);
   }})
   .then((data) => { if(data){
+    //Destructure keys from data object from backend response
     const { result, token, full_name } = data;
 
     console.log(full_name);
     
+    //If token is performed, set it in local storage as well as user's full_name
     if(token){
       localStorage.setItem('jwtToken', token);
       localStorage.setItem("userFullName", full_name);
 
       const jwt = localStorage.getItem('jwtToken');
       console.log(localStorage.getItem("userFullName"));
+
+      //If jwt is set in local storage setIsLoggedIn to true and set the user's full_name
       if (jwt){
         console.log(`Token: ${jwt}`);
         userCtx.setIsLoggedIn(true);
@@ -121,6 +135,10 @@ const LoginCard = props => {
 
   }}).catch((error) => console.log(error));
   }
+
+  // const handleClick = () => {
+  //   console.log('guest button has been clicked');
+  // }
 
   return (
     <div className={classes.card}>
@@ -160,7 +178,7 @@ const LoginCard = props => {
                     <hr className={classes.line} />
                 </div>
                 <Link to="/">
-                        <Button type="button" id={classes.guest_btn}>Login as Guest</Button>
+                    <Button type="button" onClick={userCtx.logInAsGuest} id={classes.guest_btn}>Login as Guest</Button>
                 </Link>
               </div>
               <span>Don't have an account?  <Link to="/Register" >Sign up here</Link></span>

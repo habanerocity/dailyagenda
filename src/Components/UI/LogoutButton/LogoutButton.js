@@ -5,7 +5,6 @@ import { UserContext } from "../../../store/user-context";
 import classes from './LogoutButton.module.css';
 
 const LogoutButton = () => {
-
     const userCtx = useContext(UserContext);
 
     const handleLogout = () => {
@@ -14,12 +13,15 @@ const LogoutButton = () => {
         if(userCtx.jwt){
             localStorage.removeItem('jwtToken');
             localStorage.removeItem('userFullName');
-            // Set userCtx.isLoggedIn to false
+
+            //Set userCtx.isLoggedIn to false
             userCtx.setIsLoggedIn();
 
+            //Set redirectToLogin as true
             userCtx.setRedirectToLogin();
         }
 
+        //If no jwt is found
         if (!userCtx.jwt) {
             console.log('no jwt found!');
         }

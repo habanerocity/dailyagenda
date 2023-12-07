@@ -5,16 +5,19 @@ import classes from "./WeatherCard.module.css";
 import sunrise from "../../../assets/whitesunrise.png";
 import sunset from "../../../assets/whitesunset.png";
 
-const UtilityCard = props => {
+const WeatherCard = props => {
+  //Initialize weather state variables
   const [weather, setWeather] = useState({});
   const [hasError, setError] = useState(false);
 
+  //API values
   const api = {
     key: "521a9ac90a6f44be92d203127221306",
     base: "https://api.weatherapi.com/v1",
     days: "3"
   };
 
+  //Days of the week
   const days = [
     "Sunday",
     "Monday",
@@ -25,6 +28,7 @@ const UtilityCard = props => {
     "Saturday"
   ];
 
+  //Fetch weather data
   const fetchWeather = useCallback(() => {
     const savePositionToState = async (position) => {
       try {
@@ -38,6 +42,7 @@ const UtilityCard = props => {
       }
     };
   
+    //Get current position of user
     try {
       window.navigator.geolocation.getCurrentPosition(savePositionToState);
     } catch (err) {
@@ -45,6 +50,7 @@ const UtilityCard = props => {
     }
   }, [api.base, api.days, api.key]);
   
+  //Fetch weather when component mounts
   useEffect(() => {
     fetchWeather();
     
@@ -132,4 +138,4 @@ const UtilityCard = props => {
   );
 };
 
-export default UtilityCard;
+export default WeatherCard;

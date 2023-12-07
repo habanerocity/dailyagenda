@@ -9,7 +9,7 @@ import trash from "../../../assets/trash.png";
 const Todo = props => {
   // console.log('new tasks is rendering...');
   // Render completed db column value, which arrives as a string from the fetch call, 
-  // to the number 0, thus a falsy value
+  // and convert to the number 0, thus a falsy value
   const [isCompleted, setIsCompleted] = useState(Number(props.assignment));
 
   //import user context from store
@@ -50,6 +50,7 @@ const Todo = props => {
         completed: updatedIsCompleted
       };
 
+      // Call completeTodos function which sends completed todos to db
       completeTodos(taskIdObj);
 
       // Return the new isCompleted value
@@ -63,6 +64,7 @@ const Todo = props => {
     apiRequest(url, "POST", val);
   };
 
+  //Delete todos from db
   const deleteTodos = (taskId) => {
     const url = userCtx.constructApiUrl("delete_todo.php");
     apiRequest(url, "POST", { taskId });
@@ -70,13 +72,17 @@ const Todo = props => {
 
   //Completes todos
   const completeBtnHandler = () => {
-    // Call the updateCompleted function
-    updateCompleted();
+    if(userCtx.jwt){
+      // Call the updateCompleted function
+      updateCompleted();
+    }
   };
 
   //Removes todos from db
   const removeTaskBtnHandler = () => {
-    deleteTodos(props.taskId);
+    if(userCtx.jwt){
+      deleteTodos(props.taskId);
+    }
   };
 
   return (

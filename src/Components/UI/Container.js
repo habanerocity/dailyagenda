@@ -21,19 +21,6 @@ const getLocalStorage = () => {
 const Container = () => {
   const [tasksList, setTasksList] = useState(getLocalStorage());
   const [accomplishedTasks, setAccomplishedTasks] = useState([]);
-  // const [currentTime, setCurrentTime] = useState(
-  //   new Date().toLocaleString("en-US", shortTime)
-  // );
-  // const [currentDate, setCurrentDate] = useState(new Date().toDateString());
-
-  //update the time and date every second
-  // setInterval(() => {
-  //   setCurrentTime(
-  //     new Date().toLocaleString("en-US", shortTime)
-  //   );
-
-  //   setCurrentDate(new Date().toDateString());
-  // }, 1000);
 
   const addTaskHandler = task => {
     //New Task Object being put together in Parent Component, task being received from Card.
@@ -47,7 +34,6 @@ const Container = () => {
     console.log(tasksList);
 
   };
-
 
   useEffect(() => {
     getLocalStorage();
@@ -71,7 +57,6 @@ const Container = () => {
     //setting new property back on state object
     setTasksList(newTasks);
 
-   
   };
 
   const removeTask = index => {

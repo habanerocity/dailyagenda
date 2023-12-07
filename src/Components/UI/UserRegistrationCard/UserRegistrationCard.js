@@ -17,16 +17,24 @@ const UserRegistrationCard = props => {
   const [ confirmedPassword, setConfirmedPassword ] = useState('');
   const [ confirmedPasswordIsTouched, setConfirmedPasswordIsTouched ] = useState(false);
 
+  //Initialize programmatic navigation
   const navigate=useNavigate();
 
+  //Import UserContext
   const userCtx = useContext(UserContext);
 
+  //Form validation functions
   const isNotEmpty = value => value.trim() !== "";
   const isEmail = value => value.includes("@") && value.includes(".");
   const isPassword = value => value.length >= 8;
 
+  //Check to see if password and confirmedPassword match
+  const passwordMatches = (value, valueTwo) =>isNotEmpty(value) && isNotEmpty(valueTwo) && value === valueTwo;
 
-  //extract values via destructuring from useInput custom hook
+  //Check to see if confirmed password has an error
+  const confirmedPasswordHasError = !passwordMatches(enteredPassword, confirmedPassword) && confirmedPasswordIsTouched;
+
+  //Extract values via destructuring from useInput custom hook
   const {
     value: enteredName,
     isValid: nameIsValid,
@@ -54,25 +62,26 @@ const UserRegistrationCard = props => {
     reset: resetPassword
   } = useInput(isNotEmpty && isPassword);
 
-  const passwordMatches = (value, valueTwo) =>isNotEmpty(value) && isNotEmpty(valueTwo) && value === valueTwo;
-  
+  //Set confirmed password on keystroke
   const confirmedPasswordChangeHandler = (e) => {
     setConfirmedPassword(e.target.value);
   };
 
+  //State variable that checks to see if confirmed password has been touched
   const confirmedPasswordBlurHandler = () => {
     setConfirmedPasswordIsTouched(true);
 	};
 
-  const confirmedPasswordHasError = !passwordMatches(enteredPassword, confirmedPassword) && confirmedPasswordIsTouched;
-
+  //Reset confirmed Password field
   const resetconfirmedPassword = () => {
 		setConfirmedPassword('');
 		setConfirmedPasswordIsTouched(false);
 	};
 
+  //Initialize formIsValid variable to false
   let formIsValid = false;
 
+  //If name, email, and password fields are valid set formIsValid to true
   if (
     nameIsValid &&
     emailIsValid &&
@@ -82,9 +91,11 @@ const UserRegistrationCard = props => {
     formIsValid = true;
   }
 
+  //Function that sends user registration to db
   const formSubmissionHandler = (e) => {
     e.preventDefault();
 
+    //Check to see if input fields have an error, if they do stop the function
     if (
       nameHasError &&
       emailHasError &&
@@ -94,16 +105,20 @@ const UserRegistrationCard = props => {
       return;
     }
 
+    //If form is not valid stop the function
     if (!formIsValid) return;
 
+    //Initialize formData object that will be sent to db
     const formData = {
       fullName: enteredName,
       email: enteredEmail,
       password: confirmedPassword
     }
 
+    //Contruct url endpoint
     const url = userCtx.constructApiUrl("user_registration.php");
 
+    //Send data to db
     fetch(url, { 
       method: 'POST',
       headers: {
@@ -121,6 +136,7 @@ const UserRegistrationCard = props => {
   .then((data) => { if(data){
     console.log(data)}
 
+    //Reset input fields
     resetName('');
     resetEmail('');
     resetPassword('');
