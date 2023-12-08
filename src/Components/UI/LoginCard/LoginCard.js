@@ -136,9 +136,12 @@ const LoginCard = props => {
   }}).catch((error) => console.log(error));
   }
 
-  // const handleClick = () => {
-  //   console.log('guest button has been clicked');
-  // }
+    useEffect(() => {
+    if(userCtx.guestUser.isGuest){
+      console.log('redirecting to login...');
+      navigate("/");
+    }
+  }, [userCtx.guestUser.isGuest])
 
   return (
     <div className={classes.card}>
@@ -177,9 +180,7 @@ const LoginCard = props => {
                     <h6>OR</h6>
                     <hr className={classes.line} />
                 </div>
-                <Link to="/">
                     <Button type="button" onClick={userCtx.logInAsGuest} id={classes.guest_btn}>Login as Guest</Button>
-                </Link>
               </div>
               <span>Don't have an account?  <Link to="/Register" >Sign up here</Link></span>
             </form>

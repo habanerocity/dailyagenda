@@ -8,7 +8,8 @@ import Todo from "../Todo/Todo";
 
 const Card = () => {
   //initializing state
-  const [enteredTask, setEnteredTask] = useState("");
+  const [enteredTask, setEnteredTask] = useState('');
+  const [enteredTasksList, setEnteredTasksList] = useState([]);
 
   //Import userContext store
   const userCtx = useContext(UserContext);
@@ -21,31 +22,27 @@ const Card = () => {
 
   const addGuestTodoHandler = (todo) => {
     //New Task Object being put together in Parent Component, task being received from Card.
-    userCtx.setGuestTodos(prevTodos => {
-      return [
-        //state array depends on previous state objects
-        ...prevTodos,
-        { id: Math.random().toString(), todo: todo, completed: false }
-      ];
-    });
-
-    localStorage.setItem("todos", JSON.stringify(userCtx.guestTodos));
-  };
-
-  const getTodosFromLocalStorage = () => {
-    let guestTodos = localStorage.getItem("todos");
     
-    console.log(guestTodos)
-    if (guestTodos) {
-      // userCtx.setGuestTodos(guestTodos);
-      // userCtx.setGuestTodos(JSON.parse(guestTodos));
-      console.log(userCtx.guestTodos);
-      // return JSON.parse(guestTodos);
-      // localStorage.setItem("todos", JSON.stringify(userCtx.guestTodos));
-    } else {
-      return [];
+    if(userCtx.guestUser.isGuest){
+
+      userCtx.setGuestTodos(prevTodos => {
+        return [
+          //state array depends on previous state objects
+          ...prevTodos,
+          { id: Math.random().toString(), todo: todo, completed: false }
+        ];
+      });
+  
+      localStorage.setItem("todos", JSON.stringify(userCtx.guestTodos));
     }
+    
   };
+
+  useEffect(() => {
+    
+    localStorage.setItem("todos", JSON.stringify(enteredTasksList));
+  }, [enteredTasksList])
+
 
   //Submit todo
   const submitHandler = e => {
@@ -72,14 +69,7 @@ const Card = () => {
     }
   };
 
-  useEffect(() => {
-    const storedTodos = getTodosFromLocalStorage();
-
-    console.log(storedTodos);
-    // localStorage.setItem("todos", JSON.stringify(storedTodos));
-    
-    // addGuestTodoHandler(storedTodos);
-  }, []);
+  console.log(userCtx.guestTodos);
 
   return (
     <div className={classes.card}>
@@ -98,6 +88,21 @@ const Card = () => {
                 //Todo task id passed down via parent component from db
                 taskId={task.id}
                 key={task.id}
+                index={index}
+              />
+            );
+          })}
+          {userCtx.guestUser.isGuest && userCtx.guestTodos.map((todo, index) => {
+            return (
+              //Todo element
+              <Todo
+                //Todo completed status passed down via parent component from db
+                assignment={todo.completed}
+                //Todo Description passed down via parent component from db 
+                toDoDescription={todo.todo}
+                //Todo task id passed down via parent component from db
+                taskId={todo.id}
+                key={todo.id}
                 index={index}
               />
             );

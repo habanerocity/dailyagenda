@@ -19,6 +19,7 @@ export const UserContext = createContext({
     apiRequest: () => {},
     setGuestUserInfo: () => {},
     setGuestTodos: () => {},
+    setGuestUser: () => {},
     guestTodos: []
 });
 

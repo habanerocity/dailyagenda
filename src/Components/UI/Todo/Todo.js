@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import classes from "./Todo.module.css";
 
 import { UserContext } from "../../../store/user-context";
@@ -58,6 +58,26 @@ const Todo = props => {
     });
   };
 
+  const completeGuestTodo = () => {
+    //new array variable created with state spread out in it
+    const newGuestTodos = [...userCtx.guestTodos];
+    //changing property of state slice
+    newGuestTodos[props.index].completed = true;
+    
+    //setting new property back on state object
+    userCtx.setGuestTodos(newGuestTodos);
+  };
+
+  const removeGuestTodo = () => {
+    //new array variable with state spread out in it
+    const alteredGuestTodos = [...userCtx.guestTodos];
+    //removing task from new array variable, according to index
+    alteredGuestTodos.splice(props.index, 1);
+    //putting edited object back into state
+    console.log(alteredGuestTodos);
+    userCtx.setGuestTodos(alteredGuestTodos);
+  };
+
   //Send completed todos to db
   const completeTodos = async (val) => {
     const url = userCtx.constructApiUrl("update_data-completed.php");
@@ -89,18 +109,20 @@ const Todo = props => {
     <div className={classes.toDo}>
       <div
         style={{
-          textDecoration: isCompleted ? "line-through" : null,
-          textDecorationColor: isCompleted ? "#fb8f0d" : null
+          textDecoration: isCompleted || userCtx.guestTodos[props.index]?.completed ? "line-through" : "none",
+          textDecorationColor: isCompleted || userCtx.guestTodos[props.index]?.completed ? "#fb8f0d" : "none"
+          // textDecoration: isCompleted ? "line-through" : null,
+          // textDecorationColor: isCompleted ? "#fb8f0d" : null
         }}
         className={classes.task}
       >
         {props.toDoDescription}
       </div>
       <div className={classes.btn__container}>
-        <div className={classes.btn__complete} onClick={completeBtnHandler}>
+        <div className={classes.btn__complete} onClick={(userCtx.jwt && completeBtnHandler) || (userCtx.guestUser.isGuest && completeGuestTodo)}>
           <img alt="complete" className={classes.icon} src={check} />
         </div>
-        <div className={classes.btn__trash} onClick={removeTaskBtnHandler}>
+        <div className={classes.btn__trash} onClick={(userCtx.jwt && removeTaskBtnHandler) || (userCtx.guestUser.isGuest && removeGuestTodo)}>
           <img alt="delete" className={classes.icon} src={trash} />
         </div>
       </div>

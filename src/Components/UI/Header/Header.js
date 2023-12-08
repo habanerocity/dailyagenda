@@ -39,6 +39,7 @@ const Header = () => {
   useEffect(() => {
     //If user is not logged in and redirectToLogin are true, redirect to Login page
     if (!userCtx.isLoggedIn && userCtx.redirectToLogin) {
+        console.log("about to log out...");
         userCtx.setRedirectToLogin();
 
         navigate("/Login");
@@ -50,14 +51,14 @@ const Header = () => {
     <React.Fragment>
       <div className={classes.heading}>
         <div>
-          <h1 className={classes.daily}>Daily Agenda Todo List</h1>
-          <h2 className={classes.welcome}>{userCtx.isLoggedIn && userCtx.userFullName && `Welcome back ${userCtx.userFullName}! 👋`}</h2>
+          <h1 className={classes.daily}>Daily Agenda App</h1>
+          <h2 className={classes.welcome}>{(userCtx.guestUser.isGuest && `Welcome Guest! 👋`) || (userCtx.isLoggedIn && userCtx.userFullName && `Welcome back ${userCtx.userFullName}! 👋`)}</h2>
         </div>
-        {userCtx.isLoggedIn && 
-          <div className={classes.flex__row}>
+        {(userCtx.isLoggedIn || userCtx.guestUser.isGuest) && 
+          (<div className={classes.flex__row}>
             <h1 className={classes.date}>{`${currentDate}, ${currentTime}`}</h1>
             <LogoutButton />
-          </div> 
+          </div>) 
         }
       </div>
       <hr className={classes.line} />

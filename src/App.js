@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 
 import Home from './Components/pages/Home/Home';
 import Register from './Components/pages/Register/Register';
@@ -9,6 +9,18 @@ import Login from "./Components/pages/Login/Login";
 import classes from "./App.module.css";
 
 import { UserContext } from './store/user-context';
+
+const getGuestTodosFromLocalStorage = () => {
+
+  let guestTodos = localStorage.getItem("todos");
+  
+  if (guestTodos) {
+    return (guestTodos = JSON.parse(localStorage.getItem("todos")));
+  } else {
+    return [];
+  }
+};
+
 
 const App = () => {
   console.log('app.js is rendering');
@@ -20,15 +32,33 @@ const App = () => {
   const [redirectToLogin, setRedirectToLogin] = useState(false);
   const [userFullName, setUserFullName] = useState('');
 
-  const [guestTodos, setGuestTodos] = useState([]);
+  const [guestTodos, setGuestTodos] = useState(getGuestTodosFromLocalStorage());
 
-  // const [isGuestUser, setIsGuestUser] = useState(false);
   //Initialize guest login state object
   const [guestUser, setGuestUser] = useState({
     isGuest: false,
-    guestName: 'Guest',
+    // isLoggedIn: false,
     guestId: ""
   }); 
+
+  //Initialize navigate variable for programmatic navigation
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // console.log(guestTodos);
+
+    localStorage.setItem("todos", JSON.stringify(guestTodos));
+  }, [guestTodos])
+
+  useEffect(() => {
+    if (guestUser.isGuest){
+      let guestTodosFromLocalStorage = getGuestTodosFromLocalStorage();
+
+      // console.log(guestTodosFromLocalStorage);
+
+      localStorage.setItem("todos", JSON.stringify(guestTodosFromLocalStorage));
+    }
+  }, [guestUser.isGuest])
 
   //Function to generate a unique guest ID
   const generateGuestId = () => {
@@ -51,11 +81,22 @@ const App = () => {
   }
 
   // Function to log in as a guest
-  const logInAsGuest = () => {
+  const handleLogInAsGuest = () => {
     setGuestUserInfo(); // Set guest user information
-    setIsLoggedIn(true); // For illustration purposes, consider the guest as logged in
-    console.log('logged in as guest');
+   
+    if(guestUser.guestId){
+      setIsLoggedIn(true); 
+      navigate("/");
+      console.log('logged in as guest');
+    }
   }
+
+  // useEffect(() => {
+  //   if(guestUser.isGuest){
+  //     console.log('redirecting to login...');
+  //     navigate("/");
+  //   }
+  // }, [guestUser.isGuest])
 
   //Invert the state of isLoggedIn
   const handleIsLoggedIn = () => {
@@ -198,7 +239,7 @@ const App = () => {
     constructApiUrl: constructApiUrl,
     jwt: jwt,
     guestUser: guestUser,
-    logInAsGuest: logInAsGuest,
+    logInAsGuest: handleLogInAsGuest,
     setGuestUserInfo: setGuestUserInfo,
     setGuestUser: setGuestUser,
     guestTodos: guestTodos,
