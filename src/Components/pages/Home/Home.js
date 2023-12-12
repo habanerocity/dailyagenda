@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 
 import { UserContext } from "../../../store/user-context";
 
+import { useNavigate } from "react-router-dom";
+
 import classes from "./Home.module.css";
 
 import Header from "../../UI/Header/Header";
@@ -9,8 +11,8 @@ import WeatherCard from "../../UI/WeatherCard/WeatherCard";
 import TodoCard from "../../UI/TodoCard/ToDoCard";
 
 const Home = () => {
-  // console.log('home.js is rendering');
   
+const navigate = useNavigate();
 
   const userCtx = useContext(UserContext);
 
@@ -24,12 +26,18 @@ const Home = () => {
         isGuest: true,
         guestId: storedGuestId,
       });
-      console.log(userCtx.guestUser);
+
     } else if (userCtx.guestUser.isGuest) {
       // If user is a guest user and no guest ID is found, generate a new one
       userCtx.setGuestUserInfo();
     }
-  }, [userCtx.guestUser.isGuest]);
+
+    if(!userCtx.guestUser.isGuest && !userCtx.jwt){
+        console.log('redirecting to login page');
+        navigate("/Login");
+    }
+  }, [userCtx.guestUser.isGuest, navigate]);
+  
 
   return (
   

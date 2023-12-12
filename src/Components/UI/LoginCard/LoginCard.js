@@ -1,5 +1,5 @@
 // import React, { useState, useEffect, useContext } from "react";
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 
 import useInput from "../../../hooks/useInput";
@@ -27,14 +27,54 @@ const LoginCard = props => {
   const isNotEmpty = value => value.trim() !== "";
   const isEmail = value => value.includes("@") && value.includes(".");
 
+  // Initialize refs to keep track of the previous values of jwt and guestUser.isGuest
+const prevJwt = useRef(userCtx.jwt);
+const prevIsGuest = useRef(userCtx.guestUser.isGuest);
+
   //Check to see if a JWT is stored in local storage, then login automatically
+  // useEffect(() => {
+  //   if(userCtx.jwt) {
+      
+  //       console.log('jwt present. Logging in!');
+  //       navigate("/");
+  //   }
+  // }, [navigate, userCtx.jwt]);
+
   useEffect(() => {
-    if(userCtx.jwt) {
-      //Redirect to the todo app if JWT is present 
-        console.log('jwt present. Logging in!');
-        navigate("/");
+    // Only navigate if jwt has changed from null to a truthy value
+    if (prevJwt.current === null && userCtx.jwt) {
+      console.log('jwt present. Logging in!');
+      navigate("/");
     }
-  }, [navigate]);
+    // Update the previous value of jwt
+    prevJwt.current = userCtx.jwt;
+  }, [navigate, userCtx.jwt]);
+
+
+  // useEffect hook that runs when userCtx.isLoggedIn changes
+//   useEffect(() => {
+//   if(userCtx.isLoggedIn){
+//     navigate("/");
+//     console.log('Logged in as registered user');
+//   }
+// }, [userCtx.isLoggedIn, navigate]);
+
+  // useEffect(() => {
+  //   if (userCtx.guestUser.isGuest) {
+    
+      
+  //     navigate("/");
+  // }}, [navigate, userCtx.guestUser.isGuest]);
+
+  useEffect(() => {
+    // Only navigate if guestUser.isGuest has changed from false to true
+    if (prevIsGuest.current === false && userCtx.guestUser.isGuest) {
+      console.log('Guest user logged in!');
+      navigate("/");
+    }
+    // Update the previous value of guestUser.isGuest
+    prevIsGuest.current = userCtx.guestUser.isGuest;
+  }, [navigate, userCtx.guestUser.isGuest]);
 
   //extract input helpers via destructuring from useInput custom hook
   const {
@@ -125,7 +165,7 @@ const LoginCard = props => {
         userCtx.setIsLoggedIn(true);
         userCtx.setUserFullName(full_name);
         console.log(userCtx.userFullName);
-        navigate("/");
+        // navigate("/");
       } 
     } else {
       console.log('no token stored!');
@@ -136,12 +176,10 @@ const LoginCard = props => {
   }}).catch((error) => console.log(error));
   }
 
-    useEffect(() => {
-    if(userCtx.guestUser.isGuest){
-      console.log('redirecting to login...');
-      navigate("/");
-    }
-  }, [userCtx.guestUser.isGuest])
+  useEffect(() => {
+    console.log('Guest user isGuest is set to: ', userCtx.guestUser.isGuest);
+    // console.log('Is logged in is set to: ', userCtx.isLoggedIn);
+  }, []);
 
   return (
     <div className={classes.card}>
@@ -171,7 +209,7 @@ const LoginCard = props => {
               value={enteredPassword} 
               />
               <div className={classes.error__msg}>
-                {error && <p>{errorMsg}</p>}
+                {error ? <p>{errorMsg}</p> : null}
               </div>
               <div className={classes.btn_container}>
                 <Button type="button" disabled={!formIsValid} id={!formIsValid ? classes.disabled : null}>Login</Button>

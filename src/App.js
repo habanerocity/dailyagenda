@@ -26,7 +26,7 @@ const App = () => {
   console.log('app.js is rendering');
 
   //Initialize state variables
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('jwtToken'));
   const [tasksList, setTasksList] = useState([]);
   const [isCompleted, setIsCompleted] = useState('');
   const [redirectToLogin, setRedirectToLogin] = useState(false);
@@ -37,7 +37,7 @@ const App = () => {
   //Initialize guest login state object
   const [guestUser, setGuestUser] = useState({
     isGuest: false,
-    // isLoggedIn: false,
+    // isLoggedIn: false,å
     guestId: ""
   }); 
 
@@ -49,16 +49,6 @@ const App = () => {
 
     localStorage.setItem("todos", JSON.stringify(guestTodos));
   }, [guestTodos])
-
-  useEffect(() => {
-    if (guestUser.isGuest){
-      let guestTodosFromLocalStorage = getGuestTodosFromLocalStorage();
-
-      // console.log(guestTodosFromLocalStorage);
-
-      localStorage.setItem("todos", JSON.stringify(guestTodosFromLocalStorage));
-    }
-  }, [guestUser.isGuest])
 
   //Function to generate a unique guest ID
   const generateGuestId = () => {
@@ -81,27 +71,44 @@ const App = () => {
   }
 
   // Function to log in as a guest
-  const handleLogInAsGuest = () => {
-    setGuestUserInfo(); // Set guest user information
-   
-    if(guestUser.guestId){
-      setIsLoggedIn(true); 
-      navigate("/");
-      console.log('logged in as guest');
-    }
-  }
+const handleLogInAsGuest = () => {
+  setGuestUserInfo(); // Set guest user information
+}
 
-  // useEffect(() => {
-  //   if(guestUser.isGuest){
-  //     console.log('redirecting to login...');
-  //     navigate("/");
-  //   }
-  // }, [guestUser.isGuest])
+// useEffect hook that runs when guestUser.guestId changes
+useEffect(() => {
+  if(guestUser.guestId){
+    // Retrieve guestTodos from local storage and update state
+    let guestTodosFromLocalStorage = getGuestTodosFromLocalStorage();
+     // Only update the guestTodos state if the local storage contains todos
+     if (guestTodosFromLocalStorage.length > 0) {
+      setGuestTodos(guestTodosFromLocalStorage);
+    }
+    
+    navigate("/");
+  }
+}, [guestUser.guestId, navigate]);
+
+// useEffect hook that runs when the component is mounted
+useEffect(() => {
+  // Retrieve guestTodos from local storage and update state
+  let guestTodosFromLocalStorage = getGuestTodosFromLocalStorage();
+  setGuestTodos(guestTodosFromLocalStorage);
+}, []);
 
   //Invert the state of isLoggedIn
   const handleIsLoggedIn = () => {
-    isLoggedIn ? setIsLoggedIn(false): setIsLoggedIn(true);
+    if(isLoggedIn){
+      setIsLoggedIn(false);
+    } else if(!isLoggedIn){
+      setIsLoggedIn(true);
+    }
   }
+
+  const handleSetIsLoggedInToFalse = useCallback(() => {
+    setIsLoggedIn(false);
+  }, [setIsLoggedIn]);
+ 
   
   //Invert the state of redirectToLogin
   const handleRedirectToLogin = () => {
@@ -212,15 +219,17 @@ const App = () => {
       setUserFullName(storedFullName);
     }
   }, [storedFullName]);
+  
 
   useEffect(() => {
     //If jwt is detected, set isLoggedIn to true and redirectToLogin to false
-    if(jwt){
+    if(jwt && !isLoggedIn){
       console.log('jwt is present in app.js!', jwt);
       setIsLoggedIn(true);
       setRedirectToLogin(false);
+      navigate("/");
     }
-  }, [jwt])
+  }, [jwt, isLoggedIn, navigate])
 
   //UserContext Value
   const userCtxValue = {
@@ -243,7 +252,9 @@ const App = () => {
     setGuestUserInfo: setGuestUserInfo,
     setGuestUser: setGuestUser,
     guestTodos: guestTodos,
-    setGuestTodos: handleGuestTodos
+    setGuestTodos: handleGuestTodos,
+    setIsLoggedInToFalse: handleSetIsLoggedInToFalse,
+    getGuestTodosFromLocalStorage: getGuestTodosFromLocalStorage
   }
 
   return (

@@ -20,7 +20,9 @@ export const UserContext = createContext({
     setGuestUserInfo: () => {},
     setGuestTodos: () => {},
     setGuestUser: () => {},
-    guestTodos: []
+    guestTodos: [],
+    setIsLoggedInToFalse: () => {},
+    getGuestTodosFromLocalStorage: () => {}
 });
 
 

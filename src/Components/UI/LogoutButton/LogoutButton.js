@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -30,24 +30,17 @@ const LogoutButton = () => {
             console.log('no jwt found!');
         }
 
-        console.log(userCtx.guestUser);
+        console.log('Guest user is set to:', userCtx.guestUser);
 
         if(userCtx.guestUser.isGuest){
             userCtx.setGuestUser({
                 isGuest: false,
-                guestId: '',
+                guestId: null,
               });
 
-              console.log(userCtx.guestUser);
+              console.log('Guest user is set to:', userCtx.guestUser);
               
-              //Set userCtx.isLoggedIn to false
-              userCtx.setIsLoggedIn();
-              
-              //Set redirectToLogin as true
-            //   console.log(userCtx.redirectToLogin);
-              console.log('guest has logged out!');
               userCtx.setRedirectToLogin();
-            //   console.log(userCtx.redirectToLogin);
               
               localStorage.removeItem("guestId");
         }
@@ -55,21 +48,12 @@ const LogoutButton = () => {
         if(!userCtx.guestUser.isGuest){
             userCtx.setGuestUser({
                 isGuest: false,
-                guestId: '',
+                guestId: null,
               });
               
             navigate("/Login");
         }
     }
-
-    useEffect(() => {
-        console.log(userCtx.guestUser.isGuest);
-        if(!userCtx.guestUser.isGuest){
-            console.log("navigating to login screen...");
-            console.log(userCtx.guestUser.isGuest);
-            navigate("/Login");
-        }
-    }, [userCtx.guestUser.isGuest])
 
     return (
             <button className={classes.logout__btn} onClick={handleLogout}>Log out</button>
