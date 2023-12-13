@@ -39,14 +39,11 @@ const Header = () => {
   useEffect(() => {
     //If user is not logged in and redirectToLogin are true, redirect to Login page
     if (!userCtx.guestUser.isGuest && userCtx.redirectToLogin) {
-        console.log('redirecting to login page');
-
         //Set redirectToLogin as false
         userCtx.setRedirectToLogin();
 
         navigate("/Login");
       }
-    // }
   }, [userCtx.guestUser.isGuest, userCtx.redirectToLogin, navigate]);
 
   return (

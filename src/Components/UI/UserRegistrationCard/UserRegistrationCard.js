@@ -13,7 +13,7 @@ import classes from "./UserRegistrationCard.module.css";
 import Button from "../Button/Button";
 
 const UserRegistrationCard = props => {
-  // console.log('utility card');
+
   const [ confirmedPassword, setConfirmedPassword ] = useState('');
   const [ confirmedPasswordIsTouched, setConfirmedPasswordIsTouched ] = useState(false);
 

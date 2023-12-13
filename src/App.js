@@ -10,6 +10,7 @@ import classes from "./App.module.css";
 
 import { UserContext } from './store/user-context';
 
+// Retrieve guest todos from local storage, if none are found return an empty array
 const getGuestTodosFromLocalStorage = () => {
 
   let guestTodos = localStorage.getItem("todos");
@@ -21,11 +22,12 @@ const getGuestTodosFromLocalStorage = () => {
   }
 };
 
-
 const App = () => {
   console.log('app.js is rendering');
 
   //Initialize state variables
+  
+  // Check to see if there is a jwt in local storage, then set isLoggedIn to true if jwt is found. !! operator is a common way to convert a value to a boolean in js
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('jwtToken'));
   const [tasksList, setTasksList] = useState([]);
   const [isCompleted, setIsCompleted] = useState('');
@@ -45,7 +47,6 @@ const App = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // console.log(guestTodos);
 
     localStorage.setItem("todos", JSON.stringify(guestTodos));
   }, [guestTodos])
@@ -89,12 +90,7 @@ useEffect(() => {
   }
 }, [guestUser.guestId, navigate]);
 
-// useEffect hook that runs when the component is mounted
-useEffect(() => {
-  // Retrieve guestTodos from local storage and update state
-  let guestTodosFromLocalStorage = getGuestTodosFromLocalStorage();
-  setGuestTodos(guestTodosFromLocalStorage);
-}, []);
+
 
   //Invert the state of isLoggedIn
   const handleIsLoggedIn = () => {
@@ -138,6 +134,13 @@ useEffect(() => {
   //Retrieve jwt from local storage
   const jwt = localStorage.getItem('jwtToken');
 
+  // useEffect hook that runs when the component is mounted
+useEffect(() => {
+  // Retrieve guestTodos from local storage and update state
+  let guestTodosFromLocalStorage = getGuestTodosFromLocalStorage();
+  setGuestTodos(guestTodosFromLocalStorage);
+}, [jwt]);
+
   //Generalized function to construct API URL
   const constructApiUrl = (scriptName) => {
     return `http://localhost:8888/todo_backend/${scriptName}`;
@@ -161,7 +164,7 @@ useEffect(() => {
 
       if (response.ok) {
         const data = await response.json();
-        // console.log(data);
+   
         setTasksList(data); // Update state with the fetched data
       } else {
         console.error("Error:", response.status);
@@ -197,7 +200,6 @@ useEffect(() => {
       if (response.ok) {
         //After successfully inserting todos in db, fetch the updated list of todos from db
         fetchData();
-        console.log("Todo inserted successfully!");
       } else {
         console.error("Error:", response.status);
       }
@@ -220,7 +222,6 @@ useEffect(() => {
     }
   }, [storedFullName]);
   
-
   useEffect(() => {
     //If jwt is detected, set isLoggedIn to true and redirectToLogin to false
     if(jwt && !isLoggedIn){

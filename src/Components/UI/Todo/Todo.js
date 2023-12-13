@@ -7,7 +7,7 @@ import check from "../../../assets/check.png";
 import trash from "../../../assets/trash.png";
 
 const Todo = props => {
-  // console.log('new tasks is rendering...');
+
   // Render completed db column value, which arrives as a string from the fetch call, 
   // and convert to the number 0, thus a falsy value
   const [isCompleted, setIsCompleted] = useState(Number(props.assignment));
@@ -47,7 +47,8 @@ const Todo = props => {
       // Assemble object with data from the front end to send to server and update the completed column in the SQL table
       const taskIdObj = {
         taskId: props.taskId,
-        completed: updatedIsCompleted
+        completed: updatedIsCompleted,
+        completedAt: updatedIsCompleted ? new Date().toISOString() : null
       };
 
       // Call completeTodos function which sends completed todos to db
@@ -61,8 +62,15 @@ const Todo = props => {
   const completeGuestTodo = () => {
     //new array variable created with state spread out in it
     const newGuestTodos = [...userCtx.guestTodos];
-    //changing property of state slice
-    newGuestTodos[props.index].completed = true;
+    
+    // Find the todo to mark as completed
+    const todoToComplete = newGuestTodos.find(todo => todo.id === props.taskId);
+  
+    // Mark the todo as completed
+    todoToComplete.completed = true;
+
+    // Set the completedAt property to the current date and time
+    todoToComplete.completedAt = new Date().toISOString();
     
     //setting new property back on state object
     userCtx.setGuestTodos(newGuestTodos);
@@ -71,10 +79,14 @@ const Todo = props => {
   const removeGuestTodo = () => {
     //new array variable with state spread out in it
     const alteredGuestTodos = [...userCtx.guestTodos];
-    //removing task from new array variable, according to index
-    alteredGuestTodos.splice(props.index, 1);
+
+    // Find the index of the todo to mark as completed
+    const indexToDelete = alteredGuestTodos.findIndex(todo => todo.id === props.taskId);
+
+    //removing task from new array variable, according to index of todo that will be deleted
+    alteredGuestTodos.splice(indexToDelete, 1);
+
     //putting edited object back into state
-    console.log(alteredGuestTodos);
     userCtx.setGuestTodos(alteredGuestTodos);
   };
 
@@ -105,21 +117,23 @@ const Todo = props => {
     }
   };
 
+  //Determine if todo is completed, registered user todo or guest user todo
+  const completed = isCompleted || (userCtx.guestUser.isGuest && props.assignment);
+
   return (
     <div className={classes.toDo}>
       <div
         style={{
-          textDecoration: isCompleted || userCtx.guestTodos[props.index]?.completed ? "line-through" : "none",
-          textDecorationColor: isCompleted || userCtx.guestTodos[props.index]?.completed ? "#fb8f0d" : "none"
-          // textDecoration: isCompleted ? "line-through" : null,
-          // textDecorationColor: isCompleted ? "#fb8f0d" : null
+          textDecoration: completed ? "line-through" : "none",
+          textDecorationColor: completed ? "#fb8f0d" : "none"
+ 
         }}
         className={classes.task}
       >
         {props.toDoDescription}
       </div>
       <div className={classes.btn__container}>
-        <div className={classes.btn__complete} onClick={(userCtx.jwt && completeBtnHandler) || (userCtx.guestUser.isGuest && completeGuestTodo)}>
+        <div className={classes.btn__complete} onClick={(userCtx.guestUser.isGuest && completeGuestTodo) || (userCtx.jwt && completeBtnHandler)}>
           <img alt="complete" className={classes.icon} src={check} />
         </div>
         <div className={classes.btn__trash} onClick={(userCtx.jwt && removeTaskBtnHandler) || (userCtx.guestUser.isGuest && removeGuestTodo)}>

@@ -30,15 +30,11 @@ const LogoutButton = () => {
             console.log('no jwt found!');
         }
 
-        console.log('Guest user is set to:', userCtx.guestUser);
-
         if(userCtx.guestUser.isGuest){
             userCtx.setGuestUser({
                 isGuest: false,
                 guestId: null,
               });
-
-              console.log('Guest user is set to:', userCtx.guestUser);
               
               userCtx.setRedirectToLogin();
               

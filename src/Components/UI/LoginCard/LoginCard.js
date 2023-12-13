@@ -13,7 +13,7 @@ import Button from "../Button/Button";
 import { UserContext } from "../../../store/user-context";
 
 const LoginCard = props => {
-  // console.log('rendering login card');
+
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   
@@ -28,17 +28,8 @@ const LoginCard = props => {
   const isEmail = value => value.includes("@") && value.includes(".");
 
   // Initialize refs to keep track of the previous values of jwt and guestUser.isGuest
-const prevJwt = useRef(userCtx.jwt);
-const prevIsGuest = useRef(userCtx.guestUser.isGuest);
-
-  //Check to see if a JWT is stored in local storage, then login automatically
-  // useEffect(() => {
-  //   if(userCtx.jwt) {
-      
-  //       console.log('jwt present. Logging in!');
-  //       navigate("/");
-  //   }
-  // }, [navigate, userCtx.jwt]);
+  const prevJwt = useRef(userCtx.jwt);
+  const prevIsGuest = useRef(userCtx.guestUser.isGuest);
 
   useEffect(() => {
     // Only navigate if jwt has changed from null to a truthy value
@@ -50,26 +41,9 @@ const prevIsGuest = useRef(userCtx.guestUser.isGuest);
     prevJwt.current = userCtx.jwt;
   }, [navigate, userCtx.jwt]);
 
-
-  // useEffect hook that runs when userCtx.isLoggedIn changes
-//   useEffect(() => {
-//   if(userCtx.isLoggedIn){
-//     navigate("/");
-//     console.log('Logged in as registered user');
-//   }
-// }, [userCtx.isLoggedIn, navigate]);
-
-  // useEffect(() => {
-  //   if (userCtx.guestUser.isGuest) {
-    
-      
-  //     navigate("/");
-  // }}, [navigate, userCtx.guestUser.isGuest]);
-
   useEffect(() => {
     // Only navigate if guestUser.isGuest has changed from false to true
     if (prevIsGuest.current === false && userCtx.guestUser.isGuest) {
-      console.log('Guest user logged in!');
       navigate("/");
     }
     // Update the previous value of guestUser.isGuest
@@ -148,38 +122,27 @@ const prevIsGuest = useRef(userCtx.guestUser.isGuest);
   .then((data) => { if(data){
     //Destructure keys from data object from backend response
     const { result, token, full_name } = data;
-
-    console.log(full_name);
     
     //If token is performed, set it in local storage as well as user's full_name
     if(token){
       localStorage.setItem('jwtToken', token);
       localStorage.setItem("userFullName", full_name);
 
+      //Retrieve jwt from local storage
       const jwt = localStorage.getItem('jwtToken');
-      console.log(localStorage.getItem("userFullName"));
 
       //If jwt is set in local storage setIsLoggedIn to true and set the user's full_name
       if (jwt){
-        console.log(`Token: ${jwt}`);
         userCtx.setIsLoggedIn(true);
         userCtx.setUserFullName(full_name);
-        console.log(userCtx.userFullName);
-        // navigate("/");
       } 
     } else {
-      console.log('no token stored!');
       setError(true);
       setErrorMsg(result);
     }
 
   }}).catch((error) => console.log(error));
   }
-
-  useEffect(() => {
-    console.log('Guest user isGuest is set to: ', userCtx.guestUser.isGuest);
-    // console.log('Is logged in is set to: ', userCtx.isLoggedIn);
-  }, []);
 
   return (
     <div className={classes.card}>

@@ -32,8 +32,8 @@ const navigate = useNavigate();
       userCtx.setGuestUserInfo();
     }
 
+    // If user is not a guest user nor a registered user, navigate to login page
     if(!userCtx.guestUser.isGuest && !userCtx.jwt){
-        console.log('redirecting to login page');
         navigate("/Login");
     }
   }, [userCtx.guestUser.isGuest, navigate]);

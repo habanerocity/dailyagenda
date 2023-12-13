@@ -6,7 +6,7 @@ import { UserContext } from "../../../store/user-context";
 import SearchBar from "../SearchBar";
 import Todo from "../Todo/Todo";
 
-const Card = () => {
+const ToDoCard = () => {
   //initializing state
   const [enteredTask, setEnteredTask] = useState('');
   const [enteredTasksList, setEnteredTasksList] = useState([]);
@@ -20,6 +20,23 @@ const Card = () => {
     setEnteredTask(e.target.value);
   };
 
+  const sortTodosByCompletion = (todos) => {
+    //Sort todos by completion status
+    const completedTodos = todos.filter(todo => Number(todo.completed) === 1);
+
+    //Sort todos by completion status
+    const incompleteTodos = todos.filter(todo => Number(todo.completed) === 0);
+
+    // Sort completed todos by completedAt timestamp
+    completedTodos.sort((a, b) => new Date(a.completedAt) - new Date(b.completedAt));
+
+    //Concatenate completed and incomplete todos
+    const sortedTodos = completedTodos.concat(incompleteTodos);
+
+    return sortedTodos;
+
+  }
+
   const addGuestTodoHandler = (todo) => {
     //New Task Object being put together in Parent Component, task being received from Card.
     
@@ -29,7 +46,7 @@ const Card = () => {
         return [
           //state array depends on previous state objects
           ...prevTodos,
-          { id: Math.random().toString(), todo: todo, completed: false }
+          { id: Math.random().toString(), todo: todo, completed: false, completedAt: null }
         ];
       });
   
@@ -69,7 +86,11 @@ const Card = () => {
     }
   };
 
-  console.log(userCtx.guestTodos);
+  //Sort user todos by completion status
+  const sortedUserTodos = sortTodosByCompletion(userCtx.tasksList);
+
+  //Sort guest todos by completion status
+  const sortedGuestTodos = sortTodosByCompletion(userCtx.guestTodos);
 
   return (
     <div className={classes.card}>
@@ -77,7 +98,7 @@ const Card = () => {
         <h1 className={classes.header}>DO</h1>
         <hr />
         <div>
-          {userCtx.jwt && userCtx.tasksList.map((task, index) => {
+          {userCtx.jwt ? sortedUserTodos.map((task, index) => {
             return (
               //Todo element
               <Todo
@@ -91,22 +112,22 @@ const Card = () => {
                 index={index}
               />
             );
-          })}
-          {userCtx.guestUser.isGuest && userCtx.guestTodos.map((todo, index) => {
+          }) : null}
+          {userCtx.guestUser.isGuest ? sortedGuestTodos.map((todo, index) => {
             return (
               //Todo element
               <Todo
-                //Todo completed status passed down via parent component from db
+                //Todo completed status passed down via parent component from local storage
                 assignment={todo.completed}
-                //Todo Description passed down via parent component from db 
+                //Todo Description passed down via parent component from local storage 
                 toDoDescription={todo.todo}
-                //Todo task id passed down via parent component from db
+                //Todo task id passed down via parent component local from storage
                 taskId={todo.id}
                 key={todo.id}
                 index={index}
               />
             );
-          })}
+          }) : null}
         </div>
       </div>
 
@@ -122,4 +143,4 @@ const Card = () => {
   );
 };
 
-export default Card;
+export default ToDoCard;
