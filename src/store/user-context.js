@@ -14,15 +14,11 @@ export const UserContext = createContext({
     setRedirectToLogin: () => {},
     setUserFullName: () => {},
     userFullName: '',
-    constructApiUrl: () => {},
-    fetchTodosCallback: () => {},
-    apiRequest: () => {},
     setGuestUserInfo: () => {},
     setGuestTodos: () => {},
     setGuestUser: () => {},
     guestTodos: [],
-    setIsLoggedInToFalse: () => {},
-    getGuestTodosFromLocalStorage: () => {}
+    setIsLoggedInToFalse: () => {}
 });
 
 

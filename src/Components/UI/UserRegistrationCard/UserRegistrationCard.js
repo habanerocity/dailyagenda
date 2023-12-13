@@ -1,10 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 
 import { Link, useNavigate } from 'react-router-dom';
 
 import useInput from "../../../hooks/useInput";
+import useApiUrl from "../../../hooks/useApiUrl";
 
-import { UserContext } from "../../../store/user-context";
+import { registerUser } from "../../../helpers/userRegistrationApiCall";
+
+import { isNotEmpty, isEmail, isPassword, passwordMatches } from '../../../helpers/formValidation';
 
 import user_pic from '../../../assets/user_icon.svg';
 // import check_mark from '../../assets/check.svg';
@@ -18,21 +21,7 @@ const UserRegistrationCard = props => {
   const [ confirmedPasswordIsTouched, setConfirmedPasswordIsTouched ] = useState(false);
 
   //Initialize programmatic navigation
-  const navigate=useNavigate();
-
-  //Import UserContext
-  const userCtx = useContext(UserContext);
-
-  //Form validation functions
-  const isNotEmpty = value => value.trim() !== "";
-  const isEmail = value => value.includes("@") && value.includes(".");
-  const isPassword = value => value.length >= 8;
-
-  //Check to see if password and confirmedPassword match
-  const passwordMatches = (value, valueTwo) =>isNotEmpty(value) && isNotEmpty(valueTwo) && value === valueTwo;
-
-  //Check to see if confirmed password has an error
-  const confirmedPasswordHasError = !passwordMatches(enteredPassword, confirmedPassword) && confirmedPasswordIsTouched;
+  const navigate = useNavigate();
 
   //Extract values via destructuring from useInput custom hook
   const {
@@ -62,6 +51,9 @@ const UserRegistrationCard = props => {
     reset: resetPassword
   } = useInput(isNotEmpty && isPassword);
 
+  //Check to see if confirmed password has an error
+  const confirmedPasswordHasError = !passwordMatches(enteredPassword, confirmedPassword) && confirmedPasswordIsTouched;
+
   //Set confirmed password on keystroke
   const confirmedPasswordChangeHandler = (e) => {
     setConfirmedPassword(e.target.value);
@@ -90,6 +82,8 @@ const UserRegistrationCard = props => {
   ) {
     formIsValid = true;
   }
+  
+  const constructApiUrl = useApiUrl();
 
   //Function that sends user registration to db
   const formSubmissionHandler = (e) => {
@@ -116,24 +110,18 @@ const UserRegistrationCard = props => {
     }
 
     //Contruct url endpoint
-    const url = userCtx.constructApiUrl("user_registration.php");
+    const url = constructApiUrl("user_registration.php");
 
-    //Send data to db
-    fetch(url, { 
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-  }).then((response) => {
-  if(response.ok){
-    console.log('Success: ' + response.status);
+    //Call registerUser function which sends user registration to db
+    registerUser(url, formData).then((response) => {
+    if(response.ok){
+      console.log('Success: ' + response.status);
 
-    return response.json();
-  } else {
-    console.log('Error: ' + response.status);
-  }})
-  .then((data) => { if(data){
+      return response.json();
+    } else {
+      console.log('Error: ' + response.status);
+    }})
+    .then((data) => { if(data){
     console.log(data)}
 
     //Reset input fields

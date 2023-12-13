@@ -4,6 +4,7 @@ import { UserContext } from "../../../store/user-context";
 
 import { useNavigate } from 'react-router-dom';
 
+
 import LogoutButton from '../LogoutButton/LogoutButton';
 
 import classes from "./Header.module.css";
@@ -44,7 +45,7 @@ const Header = () => {
 
         navigate("/Login");
       }
-  }, [userCtx.guestUser.isGuest, userCtx.redirectToLogin, navigate]);
+  }, [userCtx, navigate]);
 
   return (
     <React.Fragment>

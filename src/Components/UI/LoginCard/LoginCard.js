@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 
+import useApiUrl from "../../../hooks/useApiUrl";
 import useInput from "../../../hooks/useInput";
 
 import user_login_pic from '../../../assets/user_login.svg';
@@ -12,7 +13,9 @@ import Button from "../Button/Button";
 
 import { UserContext } from "../../../store/user-context";
 
-const LoginCard = props => {
+import { isNotEmpty, isEmail } from '../../../helpers/formValidation';
+
+const LoginCard = (props) => {
 
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -22,10 +25,6 @@ const LoginCard = props => {
 
   //Initialize navigate variable for programmatic navigation
   const navigate = useNavigate();
-
-  //Form validation variables
-  const isNotEmpty = value => value.trim() !== "";
-  const isEmail = value => value.includes("@") && value.includes(".");
 
   // Initialize refs to keep track of the previous values of jwt and guestUser.isGuest
   const prevJwt = useRef(userCtx.jwt);
@@ -78,6 +77,9 @@ const LoginCard = props => {
     formIsValid = true;
   }
 
+  //Import constructApiUrl function from useApiUrl custom hook
+  const constructApiUrl = useApiUrl();
+
   //Handler function that is performed if formIsValid
   const formSubmissionHandler = (e) => {
     e.preventDefault();
@@ -100,7 +102,7 @@ const LoginCard = props => {
     }
 
     //Construct api url endpoint
-    const url = userCtx.constructApiUrl("user_login.php");
+    const url = constructApiUrl("user_login.php");
 
     //Perform 'POST' request to perform user authentication
     fetch(url, { 

@@ -30,6 +30,7 @@ const LogoutButton = () => {
             console.log('no jwt found!');
         }
 
+        //Clear guest ID from localStorage and redirect to login if user is Guest
         if(userCtx.guestUser.isGuest){
             userCtx.setGuestUser({
                 isGuest: false,
@@ -41,6 +42,7 @@ const LogoutButton = () => {
               localStorage.removeItem("guestId");
         }
 
+        //If user is not a guest user, navigate to login page
         if(!userCtx.guestUser.isGuest){
             userCtx.setGuestUser({
                 isGuest: false,

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext, useEffect, useReducer } from "react";
 import classes from "./ToDoCard.module.css";
 
 import { UserContext } from "../../../store/user-context";
@@ -6,10 +6,54 @@ import { UserContext } from "../../../store/user-context";
 import SearchBar from "../SearchBar";
 import Todo from "../Todo/Todo";
 
+// Define your initial state
+const initialState = {
+  enteredTask: '',
+  enteredTasksList: [],
+};
+
+// Define your reducer
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'SET_ENTERED_TASK':
+      return { ...state, enteredTask: action.payload };
+    case 'SET_ENTERED_TASKS_LIST':
+      return { ...state, enteredTasksList: action.payload };
+    default:
+      return state;
+  }
+};
+
+//Sort todos by completion status
+const sortTodosByCompletion = (todos) => {
+  if (!todos) {
+    return;
+  }
+  //Generate new array of completed todos based on completion status
+  const completedTodos = todos.filter(todo => Number(todo.completed) === 1);
+
+  //Generate new array of incomplete todos based on completion status
+  const incompleteTodos = todos.filter(todo => Number(todo.completed) === 0);
+
+  //Sort completed todos by completedAt timestamp
+  completedTodos.sort((a, b) => new Date(a.completedAt) - new Date(b.completedAt));
+
+  //Concatenate completed and incomplete todos
+  const sortedTodos = completedTodos.concat(incompleteTodos);
+
+  //Return sorted todos
+  return sortedTodos;
+}
+
 const ToDoCard = () => {
-  //initializing state
-  const [enteredTask, setEnteredTask] = useState('');
-  const [enteredTasksList, setEnteredTasksList] = useState([]);
+
+  // Use the useReducer hook
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  // Define your dispatch actions
+  const setEnteredTask = (task) => {
+    dispatch({ type: 'SET_ENTERED_TASK', payload: task });
+  };
 
   //Import userContext store
   const userCtx = useContext(UserContext);
@@ -20,66 +64,47 @@ const ToDoCard = () => {
     setEnteredTask(e.target.value);
   };
 
-  const sortTodosByCompletion = (todos) => {
-    //Sort todos by completion status
-    const completedTodos = todos.filter(todo => Number(todo.completed) === 1);
-
-    //Sort todos by completion status
-    const incompleteTodos = todos.filter(todo => Number(todo.completed) === 0);
-
-    // Sort completed todos by completedAt timestamp
-    completedTodos.sort((a, b) => new Date(a.completedAt) - new Date(b.completedAt));
-
-    //Concatenate completed and incomplete todos
-    const sortedTodos = completedTodos.concat(incompleteTodos);
-
-    return sortedTodos;
-
-  }
-
+  //Add guest todos to state and local storage
   const addGuestTodoHandler = (todo) => {
-    //New Task Object being put together in Parent Component, task being received from Card.
     
     if(userCtx.guestUser.isGuest){
-
+      //Storing guest todos in state variable via context
       userCtx.setGuestTodos(prevTodos => {
         return [
-          //state array depends on previous state objects
+          //state array depends on previous todos array
           ...prevTodos,
+          //Generate a new todo object with a random id, the todo, completion status, and completedAt timestamp
           { id: Math.random().toString(), todo: todo, completed: false, completedAt: null }
         ];
       });
   
+      //Storing guest todos in local storage
       localStorage.setItem("todos", JSON.stringify(userCtx.guestTodos));
     }
     
   };
 
-  useEffect(() => {
-    
-    localStorage.setItem("todos", JSON.stringify(enteredTasksList));
-  }, [enteredTasksList])
-
-
   //Submit todo
-  const submitHandler = e => {
+  const submitHandler = (e) => {
+    //Prevent page reload
     e.preventDefault();
 
     //Form validation to make sure empty string is not submitted
-    if (enteredTask.trim().length === 0) {
+    if (state.enteredTask.trim().length === 0) {
       return;
     }
     
     if(userCtx.jwt){
-      //Lifting state up to Parent component via context
-      userCtx.addTaskHandler(enteredTask);
+      //Storing registered user todo in state variable via context
+      userCtx.addTaskHandler(state.enteredTask);
 
       //resetting input field
       setEnteredTask("");
     }
 
     if(userCtx.guestUser.isGuest){
-      addGuestTodoHandler(enteredTask);
+      //Storing guest todo in state variable via context
+      addGuestTodoHandler(state.enteredTask);
       
       //resetting input field
       setEnteredTask("");
@@ -92,6 +117,11 @@ const ToDoCard = () => {
   //Sort guest todos by completion status
   const sortedGuestTodos = sortTodosByCompletion(userCtx.guestTodos);
 
+  //Every time enteredTasksList changes, save it to local storage
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(state.enteredTasksList));
+  }, [state.enteredTasksList])
+  
   return (
     <div className={classes.card}>
       <div className={classes.header_container}>
@@ -134,7 +164,7 @@ const ToDoCard = () => {
       <form className={classes.form__input} onSubmit={submitHandler}>
         <SearchBar
           placeholder="Enter a task..."
-          task={enteredTask}
+          task={state.enteredTask}
           change={changeHandler}
           name="Add task"
         />
