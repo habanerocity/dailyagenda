@@ -25,6 +25,11 @@ const Todo = props => {
     
     // Find the todo to mark as completed
     const todoToComplete = newGuestTodos.find(todo => todo.id === props.taskId);
+
+    // Check if the todo is already completed
+    if (todoToComplete.completed) {
+      return;
+    }
   
     // Mark the todo as completed
     todoToComplete.completed = true;
@@ -98,8 +103,12 @@ const Todo = props => {
   //Completes todos
   const completeBtnHandler = () => {
     if(userCtx.jwt){
-      // Call the updateCompleted function
-      updateCompleted();
+      //Incomplete todos are true, and complete todos are false
+      //If there are incomplete todos, perform the following
+      if(!Number(props.assignment)){
+        //Mark todos as complete, rendering a strike through the todo
+        updateCompleted();
+      }
     }
   };
 
@@ -125,7 +134,8 @@ const Todo = props => {
         {props.toDoDescription}
       </div>
       <div className={classes.btn__container}>
-        <div className={classes.btn__complete} onClick={(userCtx.guestUser.isGuest && completeGuestTodo) || (userCtx.jwt && completeBtnHandler)}>
+        {/* ! operator here negates the value, coverts it to its opposite boolean value(Truthy values become false, falsy values become true). !! operator converts a number to a boolean, a truthy value to true and a falsy value to false */}
+        <div className={classes.btn__complete} disabled={!!props.assignment} onClick={(userCtx.guestUser.isGuest && !props.assignment && completeGuestTodo) || (userCtx.jwt && completeBtnHandler)}>
           <img alt="complete" className={classes.icon} src={check} />
         </div>
         <div className={classes.btn__trash} onClick={(userCtx.jwt && removeTaskBtnHandler) || (userCtx.guestUser.isGuest && removeGuestTodo)}>

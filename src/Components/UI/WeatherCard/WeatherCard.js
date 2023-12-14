@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 
 import classes from "./WeatherCard.module.css";
 
@@ -9,6 +9,16 @@ const WeatherCard = props => {
   //Initialize weather state variables
   const [weather, setWeather] = useState({});
   const [hasError, setError] = useState(false);
+
+  //Add a flag to track whether the component is still mounted
+  const isMounted = useRef(true);
+
+  //Set the flag to false when the component is unmounted
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
 
   //API values
   const api = {
@@ -36,9 +46,14 @@ const WeatherCard = props => {
           `${api.base}/forecast.json?key=${api.key}&q=${position.coords.latitude},${position.coords.longitude}&days=${api.days}`
         );
         const data = await response.json();
-        setWeather(data);
+        //Only update the state if the component is still mounted
+        if(isMounted.current){
+          setWeather(data);
+        }
       } catch (error) {
-        setError(true);
+        if(isMounted.current){
+          setError(true);
+        }
       }
     };
   
