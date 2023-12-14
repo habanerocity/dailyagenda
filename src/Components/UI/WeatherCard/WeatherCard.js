@@ -22,9 +22,9 @@ const WeatherCard = props => {
 
   //API values
   const api = {
-    key: "521a9ac90a6f44be92d203127221306",
-    base: "https://api.weatherapi.com/v1",
-    days: "3"
+    key: process.env.REACT_APP_WEATHER_API_KEY,
+    base: process.env.REACT_APP_WEATHER_API_BASE,
+    days: process.env.REACT_APP_WEATHER_API_DAYS
   };
 
   //Days of the week
