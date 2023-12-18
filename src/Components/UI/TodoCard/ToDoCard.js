@@ -39,7 +39,7 @@ const sortTodosByCompletion = (todos) => {
   completedTodos.sort((a, b) => new Date(a.completedAt) - new Date(b.completedAt));
 
   //Concatenate completed and incomplete todos
-  const sortedTodos = completedTodos.concat(incompleteTodos);
+  const sortedTodos = incompleteTodos.concat(completedTodos);
 
   //Return sorted todos
   return sortedTodos;

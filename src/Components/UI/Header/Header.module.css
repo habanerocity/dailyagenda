@@ -13,7 +13,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 30%;
+    width: 25%;
   }
   
   .heading {
@@ -71,25 +71,86 @@
     }
   }
 
+  @media screen and (max-width: 1346px){
+    .flex__row{
+      width: 30%;
+    }
+  }
+
+  @media screen and (max-width: 1156px){
+    .flex__row{
+      width: 35%;
+    }
+  }
+
+  @media screen and (max-width: 975px){
+    .flex__row{
+      flex-direction: column;
+      align-items: end;
+      margin-bottom: 2px;
+    }
+  }
+
   @media screen and (max-width: 840px){
     .date {
       padding-top: 1rem;
       }
     
     .heading {
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+      justify-content: space-between;
+      align-items: end;
+      flex-direction: row;
       padding: 0 !important;
     }
   }
 
-  @media screen and (min-width: 1800px) {
+  @media screen and (max-width: 766px){
+    .flex__row{
+      width: 52%;
+    }
+  }
+
+  @media screen and (max-width: 613px){
+    .app_heading{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: start;
+      width: 100%;
+    }
+
+    .heading{
+      flex-direction: column;
+    }
+
+    .flex__row{
+      flex-direction: row;
+      align-items: end;
+      transform: translateY(-3px);
+      width: 100%;
+      flex-direction: column;
+      align-items: start;
+    }
+
+    .welcome{
+      margin: 0 0 0.7rem 0;
+    }
+  }
+
+  @media screen and (min-width: 1600px) {
     .daily {
-      font-size: 6.5rem;
+      font-size: 5rem;
     }
   
     .date {
-      font-size: 3.25rem;
+      font-size: 2.8rem;
+    }
+
+    .flex__row{
+      width: 30%;
+    }
+
+    .welcome{
+      font-size: 2.4rem;
     }
   }

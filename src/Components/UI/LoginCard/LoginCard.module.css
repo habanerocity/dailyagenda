@@ -142,3 +142,15 @@
     padding-left: 20px;
   } */
   
+
+  @media screen and (max-width: 800px){
+    .card{
+      width: 60%;
+    }
+  }
+
+  @media screen and (max-width: 500px){
+    .card{
+      width: 100%;
+    }
+  }

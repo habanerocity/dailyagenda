@@ -4,7 +4,7 @@
   background-color: rgba(17, 25, 40, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.125);
   height: auto;
-  width: 30%;
+  width: 50%;
   border-radius: 3rem;
   margin: 2rem 0;
   display: flex;
@@ -33,7 +33,7 @@ h2 {
 
 .header {
   color: #fff;
-  font-size: 4rem;
+  font-size: 3.2rem;
   letter-spacing: 4px;
   padding-bottom: 1.3rem;
   text-align: center;
@@ -105,5 +105,21 @@ a {
   text-decoration: 1px solid underline;
 }
 
+@media screen and (max-width: 800px){
+  .card{
+    width: 60%;
+  }
+}
 
+@media screen and (max-width: 600px){
+  .card{
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 350px){
+  .header{
+    font-size: 2.4rem;
+  }
+}
 

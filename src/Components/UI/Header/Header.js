@@ -50,8 +50,8 @@ const Header = () => {
   return (
     <React.Fragment>
       <div className={classes.heading}>
-        <div>
-          <h1 className={classes.daily}>Daily Agenda App</h1>
+        <div className={classes.app_heading}>
+          <h1 className={classes.daily}>Daily Agenda</h1>
           <h2 className={classes.welcome}>
             {userCtx.guestUser.isGuest
               ? `Welcome Guest! 👋`

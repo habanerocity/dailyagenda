@@ -6,7 +6,7 @@
   background-color: rgba(255, 255, 255, 0.125);
   color: #fff;
   border: 1px solid rgba(255, 255, 255, 0.125);
-  text-align: center;
+  text-align: left;
   border-radius: 20px;
   display: flex;
   flex-direction: row;
@@ -46,13 +46,13 @@
   margin-right: 10px;
 }
 
-@media screen and (min-width: 1800px){
+@media screen and (min-width: 1600px){
   .toDo{
-    height: 6rem;
+    height: 5rem;
     overflow: none!important;
   }
 
   .task {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 }

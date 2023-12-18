@@ -85,10 +85,10 @@ const Todo = props => {
   const deleteTodosUrl = constructApiUrl("delete_todo.php");
 
   //Call useApiRequest to complete todos
-  const completeTodosRequest = useApiRequest(completeTodosUrl, "POST");
+  const completeTodosRequest = useApiRequest(completeTodosUrl, "PUT");
   
   //Call useApiRequest to delete todos
-  const deleteTodosRequest = useApiRequest(deleteTodosUrl, "POST");
+  const deleteTodosRequest = useApiRequest(deleteTodosUrl, "DELETE");
 
   //Send completed todos to db
   const completeTodos = async (val) => {
