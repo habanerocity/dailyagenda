@@ -1,4 +1,3 @@
-// import React, { useState, useEffect, useContext } from "react";
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -6,9 +5,11 @@ import useApiUrl from "../../../hooks/useApiUrl";
 import useInput from "../../../hooks/useInput";
 
 import user_login_pic from '../../../assets/user_login.svg';
-// import check_mark from '../../../assets/check.svg';
 
 import classes from "./LoginCard.module.css";
+
+import UserAuthCard from "../UserAuthCard/UserAuthCard";
+import UserIcon from "../UserIcon/UserIcon";
 import Button from "../Button/Button";
 
 import { UserContext } from "../../../store/user-context";
@@ -17,8 +18,10 @@ import { isNotEmpty, isEmail } from '../../../helpers/formValidation';
 
 const LoginCard = (props) => {
 
-  const [error, setError] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [usernameErrorMsg, setUsernameErrorMsg] = useState('');
+  const [passwordErrorMsg, setPasswordErrorMsg] = useState('');
+  const [formIsValid, setFormIsValid] = useState(false);
+  const [formIsTouched, setFormIsTouched] = useState(false);
   
   //Import UserContext values
   const userCtx = useContext(UserContext);
@@ -56,7 +59,13 @@ const LoginCard = (props) => {
     hasError: emailHasError,
     valueChangeHandler: emailChangeHandler,
     inputBlurHandler: emailBlurHandler,
-  } = useInput(isNotEmpty && isEmail);
+  } = useInput(isNotEmpty && isEmail, usernameErrorMsg);
+
+  //If user email is not valid and user tries to reenter email, clear error message
+  const handleEmailChange = (e) => {
+    emailChangeHandler(e);
+    setUsernameErrorMsg('');
+  };
 
   const {
     value: enteredPassword,
@@ -64,18 +73,22 @@ const LoginCard = (props) => {
     hasError: passwordHasError,
     valueChangeHandler: passwordChangeHandler,
     inputBlurHandler: passwordBlurHandler,
-  } = useInput(isNotEmpty);
+  } = useInput(isNotEmpty, passwordErrorMsg);
 
-  //Initialize formIsValid variable as false
-  let formIsValid = false;
+  //If user password is not valid and user tries to reenter password, clear error message
+  const handlePasswordChange = (e) => {
+    passwordChangeHandler(e);
+    setPasswordErrorMsg('');
+  };
 
-  //Frontend validation that checks if email and password are valid, then sets formIsValid to true 
-  if (
-    emailIsValid &&
-    passwordIsValid
-  ) {
-    formIsValid = true;
-  }
+  useEffect(() => {
+    // Update formIsValid every time emailIsValid or passwordIsValid changes
+    if (emailIsValid && passwordIsValid) {
+      setFormIsValid(true);
+    } else {
+      setFormIsValid(false);
+    }
+  }, [emailIsValid, passwordIsValid]);
 
   //Import constructApiUrl function from useApiUrl custom hook
   const constructApiUrl = useApiUrl();
@@ -83,6 +96,8 @@ const LoginCard = (props) => {
   //Handler function that is performed if formIsValid
   const formSubmissionHandler = (e) => {
     e.preventDefault();
+
+    setFormIsTouched(true);
 
     //If email or password has an error stop function
     if (
@@ -123,7 +138,7 @@ const LoginCard = (props) => {
   }})
   .then((data) => { if(data){
     //Destructure keys from data object from backend response
-    const { result, token, full_name } = data;
+    const { token, full_name } = data;
     
     //If token is performed, set it in local storage as well as user's full_name
     if(token){
@@ -139,58 +154,64 @@ const LoginCard = (props) => {
         userCtx.setUserFullName(full_name);
       } 
     } else {
-      setError(true);
-      setErrorMsg(result);
-    }
+      //If there is a password error, set password error message
+      if(data.pass_error){
+        setPasswordErrorMsg(data.pass_error);
+      }
 
-  }}).catch((error) => console.log(error));
-  }
+      //If there is a username error, set username error message
+      if(data.username_error){
+        setUsernameErrorMsg(data.username_error);
+      }
+    }
+  }}).catch((error) =>{ 
+  console.log(error);
+  // Reset formIsValid state when form submission fails
+  setFormIsValid(false);
+  })}
 
   return (
-    <div className={classes.card}>
-      <div className={classes.header_container}>
-        <h1 className={classes.header}>{props.heading}</h1>
-        <hr />
-        <div className={classes.flex_container}>
-          <div className={classes.user_pic_div}>
-            <img src={user_login_pic} alt="user icon" className={classes.user_pic}/>
-          </div>
+        <UserAuthCard headerName="User Login">
+          <UserIcon pic={user_login_pic} />
           <div className={classes.form_wrapper}>
             <form className={classes.user_login_form} method="POST" onSubmit={formSubmissionHandler}>
               <input 
+              id={classes.email}
               className={`${emailHasError ? classes.input_error : null} ${emailIsValid ? classes.input_success : null }`}
-              placeholder={emailHasError ? 'Email must not be empty!' : 'Email'}
+              placeholder="Email"
               type="email"
-              onChange={emailChangeHandler}
+              onChange={handleEmailChange}
               onBlur={emailBlurHandler}
               value={enteredEmail}
               />
+              <div className={classes.error__msg}>
+                {usernameErrorMsg ? <p>{usernameErrorMsg}</p> : emailHasError ? <p>Please enter your email</p> : null}
+              </div>
               <input 
+              id={classes.password}
               className={`${passwordHasError ? classes.input_error : null} ${passwordIsValid ? classes.input_success : null }`}
-              placeholder={passwordHasError ? 'Please enter your password!' : 'Password'} 
+              placeholder="Password" 
               type="password"
-              onChange={passwordChangeHandler}
+              onChange={handlePasswordChange}
               onBlur={passwordBlurHandler}
               value={enteredPassword} 
               />
               <div className={classes.error__msg}>
-                {error ? <p>{errorMsg}</p> : null}
+                { passwordErrorMsg ? <p>{passwordErrorMsg}</p> : passwordHasError ? <p>Please enter your password</p> : null}
               </div>
               <div className={classes.btn_container}>
-                <Button type="button" disabled={!formIsValid} id={!formIsValid ? classes.disabled : null}>Login</Button>
+                <Button type="button" disabled={!formIsValid && formIsTouched}  id={!formIsValid ? classes.disabled : classes.login_btn}>Login</Button>
                 <div className={classes.or}>
-                    <hr className={classes.line} />
-                    <h6>OR</h6>
-                    <hr className={classes.line} />
+                  <hr className={classes.line} />
+                  <h6>OR</h6>
+                  <hr className={classes.line} />
                 </div>
-                    <Button type="button" onClick={userCtx.logInAsGuest} id={classes.guest_btn}>Login as Guest</Button>
+                  <Button type="button" onClick={userCtx.logInAsGuest} id={classes.guest_btn}>Login as Guest</Button>
               </div>
               <span>Don't have an account?  <Link to="/Register" >Sign up here</Link></span>
             </form>
           </div>
-        </div>
-      </div>
-    </div>
+      </UserAuthCard>
   );
 };
 

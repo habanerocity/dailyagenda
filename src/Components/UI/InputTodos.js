@@ -2,7 +2,7 @@ import React from "react";
 
 import Button from "./Button/Button";
 
-const SearchBar = props => {
+const InputTodos = (props) => {
 
   return (
     <>
@@ -19,4 +19,4 @@ const SearchBar = props => {
   );
 };
 
-export default SearchBar;
+export default InputTodos;

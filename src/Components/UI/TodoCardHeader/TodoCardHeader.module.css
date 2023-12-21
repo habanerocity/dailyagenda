@@ -1,0 +1,32 @@
+.header {
+    color: #fff;
+    font-size: 4rem;
+    letter-spacing: 4px;
+    padding-bottom: 1.3rem;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  @media screen and (min-width: 1600px){
+    .header {
+      font-size: 4.4rem;
+    }
+}
+
+@media screen and (max-width: 882px) {
+    .header {
+        font-size: 3.6rem;
+    }
+}
+
+@media screen and (max-width: 405px) {
+    .header {
+        font-size: 3.2rem;
+    }
+}
+
+@media screen and (max-width: 347px) {
+    .header {
+        font-size: 2.4rem;
+    }
+}

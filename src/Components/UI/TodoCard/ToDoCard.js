@@ -3,16 +3,17 @@ import classes from "./ToDoCard.module.css";
 
 import { UserContext } from "../../../store/user-context";
 
-import SearchBar from "../SearchBar";
+import Card from "../Card/Card";
+import InputTodos from "../InputTodos";
 import Todo from "../Todo/Todo";
 
-// Define your initial state
-const initialState = {
+// Define initial state
+const initialGuestTodoState = {
   enteredTask: '',
   enteredTasksList: [],
 };
 
-// Define your reducer
+// Define reducer
 const reducer = (state, action) => {
   switch (action.type) {
     case 'SET_ENTERED_TASK':
@@ -46,9 +47,8 @@ const sortTodosByCompletion = (todos) => {
 }
 
 const ToDoCard = () => {
-
   // Use the useReducer hook
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialGuestTodoState);
 
   // Define your dispatch actions
   const setEnteredTask = (task) => {
@@ -123,11 +123,9 @@ const ToDoCard = () => {
   }, [state.enteredTasksList])
   
   return (
-    <div className={classes.card}>
-      <div className={classes.header_container}>
-        <h1 className={classes.header}>DO</h1>
-        <hr />
-        <div>
+       <Card headerName="Do" >
+          <div className={classes.add_todos}>
+           <div className={classes.todo_container}>
           {userCtx.jwt ? sortedUserTodos.map((task, index) => {
             return (
               //Todo element
@@ -158,18 +156,17 @@ const ToDoCard = () => {
               />
             );
           }) : null}
-        </div>
-      </div>
-
+         </div>
       <form className={classes.form__input} onSubmit={submitHandler}>
-        <SearchBar
+        <InputTodos
           placeholder="Enter a task..."
           task={state.enteredTask}
           change={changeHandler}
           name="Add task"
         />
       </form>
-    </div>
+       </div>
+    </Card>
   );
 };
 

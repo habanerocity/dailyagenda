@@ -2,11 +2,17 @@ import { useState } from 'react';
 
 //Custom Hook that uses a function parameter that validates form inputs and returns input functions
 
-const useInput = (validateValue) => {
+const useInput = (validateValue, valueHasErrorMsg) => {
 	const [ enteredValue, setEnteredValue ] = useState('');
 	const [ isTouched, setIsTouched ] = useState(false);
 
-	const valueIsValid = validateValue(enteredValue);
+	let valueIsValid = validateValue(enteredValue);
+
+	//If valueHasErrorMsg is true, set valueIsValid to false
+	if (valueHasErrorMsg) {
+		valueIsValid = false;
+	  }
+
 	const hasError = !valueIsValid && isTouched;
 
 	const valueChangeHandler = (e) => {

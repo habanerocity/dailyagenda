@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -13,12 +13,19 @@ import user_pic from '../../../assets/user_icon.svg';
 // import check_mark from '../../assets/check.svg';
 
 import classes from "./UserRegistrationCard.module.css";
+
+import UserAuthCard from "../UserAuthCard/UserAuthCard";
+import UserIcon from "../UserIcon/UserIcon";
 import Button from "../Button/Button";
 
-const UserRegistrationCard = props => {
+const UserRegistrationCard = () => {
 
   const [ confirmedPassword, setConfirmedPassword ] = useState('');
   const [ confirmedPasswordIsTouched, setConfirmedPasswordIsTouched ] = useState(false);
+  const [ emailErrorMsg, setEmailErrorMsg ] = useState('');
+  const [ nameErrorMsg, setNameErrorMsg ] = useState('');
+  const [ passwordErrorMsg, setPasswordErrorMsg ] = useState('');
+  const [ confirmedPasswordErrorMsg, setConfirmedPasswordErrorMsg ] = useState('');
 
   //Initialize programmatic navigation
   const navigate = useNavigate();
@@ -133,57 +140,70 @@ const UserRegistrationCard = props => {
     // setRedirectToLogin(true);
     navigate("/Login");
   
-  }).catch((error) => console.log(error));
+  }).catch((error) => {
+    console.log(error.message);
+    setEmailErrorMsg(error.message);
+    console.log(emailErrorMsg);
+  });
   }
 
+  useEffect(() => {
+    setNameErrorMsg('Full name must not be empty!');
+  }, [nameHasError]);
+
+  useEffect(() => {
+    setPasswordErrorMsg('Password must be atleast 8 characters!');
+  }, [passwordHasError]);
+
+  useEffect(() => {
+    setConfirmedPasswordErrorMsg('Password must match!');
+  }, [confirmedPasswordHasError]);
+
   return (
-    <div className={classes.card}>
-      <div className={classes.header_container}>
-        <h1 className={classes.header}>{props.heading}</h1>
-        <hr />
+      <UserAuthCard headerName="User Registration">
         <h2>Sign up for an account today, it's free.</h2>
-        <div>
-          <div className={classes.user_pic_div}>
-            <img src={user_pic} alt="user icon" className={classes.user_pic}/>
-          </div>
-            <form className={classes.user_registration_form} method="POST" onSubmit={formSubmissionHandler}>
-              <input 
-              className={`${nameHasError ? classes.input_error : null} ${nameIsValid ? classes.input_success : null }`}
-              placeholder={nameHasError ? 'Full name must not be empty!' : 'Full name'}
-              onChange={nameChangeHandler}
-              onBlur={nameBlurHandler}
-              value={enteredName}
-              />
-              <input 
-              className={`${emailHasError ? classes.input_error : null} ${emailIsValid ? classes.input_success : null }`}
-              placeholder={emailHasError ? 'Email must not be empty!' : 'Email'}
-              type="email"
-              onChange={emailChangeHandler}
-              onBlur={emailBlurHandler}
-              value={enteredEmail}
-              />
-              <input 
-              className={`${passwordHasError ? classes.input_error : null} ${passwordIsValid ? classes.input_success : null }`}
-              placeholder={passwordHasError ? 'Password must be atleast 8 characters!' : 'Password'} 
-              type="password"
-              onChange={passwordChangeHandler}
-              onBlur={passwordBlurHandler}
-              value={enteredPassword} 
-              />
-              <input 
-              className={`${confirmedPasswordHasError ? classes.input_error : null} ${passwordMatches(enteredPassword, confirmedPassword) ? classes.input_success : null }`}
-              placeholder={confirmedPasswordHasError ? 'Password must match!' : 'Confirm Password'} 
-              type="password"
-              onChange={confirmedPasswordChangeHandler}
-              onBlur={confirmedPasswordBlurHandler}
-              value={confirmedPassword}  
-              />
-              <Button type="button" disabled={!formIsValid} id={!formIsValid ? classes.disabled : null}>Submit</Button>
-            </form>
-            <span>Already have an account?  <Link to="/Login" >Sign in here</Link></span>
-        </div>
-      </div>
-    </div>
+        <UserIcon pic={user_pic} />
+        <form className={` ${classes.flex__col} ${classes.user_registration_form}`} method="POST" onSubmit={formSubmissionHandler}>
+          <input 
+          className={`${nameHasError ? classes.input_error : null} ${nameIsValid ? classes.input_success : null }`}
+          placeholder='Full name'
+          onChange={nameChangeHandler}
+          onBlur={nameBlurHandler}
+          value={enteredName}
+          />
+          {nameHasError ? <p className={classes.error_text}>{nameErrorMsg}</p> : null}
+          <input 
+          className={`${emailHasError ? classes.input_error : null} ${emailIsValid ? classes.input_success : null }`}
+          placeholder='Email'
+          type="email"
+          onChange={emailChangeHandler}
+          onBlur={emailBlurHandler}
+          value={enteredEmail}
+          />
+          {emailHasError ? <p className={classes.error_text}>Email must not be empty!</p> : null}
+          {emailErrorMsg ? <p className={classes.error_text}>{emailErrorMsg}</p> : null}
+          <input 
+          className={`${passwordHasError ? classes.input_error : null} ${passwordIsValid ? classes.input_success : null }`}
+          placeholder='Password'
+          type="password"
+          onChange={passwordChangeHandler}
+          onBlur={passwordBlurHandler}
+          value={enteredPassword} 
+          />
+          {passwordHasError ? <p className={classes.error_text}>{passwordErrorMsg}</p> : null}
+          <input 
+          className={`${confirmedPasswordHasError ? classes.input_error : null} ${passwordMatches(enteredPassword, confirmedPassword) ? classes.input_success : null }`}
+          placeholder='Confirm Password'
+          type="password"
+          onChange={confirmedPasswordChangeHandler}
+          onBlur={confirmedPasswordBlurHandler}
+          value={confirmedPassword}  
+          />
+          {confirmedPasswordHasError ? <p className={classes.error_text}>{confirmedPasswordErrorMsg}</p> : null}
+          <Button type="button" disabled={!formIsValid} id={!formIsValid ? classes.disabled : classes.sign_up_btn}>Submit</Button>
+        </form>
+        <span>Already have an account?  <Link to="/Login" >Sign in here</Link></span>
+      </UserAuthCard>
   );
 };
 

@@ -1,13 +1,8 @@
 .btn {
-  order: none;
   font-family: inherit;
-  font-size: 1rem;
-  color: inherit;
-  background: none;
   cursor: pointer;
-  padding: 0.8rem 2rem;
+  padding: .9rem 2rem;
   display: inline-block;
-  margin: 2rem 1.5rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: 700;
@@ -16,7 +11,6 @@
   -webkit-transition: all 0.3s;
   -moz-transition: all 0.3s;
   transition: all 0.3s;
-  width: 90%;
 }
 
 .btn__submit {
@@ -25,7 +19,7 @@
   border-radius: 0.7rem;
 }
 
-@media screen and (min-width: 1200px){
+@media screen and (min-width: 450px){
   .btn {
     font-size: 1.5rem;
   }
