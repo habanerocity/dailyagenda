@@ -1,68 +1,65 @@
 .container {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    height: 100%;
-    transform: translateY(2rem);
-    padding: 0 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+  transform: translateY(2rem);
+  padding: 0 4rem;
+}
+
+.card_holder {
+  display: flex;
+  position: relative;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 95%;
+}
+
+@media screen and (min-width: 1800px) {
+  .daily {
+    font-size: 6.5rem;
   }
-  
-  .card_holder {
-    display: flex;
-    position: relative;
+
+  .date {
+    font-size: 3.25rem;
+  }
+}
+
+@media screen and (max-width: 840px){
+  .card_holder{
     flex-direction: row;
     justify-content: space-between;
-    width: 95%;
+    align-items: center;
   }
 
-  @media screen and (min-width: 1800px) {
-    .daily {
-      font-size: 6.5rem;
-    }
-  
-    .date {
-      font-size: 3.25rem;
-    }
-  }
-  
-  @media screen and (max-width: 840px){
-  
-    .card_holder{
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
-    }
-  
-    .container {
-      transform: translateY(5px);
-    }
-
-    .date {
-      padding-top: 1rem;
-    }
-  
-    .heading {
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      padding: 0 !important;
-    }
-    
-  }
-  
-  @media screen and (max-width: 660px) {
-    .card_holder{
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
+  .container {
+    transform: translateY(5px);
   }
 
-  @media screen and (max-width: 660px){
-    .container {
-      padding: 0 2rem;
-    }
+  .date {
+    padding-top: 1rem;
+  }
+
+  .heading {
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 0 !important;
   }
   
- 
+}
+
+@media screen and (max-width: 660px) {
+  .card_holder{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 660px){
+  .container {
+    padding: 0 2rem;
+  }
+}

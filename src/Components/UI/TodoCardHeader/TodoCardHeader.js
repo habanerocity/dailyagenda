@@ -9,6 +9,6 @@ const TodoCardHeader = (props) => {
             <hr />
         </React.Fragment>
     );
-    };
+};
 
 export default TodoCardHeader;

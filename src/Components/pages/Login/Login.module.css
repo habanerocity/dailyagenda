@@ -8,8 +8,8 @@
     padding: 0 4rem;
   }
 
-  @media screen and (max-width: 840px){
-    .container {
-        transform: translateY(5px);
-      }
-  }
+@media screen and (max-width: 840px){
+  .container {
+      transform: translateY(5px);
+    }
+}

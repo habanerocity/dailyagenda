@@ -8,14 +8,8 @@
     padding: 0 4rem;
   }
 
-/* .flex_container{
-    display: flex;
-    justify-self: center;
-    align-items: center;
-} */
-
-  @media screen and (max-width: 840px){
-    .container {
-        transform: translateY(5px);
-      }
-  }
+@media screen and (max-width: 840px){
+  .container {
+      transform: translateY(5px);
+    }
+}

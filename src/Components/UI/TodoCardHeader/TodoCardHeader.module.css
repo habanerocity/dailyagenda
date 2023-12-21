@@ -7,9 +7,9 @@
     text-transform: uppercase;
   }
 
-  @media screen and (min-width: 1600px){
+@media screen and (min-width: 1600px){
     .header {
-      font-size: 4.4rem;
+        font-size: 4.4rem;
     }
 }
 

@@ -5,7 +5,6 @@ import { UserContext } from "../../../store/user-context";
 
 import Card from "../Card/Card";
 import InputTodos from "../InputTodos";
-import Todo from "../Todo/Todo";
 
 // Define initial state
 const initialGuestTodoState = {
@@ -26,24 +25,16 @@ const reducer = (state, action) => {
 };
 
 //Sort todos by completion status
-const sortTodosByCompletion = (todos) => {
+const sortIncompleteTodos = (todos) => {
   if (!todos) {
     return;
   }
-  //Generate new array of completed todos based on completion status
-  const completedTodos = todos.filter(todo => Number(todo.completed) === 1);
 
   //Generate new array of incomplete todos based on completion status
   const incompleteTodos = todos.filter(todo => Number(todo.completed) === 0);
 
-  //Sort completed todos by completedAt timestamp
-  completedTodos.sort((a, b) => new Date(a.completedAt) - new Date(b.completedAt));
-
-  //Concatenate completed and incomplete todos
-  const sortedTodos = incompleteTodos.concat(completedTodos);
-
   //Return sorted todos
-  return sortedTodos;
+  return incompleteTodos;
 }
 
 const ToDoCard = () => {
@@ -59,14 +50,13 @@ const ToDoCard = () => {
   const userCtx = useContext(UserContext);
 
   //Change enteredTask state variable every keystroke
-  const changeHandler = e => {
+  const changeHandler = (e) => {
     //Storing user input into state variable
     setEnteredTask(e.target.value);
   };
 
   //Add guest todos to state and local storage
   const addGuestTodoHandler = (todo) => {
-    
     if(userCtx.guestUser.isGuest){
       //Storing guest todos in state variable via context
       userCtx.setGuestTodos(prevTodos => {
@@ -81,7 +71,6 @@ const ToDoCard = () => {
       //Storing guest todos in local storage
       localStorage.setItem("todos", JSON.stringify(userCtx.guestTodos));
     }
-    
   };
 
   //Submit todo
@@ -112,10 +101,10 @@ const ToDoCard = () => {
   };
 
   //Sort user todos by completion status
-  const sortedUserTodos = sortTodosByCompletion(userCtx.tasksList);
+  const sortedUserTodos = sortIncompleteTodos(userCtx.tasksList);
 
   //Sort guest todos by completion status
-  const sortedGuestTodos = sortTodosByCompletion(userCtx.guestTodos);
+  const sortedGuestTodos = sortIncompleteTodos(userCtx.guestTodos);
 
   //Every time enteredTasksList changes, save it to local storage
   useEffect(() => {
@@ -124,48 +113,19 @@ const ToDoCard = () => {
   
   return (
        <Card headerName="Do" >
-          <div className={classes.add_todos}>
-           <div className={classes.todo_container}>
-          {userCtx.jwt ? sortedUserTodos.map((task, index) => {
-            return (
-              //Todo element
-              <Todo
-                //Todo completed status passed down via parent component from db
-                assignment={task.completed}
-                //Todo Description passed down via parent component from db 
-                toDoDescription={task.description}
-                //Todo task id passed down via parent component from db
-                taskId={task.id}
-                key={task.id}
-                index={index}
-              />
-            );
-          }) : null}
-          {userCtx.guestUser.isGuest ? sortedGuestTodos.map((todo, index) => {
-            return (
-              //Todo element
-              <Todo
-                //Todo completed status passed down via parent component from local storage
-                assignment={todo.completed}
-                //Todo Description passed down via parent component from local storage 
-                toDoDescription={todo.todo}
-                //Todo task id passed down via parent component local from storage
-                taskId={todo.id}
-                key={todo.id}
-                index={index}
-              />
-            );
-          }) : null}
-         </div>
-      <form className={classes.form__input} onSubmit={submitHandler}>
-        <InputTodos
-          placeholder="Enter a task..."
-          task={state.enteredTask}
-          change={changeHandler}
-          name="Add task"
-        />
-      </form>
-       </div>
+        <div className={classes.add_todos}>
+          <div className={classes.todo_container}>
+            {userCtx.jwt ? userCtx.renderTodos(sortedUserTodos, false) : userCtx.guestUser.isGuest ? userCtx.renderTodos(sortedGuestTodos, true) : null}
+          </div>
+        <form className={classes.form__input} onSubmit={submitHandler}>
+          <InputTodos
+            placeholder="Enter a todo..."
+            task={state.enteredTask}
+            change={changeHandler}
+            name="Add task"
+          />
+        </form>
+      </div>
     </Card>
   );
 };

@@ -4,6 +4,7 @@ import useApi from "./hooks/useApi";
 
 import { Routes, Route, useNavigate } from 'react-router-dom';
 
+import Todo from "./Components/UI/Todo/Todo";
 import Home from './Components/pages/Home/Home';
 import Register from './Components/pages/Register/Register';
 import Login from "./Components/pages/Login/Login";
@@ -21,6 +22,21 @@ const getGuestTodosFromLocalStorage = () => {
   } else {
     return [];
   }
+};
+
+//Render todos for both registered and guest users
+const renderTodos = (todos, isGuest) => {
+  return todos.map((todo, index) => {
+    return (
+      <Todo
+        assignment={todo.completed}
+        toDoDescription={isGuest ? todo.todo : todo.description}
+        taskId={todo.id}
+        key={todo.id}
+        index={index}
+      />
+    );
+  });
 };
 
 const App = () => {
@@ -170,7 +186,6 @@ const App = () => {
     }
   }, [jwt, fetchData, navigate, storedFullName]);
 
-
   //UserContext Value
   const userCtxValue = {
     isLoggedIn,
@@ -178,6 +193,7 @@ const App = () => {
     tasksList,
     isCompleted,
     fetchData,
+    renderTodos,
     addTaskHandler,
     redirectToLogin,
     jwt,

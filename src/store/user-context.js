@@ -6,6 +6,7 @@ export const UserContext = createContext({
     logInAsGuest: () => {},
     tasksList: [],
     setTasksList: () => {},
+    renderTodos: () => {},
     fetchData: () =>{},
     enteredTask: '',
     setEnteredTask: () => {},
@@ -20,5 +21,3 @@ export const UserContext = createContext({
     guestTodos: [],
     setIsLoggedInToFalse: () => {}
 });
-
-

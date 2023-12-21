@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import classes from "./Home.module.css";
 
 import Header from "../../UI/Header/Header";
+import DoneCard from "../../UI/DoneCard/DoneCard";
 import WeatherCard from "../../UI/WeatherCard/WeatherCard";
 import TodoCard from "../../UI/TodoCard/ToDoCard";
 
@@ -38,17 +39,15 @@ const navigate = useNavigate();
     }
   }, [userCtx.guestUser.isGuest, navigate]);
   
-
   return (
-  
     <div className={classes.container}>
       <Header />
       <div className={classes.card_holder}>
         <TodoCard />
+        <DoneCard />
         <WeatherCard cardTitle="WEATHER" />
       </div>
     </div>
-
   );
 };
 

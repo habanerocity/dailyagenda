@@ -1,39 +1,39 @@
 .user__card {
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    background-color: rgba(17, 25, 40, 0.75);
-    border: 1px solid rgba(255, 255, 255, 0.125);
-    height: auto;
-    width: 40%;
-    border-radius: 3rem;
-    margin: 2rem 0;
-    display: flex;
-    position: relative;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-  }
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background-color: rgba(17, 25, 40, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  height: auto;
+  width: 40%;
+  border-radius: 3rem;
+  margin: 2rem 0;
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
 
 .header_container {
-    width: 90%;
-    position: relative;
-    padding: 3rem 0;
+  width: 90%;
+  position: relative;
+  padding: 3rem 0;
 }
 
 @media screen and (min-width: 1200px){
-    .user__card{
-      max-width: 30%;
-    }
+  .user__card{
+    max-width: 30%;
   }
+}
     
-  @media screen and (max-width: 800px){
-    .user__card{
-      width: 60%;
-    }
+@media screen and (max-width: 800px){
+  .user__card{
+    width: 60%;
   }
-  
-  @media screen and (max-width: 600px){
-    .user__card{
-      width: 100%;
-    }
+}
+
+@media screen and (max-width: 600px){
+  .user__card{
+    width: 100%;
   }
+}
