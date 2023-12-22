@@ -1,5 +1,6 @@
 .toDo {
   width: 100%;
+  padding: 1.2rem;
   backdrop-filter: blur(16px) saturate(120%);
   -webkit-backdrop-filter: blur(16px) saturate(120%);
   background-color: rgba(255, 255, 255, 0.125);
@@ -14,7 +15,6 @@
   margin-top: 1rem;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   font-size: 20px;
-  /* overflow: scroll; */
 }
 
 .btn__container {
@@ -27,22 +27,26 @@
   cursor: pointer;
   position: relative;
   display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.btn__trash {
+  margin-left: 8px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .icon {
-  height: 3rem;
+  width: 2.4rem;
+  cursor: pointer;
 }
 
 .task {
-  margin-left: 10px;
-  font-size: 1.5rem;
-}
-
-.btn__trash {
-  cursor: pointer;
-  margin-right: 10px;
+  font-size: 1.6rem;
 }
 
 @media screen and (min-width: 1600px){

@@ -7,8 +7,8 @@ import classes from "./Todo.module.css";
 
 import { UserContext } from "../../../store/user-context";
 
-import check from "../../../assets/check.png";
-import trash from "../../../assets/trash.png";
+import check from "../../../assets/check.svg";
+import trash from "../../../assets/red_trash-2.svg";
 
 const Todo = props => {
   // Render completed db column value, which arrives as a string from the fetch call, 

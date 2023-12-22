@@ -1,10 +1,14 @@
 import { useContext } from 'react';
 
 import { UserContext } from '../store/user-context';
+import { AuthContext } from '../store/AuthContext';
 
 //Custom hook to make API requests
 const useApiRequest = (url, method) => {
+
+  //Import userContext and authContext
   const userCtx = useContext(UserContext);
+  const authCtx = useContext(AuthContext);
 
   const apiRequest = async (body) => {
     try {
@@ -12,7 +16,7 @@ const useApiRequest = (url, method) => {
         method,
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${userCtx.jwt}`
+          "Authorization": `Bearer ${authCtx.jwt}`
         },
         body: body ? JSON.stringify(body) : undefined
       });

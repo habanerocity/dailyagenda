@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background: url("../src/assets/mj.png") no-repeat center center;
+  background: url("../src/assets/hubble.PNG") no-repeat center center;
   background-size: cover; /* or contain depending on what you want */
   background-position: center center;
   background-repeat: no-repeat;
