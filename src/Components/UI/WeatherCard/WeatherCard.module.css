@@ -1,13 +1,19 @@
+.flex_center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .country {
-  margin-top: 1rem;
-  font-size: 3rem;
+  margin-top: var(--margin-top);
+  font-size: var(--font-size-large);
 }
 
 .forecast {
   padding: 1rem;
   margin-top: 2rem;
   background-color: rgba(255, 255, 255, 0.125);
-  color: #fff;
+  color: var(--color-white);
   border: 1px solid rgba(255, 255, 255, 0.125);
   text-align: center;
   border-radius: 20px;
@@ -15,7 +21,11 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  /* overflow: scroll; */
+}
+
+.flex_row{
+  flex-direction: row;
+  height: 100%;
 }
 
 .high {
@@ -28,14 +38,11 @@
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  font-size: 2.5rem;
+  font-size: var(--font-size-medium);
   padding-top: 5px;
 }
 
 .loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   padding-bottom: 3rem;
   transform: translateY(3rem);
 }
@@ -48,7 +55,7 @@
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   background-color: rgba(17, 25, 40, 0.75);
   border: 10px solid transparent;
-  border-top-color: #fb8f0d;
+  border-top-color: var(--color-orange);
   border-radius: 50%;
   animation: loading 1s linear infinite;
 }
@@ -60,101 +67,93 @@
 }
 
 .location {
-  font-size: 3rem;
+  font-size: var(--font-size-large);
   margin-top: 2rem;
 }
 
-.search > input {
-  height: 3.1rem;
-  border-radius: 4px;
-  width: auto;
-  font-size: 1.5rem;
-  padding-left: 1rem;
-}
-
 .substring {
-  font-size: 1.3rem;
+  font-size: var(--font-size-small);
 }
 
 .sun {
-  margin-top: 1rem;
+  margin-top: var(--margin-top);
 }
 
 .temperature {
   font-size: 6rem;
-  margin-top: 1rem;
+  margin-top: var(--margin-top);
 }
 
 .tomorrow {
-  font-size: 3.5rem;
+  font-size: var(--font-size-x-large);
   padding-right: 2rem;
   height: 100%;
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  border-right: #fff thick 20px;
+  border-right: var(--color-white) thick 20px;
 }
 
 .day_after_tomorrow {
-  font-size: 3.5rem;
-  height: 100%;
-  display: flex;
+  font-size: var(--font-size-x-large);
+  height: 100%; 
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 }
 
 .weather_info {
-  /* padding-top: 1rem; */
-  color: #fff;
+  color: var(--color-white);
   text-align: center;
   position: relative;
-  display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+}
+
+#weather_button{
+  background-color: transparent;
+  border: 3px solid var(--color-orange);
+  color:var(--color-white);
+  width: 50%;
+  padding: 2rem;
+  cursor: pointer;
+}
+
+#weather_button:hover{
+  background-color: var(--color-orange);
+  color: var(--color-white);
 }
 
 .weather_condition {
   font-size: 2rem;
-  margin-top: 1rem;
+  margin-top: var(--margin-top);
 }
 
 .valid_location {
-  color: #fff;
-  font-size: 3rem;
-  display:flex;
+  color: var(--color-white);
+  font-size: var(--font-size-large);
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   height: 100%;
-  /* margin-bottom: 3rem; */
 }
 
 .valid_location > h1 {
-  font-size: 3.5rem;
+  font-size: var(--font-size-x-large);
   padding-bottom: 1rem;
 }
 
 @media screen and (max-width: 1020px){
   .location {
-    font-size: 2.5rem;
+    font-size: var(--font-size-medium);
   }
 
   .country {
-    margin-top: 1rem;
-    font-size: 2.5rem;
+    margin-top: var(--margin-top);
+    font-size: var(--font-size-medium);
   }
 
   .temperature {
     font-size: 5rem;
-    margin-top: 1rem;
+    margin-top: var(--margin-top);
   }
 
   .weather_condition {
-    font-size: 1.5rem;
-    margin-top: 1rem;
+    font-size: var(--font-size-small);
+    margin-top: var(--margin-top);
   }
 
 }
@@ -167,11 +166,11 @@
 
 @media screen and (max-width: 810px){
   .day {
-    font-size: 1.5rem;
+    font-size: var(--font-size-small);
   }
 
   .max {
-    font-size: 1.3rem;
+    font-size: var(--font-size-small);
   }
 }
 
@@ -191,19 +190,19 @@
 
 @media screen and (min-width: 1600px){
   .location {
-    font-size: 3rem;
+    font-size: var(--font-size-large);
   }
 
   .country {
-    font-size: 3rem;
+    font-size: var(--font-size-large);
   }
 
   .temperature {
-    font-size: 3rem;
+    font-size: 6rem;
   }
 
   .weather_condition {
-    font-size: 2.5rem;
+    font-size: var(--font-size-medium);
   }
 
   .high {
@@ -215,17 +214,16 @@
   }
 
   .icon {
-    font-size: 3rem;
+    font-size: var(--font-size-large);
   }
 
   .forecast {
     width: 75%;
     overflow: none!important;
-    /* margin-top: 9rem; */
   }
 
   .day {
-    font-size: 2.5rem;
+    font-size: var(--font-size-medium);
   }
 
   .weather_pic {

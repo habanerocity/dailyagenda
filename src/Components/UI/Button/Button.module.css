@@ -14,13 +14,13 @@
 }
 
 .btn__submit {
-  background: #fb8f0d;
-  color: #fff;
-  border-radius: 0.7rem;
+  background: var(--color-orange);
+  color: var(--color-white);
+  border-radius: 0.6rem;
 }
 
 @media screen and (min-width: 450px){
   .btn {
-    font-size: 1.5rem;
+    font-size: var(--font-size-small);
   }
 }

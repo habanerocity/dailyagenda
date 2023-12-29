@@ -5,10 +5,10 @@ import TodoCardHeader from '../TodoCardHeader/TodoCardHeader';
 
 const Card = (props) => {
   return (
-    <div className={classes.card}>
+    <div id={props.id} className={classes.card}>
       <div className={classes.header_container}>
         <div>
-          <TodoCardHeader name={props.headerName} />
+          <TodoCardHeader  name={props.headerName} />
         </div>
         {props.children}
       </div>

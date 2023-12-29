@@ -1,9 +1,22 @@
+:root {
+  --font-size-x-large: 3.6rem;
+  --font-size-large: 3.2rem;
+  --font-size-medium: 2.4rem;
+  --font-size-small: 1.6rem;
+  --font-size-x-small: 1.2rem;
+  --font-size-input: 2rem;
+  --margin-top: 1rem;
+  --color-white: #fff;
+  --color-orange: #fb8f0d;
+}
+
+*:focus {
+  outline: none;
+}
+
 .App {
   text-align: center;
-  background: url("../src/assets/hubble.PNG") no-repeat center center;
-  background-size: cover; /* or contain depending on what you want */
-  background-position: center center;
-  background-repeat: no-repeat;
+  background: url("../src/assets/hubble.PNG") no-repeat center center / cover;
   min-height: 100vh;
   overflow: hidden;
 }
@@ -13,8 +26,4 @@
   margin: 0;
   font-size: 62.5%;
   box-sizing: border-box;
-}
-
-html {
-  background-color: #f5f5f5;
 }

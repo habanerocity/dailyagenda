@@ -1,5 +1,5 @@
 .header {
-    color: #fff;
+    color: var(--color-white);
     font-size: 4rem;
     letter-spacing: 4px;
     padding-bottom: 1.3rem;
@@ -15,18 +15,18 @@
 
 @media screen and (max-width: 882px) {
     .header {
-        font-size: 3.6rem;
+        font-size: var(--font-size-x-large);
     }
 }
 
 @media screen and (max-width: 405px) {
     .header {
-        font-size: 3.2rem;
+        font-size: var(--font-size-large);
     }
 }
 
 @media screen and (max-width: 347px) {
     .header {
-        font-size: 2.4rem;
+        font-size: var(--font-size-medium);
     }
 }

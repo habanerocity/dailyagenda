@@ -31,7 +31,7 @@ const DoneCard = () => {
     const sortedCompletedGuestTodos = sortCompletedTodos(userCtx.guestTodos);
 
     return (
-        <Card headerName="Done" >
+        <Card id={classes.done_card} headerName="Done" >
            <div className={classes.add_todos}>
                 <div className={classes.todo_container}>
                     {userCtx.jwt ? userCtx.renderTodos(sortedCompletedUserTodos, false) : userCtx.guestUser.isGuest ? userCtx.renderTodos(sortedCompletedGuestTodos, true) : null}

@@ -6,3 +6,12 @@
   justify-content: space-between;
   align-items: normal;
 }
+
+.todo_container {
+  overflow: scroll;
+  max-height: 92%;
+}
+
+#done_card{
+  height: 65vh;
+}

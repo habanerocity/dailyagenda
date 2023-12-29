@@ -2,7 +2,6 @@
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   background-color: rgba(17, 25, 40, 0.75);
-  /* overflow: scroll; */
   border: 1px solid rgba(255, 255, 255, 0.125);
   min-height: 81vh;
   width: 30%;
@@ -25,7 +24,20 @@
   justify-content: flex-start;
 }
 
-@media screen and (max-width: 660px){
+@media screen and (max-width: 1132px){
+  .card{
+    min-height: 65rem;
+    width: 40%;
+  }
+}
+
+@media screen and (max-width: 870px){
+  .card{
+    width: 68%;
+  }
+}
+
+@media screen and (max-width: 504px){
   .card{
     min-height: 65rem;
     width: 100%;

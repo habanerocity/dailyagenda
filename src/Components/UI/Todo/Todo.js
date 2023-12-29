@@ -10,7 +10,7 @@ import { UserContext } from "../../../store/user-context";
 import check from "../../../assets/check.svg";
 import trash from "../../../assets/red_trash-2.svg";
 
-const Todo = props => {
+const Todo = (props) => {
   // Render completed db column value, which arrives as a string from the fetch call, 
   // and convert to the number 0, thus a falsy value
   const [isCompleted, setIsCompleted] = useState(Number(props.assignment));
@@ -127,7 +127,8 @@ const Todo = props => {
       <div
         style={{
           textDecoration: completed ? "line-through" : "none",
-          textDecorationColor: completed ? "#fb8f0d" : "none"
+          textDecorationColor: completed ? "#fb8f0d" : "none",
+          color: completed ? "#ada6a6" : "#fff"
         }}
         className={classes.task}
       >

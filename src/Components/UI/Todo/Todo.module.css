@@ -4,7 +4,7 @@
   backdrop-filter: blur(16px) saturate(120%);
   -webkit-backdrop-filter: blur(16px) saturate(120%);
   background-color: rgba(255, 255, 255, 0.125);
-  color: #fff;
+  color: var(--color-white);
   border: 1px solid rgba(255, 255, 255, 0.125);
   text-align: left;
   border-radius: 20px;
@@ -12,9 +12,9 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: var(--margin-top);
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  font-size: 20px;
+  font-size: var(--font-size-small);
 }
 
 .btn__container {
@@ -46,7 +46,7 @@
 }
 
 .task {
-  font-size: 1.6rem;
+  font-size: var(--font-size-small);
 }
 
 @media screen and (min-width: 1600px){
@@ -56,6 +56,6 @@
   }
 
   .task {
-    font-size: 2rem;
+    font-size: var(--font-size-small);
   }
 }

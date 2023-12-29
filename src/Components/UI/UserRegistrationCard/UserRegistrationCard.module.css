@@ -4,7 +4,7 @@
   display: inline-block;
   text-align: left;
   color: red;
-  font-size: 1.5rem;
+  font-size: var(--font-size-small);
   font-weight: bold;
 }
 
@@ -16,9 +16,9 @@
 }
 
 h2 {
-  font-size: 1.6rem;
+  font-size: var(--font-size-small);
   margin-top: 1.3rem;
-  color: #fff;
+  color: var(--color-white);
 }
 
 .user_pic{
@@ -36,14 +36,14 @@ input{
   position: relative;
   padding-left: 2rem;
   background-color: rgba(255, 255, 255, 0.125);
-  color: #fff;
+  color: var(--color-white);
   border: 1px solid rgba(255, 255, 255, 0.125);
   border-radius: 10px;
-  font-size: 2rem;
+  font-size: var(--font-size-input);
 }
 
 input::placeholder{
-  font-size: 2rem;
+  font-size: var(--font-size-input);
   line-height: 4rem;
 }
 
@@ -72,13 +72,13 @@ input:not(:first-of-type) {
 }
 
 span {
-  color: #fff;
-  font-size: 1.2rem;
+  color: var(--color-white);
+  font-size: var(--font-size-x-small);
 }
 
 a {
-  font-size: 1.2rem;
-  color: #fff;
+  font-size: var(--font-size-x-small);
+  color: var(--color-white);
   cursor: pointer;
   text-decoration: 1px solid underline;
 }

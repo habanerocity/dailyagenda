@@ -4,7 +4,7 @@ import classes from "./ToDoCard.module.css";
 import { UserContext } from "../../../store/user-context";
 
 import Card from "../Card/Card";
-import InputTodos from "../InputTodos";
+import InputTodos from "../InputTodos/InputTodos";
 
 // Define initial state
 const initialGuestTodoState = {
@@ -40,6 +40,8 @@ const sortIncompleteTodos = (todos) => {
 const ToDoCard = () => {
   // Use the useReducer hook
   const [state, dispatch] = useReducer(reducer, initialGuestTodoState);
+
+
 
   // Define your dispatch actions
   const setEnteredTask = (task) => {
@@ -112,7 +114,7 @@ const ToDoCard = () => {
   }, [state.enteredTasksList])
   
   return (
-       <Card headerName="Do" >
+       <Card id={classes.todo_card} headerName="Do" >
         <div className={classes.add_todos}>
           <div className={classes.todo_container}>
             {userCtx.jwt ? userCtx.renderTodos(sortedUserTodos, false) : userCtx.guestUser.isGuest ? userCtx.renderTodos(sortedGuestTodos, true) : null}
@@ -122,7 +124,7 @@ const ToDoCard = () => {
             placeholder="Enter a todo..."
             task={state.enteredTask}
             change={changeHandler}
-            name="Add task"
+            name="➕ Add todo"
           />
         </form>
       </div>

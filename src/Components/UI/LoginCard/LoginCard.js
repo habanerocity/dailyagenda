@@ -199,9 +199,9 @@ const LoginCard = (props) => {
               <div className={classes.error__msg}>
                 { passwordErrorMsg ? <p>{passwordErrorMsg}</p> : passwordHasError ? <p>Please enter your password</p> : null}
               </div>
-              <div className={classes.btn_container}>
+              <div className={`${classes.flex_center} ${classes.btn_container}`}>
                 <Button type="button" disabled={!formIsValid && formIsTouched}  id={!formIsValid ? classes.disabled : classes.login_btn}>Login</Button>
-                <div className={classes.or}>
+                <div className={`${classes.flex_center} ${classes.or}`}>
                   <hr className={classes.line} />
                   <h6>OR</h6>
                   <hr className={classes.line} />

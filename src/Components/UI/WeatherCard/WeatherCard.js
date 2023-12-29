@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 
 import Card from "../Card/Card";
-
+import Button from "../../UI/Button/Button";
 import classes from "./WeatherCard.module.css";
 
 import sunrise from "../../../assets/whitesunrise.png";
@@ -11,6 +11,7 @@ const WeatherCard = () => {
   //Initialize weather state variables
   const [weather, setWeather] = useState({});
   const [hasError, setError] = useState(false);
+  const [hasClicked, setHasClicked] = useState(false);
 
   //Add a flag to track whether the component is still mounted
   const isMounted = useRef(true);
@@ -65,10 +66,14 @@ const WeatherCard = () => {
     } catch (err) {
       console.error(err);
     }
+
+    setHasClicked(true);
   }, [api.base, api.days, api.key]);
   
   //Fetch weather when component mounts
   useEffect(() => {
+
+    if (hasClicked) {
     fetchWeather();
     
     const intervalId = setInterval(() => {
@@ -78,13 +83,20 @@ const WeatherCard = () => {
     return () => {
       clearInterval(intervalId); // Cleanup on unmount
     };
+  }
     
-  }, [fetchWeather]);
+  }, [fetchWeather, hasClicked]);
 
   return (
     <Card headerName="Weather">
-      {weather.forecast ? (
-        <div className={classes.weather_info}>
+      {!hasClicked ? (
+        <div className={`${classes.flex_center} ${classes.flex_row}`}>
+          <Button id={classes.weather_button} onClick={fetchWeather}>
+          🌤️ Get Current Weather
+          </Button>
+        </div>
+      ) :weather.forecast ? (
+        <div className={`${classes.flex_center} ${classes.weather_info}`}>
           <h1 className={classes.location}>
             {`${weather.location.name},`}
           </h1>
@@ -115,7 +127,7 @@ const WeatherCard = () => {
             </span>
           </div>
           <div className={classes.forecast}>
-            <div className={classes.tomorrow}>
+            <div className={`${classes.flex_center} ${classes.tomorrow}`}>
               <h3 className={classes.day}>Tomorrow</h3>
               <img className={classes.weather_pic} alt="weather conditions" src={`https://${weather.forecast.forecastday[1].day.condition.icon}`} />
               <div className={classes.highLow}>
@@ -124,7 +136,7 @@ const WeatherCard = () => {
                 </h3>
               </div>
             </div>
-            <div className={classes.day_after_tomorrow}>
+            <div className={`${classes.flex_center} ${classes.day_after_tomorrow}`}>
               <h3 className={classes.day}>
                 {days[new Date(weather.forecast.forecastday[2].date).getUTCDay()]}
               </h3>
@@ -138,10 +150,10 @@ const WeatherCard = () => {
           </div>
         </div>
       ) : (
-          <div className={classes.valid_location}>
+          <div className={`${classes.flex_center} ${classes.valid_location}`}>
             {hasError ? <h1>Error</h1> : <h1>Getting Location...</h1>}
             <div>Please Enable Location Services</div>
-            {hasError ? '' : <div className={classes.loading}></div>}
+            {hasError ? '' : <div className={`${classes.flex_center} ${classes.loading}`}></div>}
           </div>
         )}
     </Card>

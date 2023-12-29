@@ -40,7 +40,6 @@ const renderTodos = (todos, isGuest) => {
 };
 
 const App = () => {
-  console.log('app.js is rendering');
 
   //Initialize state variables
   

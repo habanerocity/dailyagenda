@@ -1,6 +1,8 @@
 import React from "react";
 
-import Button from "./Button/Button";
+import Button from "../Button/Button";
+
+import classes from "./InputTodos.module.css";
 
 const InputTodos = (props) => {
 
@@ -8,13 +10,13 @@ const InputTodos = (props) => {
     <>
       <input
         type="text"
-        id="field"
+        // id="field"
         placeholder={props.placeholder}
         onKeyPress={props.onKeyPress}
         value={props.task}
         onChange={props.change}
       />
-      <Button>{props.name}</Button>
+      <Button id={classes.field}>{props.name}</Button>
     </>
   );
 };

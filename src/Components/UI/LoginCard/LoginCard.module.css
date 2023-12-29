@@ -8,7 +8,7 @@
   display: inline-block;
   text-align: left;
   color: red;
-  font-size: 2rem;
+  font-size: var(--font-size-input);
   font-weight: bold;
 }
 
@@ -19,13 +19,13 @@ input{
   position: relative;
   padding-left: 2rem;
   background-color: rgba(255, 255, 255, 0.125);
-  color: #fff;
+  color: var(--color-white);
   border: 1px solid rgba(255, 255, 255, 0.125);
   border-radius: 10px;
 }
 
 input::placeholder{
-  font-size: 2rem;
+  font-size: var(--font-size-input);
   line-height: 4rem;
 }
 
@@ -50,45 +50,45 @@ input::placeholder{
 
 #guest_btn {
   background-color: transparent;
-  border-color: #fb8f0d;
+  border-color: var(--color-orange);
   width: 90%;
   margin: 1.2rem 0;
 }
 
 #guest_btn:hover{
-  background-color: #fb8f0d;
+  background-color: var(--color-orange);
   cursor: pointer;
   margin-top: 1.2rem 0;
 }
 
 #login_btn{
-  background-color: #fb8f0d;
+  background-color: var(--color-orange);
   width: 90%;
   margin: 2.4rem 0 1.2rem 0;
 }
 
 .btn_container{
-  display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
 }
 
+.flex_center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 span {
-  color: #fff;
-  font-size: 1.2rem;
+  color: var(--color-white);
+  font-size: var(--font-size-x-small);
 }
 
 .or h6{
-  font-size: 1.5rem;
-  color: #fff;
+  font-size: var(--font-size-small);
+  color: var(--color-white);
   padding: 0 1rem;
 }
 
 .or{
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 90%;
 }
 

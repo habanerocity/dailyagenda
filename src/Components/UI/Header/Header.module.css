@@ -1,10 +1,10 @@
 .daily {
-  color: #fff;
+  color: var(--color-white);
   font-size: 4rem;
 }
 
 .date {
-  color: #fff;
+  color: var(--color-white);
   font-size: 2rem;
   transform: translateY(-4px);
 }
@@ -34,41 +34,6 @@
 .welcome{
   text-align: left;
   font-size: 2rem;
-}
-
-.sup {
-  animation-name: wave;
-  animation-duration: 2s;
-  animation-delay: 1.8s;
-  transform-origin: 70% 70%;
-  display: inline-block;
-}
-
-@keyframes wave {
-  0% {
-    transform: rotate(0deg);
-  }
-  15% {
-    transform: rotate(16deg);
-  }
-  30% {
-    transform: rotate(-10deg);
-  }
-  40% {
-    transform: rotate(16deg);
-  }
-  50% {
-    transform: rotate(-6deg);
-  }
-  60% {
-    transform: rotate(12deg);
-  }
-  70% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(0deg);
-  }
 }
 
 @media screen and (max-width: 1346px){
@@ -151,6 +116,6 @@
   }
 
   .welcome{
-    font-size: 2.4rem;
+    font-size: var(--font-size-medium);
   }
 }

@@ -10,10 +10,11 @@
 
 .card_holder {
   display: flex;
+  flex-wrap: wrap;
   position: relative;
   flex-direction: row;
   justify-content: space-between;
-  width: 95%;
+  width: 100%;
 }
 
 @media screen and (min-width: 1800px) {
@@ -22,14 +23,14 @@
   }
 
   .date {
-    font-size: 3.25rem;
+    font-size: var(--font-size-large);
   }
 }
 
-@media screen and (max-width: 840px){
+@media screen and (max-width: 870px){
   .card_holder{
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
   }
 
@@ -46,15 +47,6 @@
     align-items: center;
     flex-direction: column;
     padding: 0 !important;
-  }
-  
-}
-
-@media screen and (max-width: 660px) {
-  .card_holder{
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
 }
 
