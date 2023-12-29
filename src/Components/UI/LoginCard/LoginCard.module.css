@@ -7,7 +7,7 @@
   margin-top: 5px;
   display: inline-block;
   text-align: left;
-  color: red;
+  color: var(--color-red);
   font-size: var(--font-size-input);
   font-weight: bold;
 }
@@ -59,7 +59,7 @@ input::placeholder{
 }
 
 .input_success{
-  border:solid 1px lightgreen;
+  border:solid 1px var(--color-green);
 }
 
 #disabled{

@@ -37,6 +37,7 @@ const navigate = useNavigate();
     if(!userCtx.guestUser.isGuest && !userCtx.jwt){
         navigate("/Login");
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userCtx.guestUser.isGuest, navigate]);
   
   return (

@@ -15,7 +15,6 @@ const Todo = (props) => {
   // and convert to the number 0, thus a falsy value
   const [isCompleted, setIsCompleted] = useState(Number(props.assignment));
 
-  //Import user context from store
   const userCtx = useContext(UserContext);
 
   //Complete guest todos and update state to reflect their status

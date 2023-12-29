@@ -30,7 +30,6 @@ const UserRegistrationCard = () => {
   const [ passwordErrorMsg, setPasswordErrorMsg ] = useState('');
   const [ confirmedPasswordErrorMsg, setConfirmedPasswordErrorMsg ] = useState('');
 
-  //Initialize programmatic navigation
   const navigate = useNavigate();
 
   //Extract values via destructuring from useInput custom hook
@@ -64,7 +63,6 @@ const UserRegistrationCard = () => {
   //Check to see if confirmed password has an error
   const confirmedPasswordHasError = !passwordMatches(enteredPassword, confirmedPassword) && confirmedPasswordIsTouched;
 
-  //Set confirmed password on keystroke
   const confirmedPasswordChangeHandler = (e) => {
     setConfirmedPassword(e.target.value);
   };

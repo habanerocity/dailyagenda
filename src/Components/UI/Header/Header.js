@@ -4,7 +4,6 @@ import { UserContext } from "../../../store/user-context";
 
 import { useNavigate } from 'react-router-dom';
 
-
 import LogoutButton from '../LogoutButton/LogoutButton';
 
 import classes from "./Header.module.css";
@@ -14,7 +13,7 @@ const shortTime = {
 };
 
 const Header = () => {
-  //import UserContext from store
+
   const userCtx = useContext(UserContext);
 
   //Import useNavigate for programmatic navigation

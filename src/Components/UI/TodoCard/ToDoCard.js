@@ -38,22 +38,16 @@ const sortIncompleteTodos = (todos) => {
 }
 
 const ToDoCard = () => {
-  // Use the useReducer hook
   const [state, dispatch] = useReducer(reducer, initialGuestTodoState);
 
-
-
-  // Define your dispatch actions
+  // Define dispatch actions
   const setEnteredTask = (task) => {
     dispatch({ type: 'SET_ENTERED_TASK', payload: task });
   };
 
-  //Import userContext store
   const userCtx = useContext(UserContext);
 
-  //Change enteredTask state variable every keystroke
   const changeHandler = (e) => {
-    //Storing user input into state variable
     setEnteredTask(e.target.value);
   };
 

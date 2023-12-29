@@ -9,6 +9,8 @@
   --color-white: #fff;
   --color-off-white: #e9e0cf;
   --color-orange: #fb8f0d;
+  --color-red: #FF1C1C;
+  --color-green: #02CC3B;
 }
 
 *:focus {

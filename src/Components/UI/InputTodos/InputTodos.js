@@ -10,7 +10,6 @@ const InputTodos = (props) => {
     <>
       <input
         type="text"
-        // id="field"
         placeholder={props.placeholder}
         onKeyPress={props.onKeyPress}
         value={props.task}

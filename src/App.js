@@ -40,8 +40,6 @@ const renderTodos = (todos, isGuest) => {
 };
 
 const App = () => {
-
-  //Initialize state variables
   
   // Check to see if there is a jwt in local storage, then set isLoggedIn to true if jwt is found. !! operator is a common way to convert a value to a boolean in js
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('jwtToken'));

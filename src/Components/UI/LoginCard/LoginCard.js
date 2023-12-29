@@ -24,10 +24,8 @@ const LoginCard = (props) => {
   const [formIsValid, setFormIsValid] = useState(false);
   const [formIsTouched, setFormIsTouched] = useState(false);
   
-  //Import UserContext values
   const userCtx = useContext(UserContext);
 
-  //Initialize navigate variable for programmatic navigation
   const navigate = useNavigate();
 
   // Initialize refs to keep track of the previous values of jwt and guestUser.isGuest
@@ -37,7 +35,6 @@ const LoginCard = (props) => {
   useEffect(() => {
     // Only navigate if jwt has changed from null to a truthy value
     if (prevJwt.current === null && userCtx.jwt) {
-      console.log('jwt present. Logging in!');
       navigate("/");
     }
     // Update the previous value of jwt
@@ -100,7 +97,6 @@ const LoginCard = (props) => {
 
     setFormIsTouched(true);
 
-    //If email or password has an error stop function
     if (
       emailHasError &&
       passwordHasError
@@ -108,7 +104,6 @@ const LoginCard = (props) => {
       return;
     }
 
-    //If form is not valid stop function
     if (!formIsValid) return;
 
     //Initialize object that is sent to db
@@ -120,7 +115,7 @@ const LoginCard = (props) => {
     //Construct api url endpoint
     const url = constructApiUrl("user_login.php");
 
-    //Perform 'POST' request to perform user authentication
+    //Perform user authentication
     fetch(url, { 
       method: 'POST',
       headers: {
@@ -146,7 +141,6 @@ const LoginCard = (props) => {
       localStorage.setItem('jwtToken', token);
       localStorage.setItem("userFullName", full_name);
 
-      //Retrieve jwt from local storage
       const jwt = localStorage.getItem('jwtToken');
 
       //If jwt is set in local storage setIsLoggedIn to true and set the user's full_name
@@ -155,12 +149,10 @@ const LoginCard = (props) => {
         userCtx.setUserFullName(full_name);
       } 
     } else {
-      //If there is a password error, set password error message
       if(data.pass_error){
         setPasswordErrorMsg(data.pass_error);
       }
 
-      //If there is a username error, set username error message
       if(data.username_error){
         setUsernameErrorMsg(data.username_error);
       }

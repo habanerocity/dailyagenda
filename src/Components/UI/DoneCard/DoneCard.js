@@ -20,7 +20,7 @@ const DoneCard = () => {
         //Sort completed todos by completedAt timestamp
         completedTodos.sort((a, b) => new Date(a.completedAt) - new Date(b.completedAt));
       
-        //Return sorted todos
+        //Return sorted completed todos
         return completedTodos;
       }
 
