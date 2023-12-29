@@ -1,6 +1,7 @@
 .daily {
   color: var(--color-white);
   font-size: 4rem;
+  text-align: left;
 }
 
 .date {
@@ -99,6 +100,10 @@
 
   .welcome{
     margin: 0 0 0.7rem 0;
+  }
+
+  .daily{
+    font-size:var(--font-size-large);
   }
 }
 

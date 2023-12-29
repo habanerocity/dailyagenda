@@ -158,6 +158,18 @@
 
 }
 
+@media screen and (max-width: 1382px){
+  #weather_button{
+    width: 75%;
+  }
+}
+
+@media screen and (max-width: 1128px){
+  #weather_button{
+    width: 65%;
+  }
+}
+
 @media screen and (max-width: 840px){
   .forecast{
     margin-bottom: 2rem;

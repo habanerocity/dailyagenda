@@ -124,7 +124,7 @@ const ToDoCard = () => {
             placeholder="Enter a todo..."
             task={state.enteredTask}
             change={changeHandler}
-            name="➕ Add todo"
+            name="Add todo"
           />
         </form>
       </div>

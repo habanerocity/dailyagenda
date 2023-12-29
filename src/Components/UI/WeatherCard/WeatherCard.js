@@ -92,7 +92,7 @@ const WeatherCard = () => {
       {!hasClicked ? (
         <div className={`${classes.flex_center} ${classes.flex_row}`}>
           <Button id={classes.weather_button} onClick={fetchWeather}>
-          🌤️ Get Current Weather
+          🌤️ Get Weather
           </Button>
         </div>
       ) :weather.forecast ? (

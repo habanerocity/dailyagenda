@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import useApiUrl from "../../../hooks/useApiUrl";
 import useInput from "../../../hooks/useInput";
 
-import user_login_pic from '../../../assets/user_login.svg';
+import user_login_pic from '../../../assets/daily_agenda_logo-cropped.webp';
 
 import classes from "./LoginCard.module.css";
 
