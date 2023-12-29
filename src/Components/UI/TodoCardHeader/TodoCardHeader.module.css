@@ -19,7 +19,7 @@
     }
 }
 
-@media screen and (max-width: 405px) {
+@media screen and (max-width: 613px) {
     .header {
         font-size: var(--font-size-large);
     }

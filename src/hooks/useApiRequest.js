@@ -5,7 +5,6 @@ import { UserContext } from '../store/user-context';
 //Custom hook to make API requests
 const useApiRequest = (url, method) => {
 
-  //Import userContext and authContext
   const userCtx = useContext(UserContext);
 
   const apiRequest = async (body) => {

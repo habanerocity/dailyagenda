@@ -4,8 +4,8 @@ import Card from "../Card/Card";
 import Button from "../../UI/Button/Button";
 import classes from "./WeatherCard.module.css";
 
-import sunrise from "../../../assets/whitesunrise.png";
-import sunset from "../../../assets/whitesunset.png";
+import sunrise from "../../../assets/sun_rise.svg";
+import sunset from "../../../assets/sun_set.svg";
 
 const WeatherCard = () => {
   //Initialize weather state variables

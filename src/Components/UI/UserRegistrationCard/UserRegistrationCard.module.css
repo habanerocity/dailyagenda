@@ -36,7 +36,7 @@ input{
   position: relative;
   padding-left: 2rem;
   background-color: rgba(255, 255, 255, 0.125);
-  color: var(--color-white);
+  color: var(--color-off-white);
   border: 1px solid rgba(255, 255, 255, 0.125);
   border-radius: 10px;
   font-size: var(--font-size-input);
@@ -44,11 +44,25 @@ input{
 
 input::placeholder{
   font-size: var(--font-size-input);
+  color: var(--color-off-white);
   line-height: 4rem;
 }
 
-input:not(:first-of-type) {
+.input_wrapper:not(:first-of-type) {
   margin: 2.4rem 0 0 0;
+}
+
+.input_wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.input_icon {
+  position: absolute;
+  top: 50%;
+  right: 87.5%;
+  transform: translateY(-50%);
+  width: 2rem;
 }
 
 .input_error{
@@ -86,5 +100,24 @@ a {
 @media screen and (max-width: 1199px){
   input{
     height: 3.6rem;
+  }
+}
+
+@media screen and (max-width: 550px){
+  .input_icon{
+    right: 85.5%;
+  }
+}
+
+@media screen and (max-width: 450px){
+  .input_icon{
+    right: 83.5%;
+  }
+
+}
+
+@media screen and (max-width: 385px){
+  .input_icon{
+    right: 81.5%;
   }
 }

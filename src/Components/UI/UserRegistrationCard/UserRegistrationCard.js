@@ -10,6 +10,9 @@ import { registerUser } from "../../../helpers/userRegistrationApiCall";
 import { isNotEmpty, isEmail, isPassword, passwordMatches } from '../../../helpers/formValidation';
 
 import user_pic from '../../../assets/user_icon.svg';
+import email_icon from '../../../assets/email_off-white.svg';
+import lock_icon from '../../../assets/pwd.svg';
+import name_icon from '../../../assets/name_icon.svg';
 // import check_mark from '../../assets/check.svg';
 
 import classes from "./UserRegistrationCard.module.css";
@@ -164,41 +167,53 @@ const UserRegistrationCard = () => {
         <h2>Sign up for an account today, it's free.</h2>
         <UserIcon pic={user_pic} />
         <form className={` ${classes.flex__col} ${classes.user_registration_form}`} method="POST" onSubmit={formSubmissionHandler}>
-          <input 
-          className={`${nameHasError ? classes.input_error : null} ${nameIsValid ? classes.input_success : null }`}
-          placeholder='Full name'
-          onChange={nameChangeHandler}
-          onBlur={nameBlurHandler}
-          value={enteredName}
-          />
+          <div className={classes.input_wrapper}>
+            <input 
+            className={`${nameHasError ? classes.input_error : null} ${nameIsValid ? classes.input_success : null }`}
+            placeholder='Full name'
+            onChange={nameChangeHandler}
+            onBlur={nameBlurHandler}
+            value={enteredName}
+            />
+            <img src={name_icon} className={classes.input_icon} alt="lock icon" />
+          </div>
           {nameHasError ? <p className={classes.error_text}>{nameErrorMsg}</p> : null}
-          <input 
-          className={`${emailHasError ? classes.input_error : null} ${emailIsValid ? classes.input_success : null }`}
-          placeholder='Email'
-          type="email"
-          onChange={emailChangeHandler}
-          onBlur={emailBlurHandler}
-          value={enteredEmail}
-          />
+          <div className={classes.input_wrapper}>
+            <input 
+            className={`${emailHasError ? classes.input_error : null} ${emailIsValid ? classes.input_success : null }`}
+            placeholder='Email'
+            type="email"
+            onChange={emailChangeHandler}
+            onBlur={emailBlurHandler}
+            value={enteredEmail}
+            />
+            <img src={email_icon} className={classes.input_icon} alt="email icon" />
+          </div>
           {emailHasError ? <p className={classes.error_text}>Email must not be empty!</p> : null}
           {emailErrorMsg ? <p className={classes.error_text}>{emailErrorMsg}</p> : null}
-          <input 
-          className={`${passwordHasError ? classes.input_error : null} ${passwordIsValid ? classes.input_success : null }`}
-          placeholder='Password'
-          type="password"
-          onChange={passwordChangeHandler}
-          onBlur={passwordBlurHandler}
-          value={enteredPassword} 
-          />
+          <div className={classes.input_wrapper}>
+            <input 
+            className={`${passwordHasError ? classes.input_error : null} ${passwordIsValid ? classes.input_success : null }`}
+            placeholder='Password'
+            type="password"
+            onChange={passwordChangeHandler}
+            onBlur={passwordBlurHandler}
+            value={enteredPassword} 
+            />
+            <img src={lock_icon} className={classes.input_icon} alt="email icon" />
+          </div>
           {passwordHasError ? <p className={classes.error_text}>{passwordErrorMsg}</p> : null}
-          <input 
-          className={`${confirmedPasswordHasError ? classes.input_error : null} ${passwordMatches(enteredPassword, confirmedPassword) ? classes.input_success : null }`}
-          placeholder='Confirm Password'
-          type="password"
-          onChange={confirmedPasswordChangeHandler}
-          onBlur={confirmedPasswordBlurHandler}
-          value={confirmedPassword}  
-          />
+          <div className={classes.input_wrapper}>
+            <input 
+            className={`${confirmedPasswordHasError ? classes.input_error : null} ${passwordMatches(enteredPassword, confirmedPassword) ? classes.input_success : null }`}
+            placeholder='Confirm Password'
+            type="password"
+            onChange={confirmedPasswordChangeHandler}
+            onBlur={confirmedPasswordBlurHandler}
+            value={confirmedPassword}  
+            />
+            <img src={lock_icon} className={classes.input_icon} alt="email icon" />
+          </div>
           {confirmedPasswordHasError ? <p className={classes.error_text}>{confirmedPasswordErrorMsg}</p> : null}
           <Button type="button" disabled={!formIsValid} id={!formIsValid ? classes.disabled : classes.sign_up_btn}>Submit</Button>
         </form>

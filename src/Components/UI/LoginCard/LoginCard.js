@@ -4,8 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import useApiUrl from "../../../hooks/useApiUrl";
 import useInput from "../../../hooks/useInput";
 
-import user_login_pic from '../../../assets/daily_agenda_logo-cropped.webp';
-
+import daily_agenda_logo from '../../../assets/daily_agenda_logo-2.png';
+import email_icon from '../../../assets/email_off-white.svg';
+import lock_icon from '../../../assets/pwd.svg';
 import classes from "./LoginCard.module.css";
 
 import UserAuthCard from "../UserAuthCard/UserAuthCard";
@@ -172,30 +173,36 @@ const LoginCard = (props) => {
 
   return (
         <UserAuthCard headerName="User Login">
-          <UserIcon pic={user_login_pic} />
+          <UserIcon pic={daily_agenda_logo} />
           <div className={classes.form_wrapper}>
             <form className={classes.user_login_form} method="POST" onSubmit={formSubmissionHandler}>
-              <input 
-              id={classes.email}
-              className={`${emailHasError ? classes.input_error : null} ${emailIsValid ? classes.input_success : null }`}
-              placeholder="Email"
-              type="email"
-              onChange={handleEmailChange}
-              onBlur={emailBlurHandler}
-              value={enteredEmail}
-              />
+              <div className={classes.input_wrapper}>
+                <input 
+                id={classes.email}
+                className={`${emailHasError ? classes.input_error : null} ${emailIsValid ? classes.input_success : null }`}
+                placeholder="Email"
+                type="email"
+                onChange={handleEmailChange}
+                onBlur={emailBlurHandler}
+                value={enteredEmail}
+                />
+                <img src={email_icon} className={classes.input_icon} alt="email icon" />
+              </div>
               <div className={classes.error__msg}>
                 {usernameErrorMsg ? <p>{usernameErrorMsg}</p> : emailHasError ? <p>Please enter your email</p> : null}
               </div>
-              <input 
-              id={classes.password}
-              className={`${passwordHasError ? classes.input_error : null} ${passwordIsValid ? classes.input_success : null }`}
-              placeholder="Password" 
-              type="password"
-              onChange={handlePasswordChange}
-              onBlur={passwordBlurHandler}
-              value={enteredPassword} 
-              />
+              <div className={classes.input_wrapper}>
+                <input 
+                id={classes.password}
+                className={`${passwordHasError ? classes.input_error : null} ${passwordIsValid ? classes.input_success : null }`}
+                placeholder="Password" 
+                type="password"
+                onChange={handlePasswordChange}
+                onBlur={passwordBlurHandler}
+                value={enteredPassword} 
+                />
+                <img src={lock_icon} className={classes.lock_icon} alt="email icon" />
+              </div>
               <div className={classes.error__msg}>
                 { passwordErrorMsg ? <p>{passwordErrorMsg}</p> : passwordHasError ? <p>Please enter your password</p> : null}
               </div>

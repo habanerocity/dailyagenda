@@ -4,7 +4,7 @@
   background-color: rgba(17, 25, 40, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.125);
   height: auto;
-  width: 40%;
+  width: 44rem;
   border-radius: 3rem;
   margin: 2rem 0;
   display: flex;
@@ -20,20 +20,20 @@
   padding: 3rem 0;
 }
 
-@media screen and (min-width: 1200px){
+@media screen and (max-width: 550px){
   .user__card{
-    max-width: 30%;
-  }
-}
-    
-@media screen and (max-width: 800px){
-  .user__card{
-    width: 60%;
+    width: 34rem;
   }
 }
 
-@media screen and (max-width: 600px){
+@media screen and (max-width: 450px){
   .user__card{
-    width: 100%;
+    width: 29rem;
   }
-}
+} 
+
+@media screen and (max-width: 385px){
+  .user__card{
+    width: 24rem;
+  }
+} 
