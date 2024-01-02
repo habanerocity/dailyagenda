@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 
 const useApiUrl = () => {
   const constructApiUrl = useCallback((scriptName) => {
-    return `http://localhost:8888/todo_backend/${scriptName}`;
+    return `${process.env.REACT_APP_DAILY_AGENDA_API_BASE}/${scriptName}`;
   }, []);
 
   return constructApiUrl;
