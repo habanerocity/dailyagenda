@@ -112,7 +112,7 @@ const WeatherCard = () => {
               {`H:${Math.round(weather.forecast.forecastday[0].day.maxtemp_f)}° L:${Math.round(weather.forecast.forecastday[0].day.mintemp_f)}°`}
             </h3>
           </div>
-          <div >
+          <div className={classes.sun_container} >
             <span className={classes.icon}>
               <img className={classes.sun} src={sunrise} alt="sunrise" />
               <h3 className={classes.substring}>
