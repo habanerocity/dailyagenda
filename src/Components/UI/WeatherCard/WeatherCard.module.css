@@ -77,6 +77,7 @@
 
 .sun {
   margin-top: var(--margin-top);
+  height: 3rem;
 }
 
 .temperature {

@@ -6,7 +6,7 @@ const useGeoLocation = () => {
     coordinates: { lat: "", lng: "" }
   });
 
-  const onSuccess = location => {
+  const onSuccess = (location) => {
     setLocation({
       loaded: true,
       coordinates: {
@@ -16,7 +16,7 @@ const useGeoLocation = () => {
     });
   };
 
-  const onError = error => {
+  const onError = (error) => {
     setLocation({
       loaded: true,
       error
